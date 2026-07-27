@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaan Tan — Web, Otomasyon &amp; İkas İş Ortağı</title>
+  <meta name="description" content="Kaan Tan — solopreneur dijital çözüm ortağı. Profesyonel web sitesi, süreç otomasyonu, yapay zeka entegrasyonu ve İkas e-ticaret altyapısında iş ortaklığı. Ortalama 30 dakikada dönüş." />
+  <meta property="og:title" content="Kaan Tan — Dijital Çözüm Ortağınız" />
+  <meta property="og:description" content="Web sitesi, otomasyon, yapay zeka ve İkas e-ticaret çözümleri. Tek elden, hızlı ve profesyonel." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2384CC16'/%3E%3Cpath d='M11 7v18M11 16l9-9M11 16l9 9' stroke='%230A0A0A' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Kaan Tan",
+    "url": "https://kaantan.com.tr",
+    "jobTitle": "Yazılım Geliştirici",
+    "description": "10 yılı aşkın deneyime sahip, İstanbul merkezli yazılım geliştiricisi. ikas ve Shopify partneri, e-ticaret altyapıları ve özel yazılım çözümleri üzerine çalışıyor.",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "KT.",
+      "url": "https://kaantan.com.tr"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "İstanbul",
+      "addressCountry": "TR"
+    },
+    "email": "mailto:kaantanpr@gmail.com",
+    "telephone": "+905422979212",
+    "sameAs": [
+      "https://instagram.com/qkaantan",
+      "https://tiktok.com/@qkaantan",
+      "https://linkedin.com/in/vekaantan",
+      "https://youtube.com/@qkaantan",
+      "https://www.behance.net/kaantan2",
+      "https://github.com/Kaaantn"
+    ]
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --lime-50:  #F7FEE7;
+      --lime-100: #ECFCCB;
+      --lime-200: #D9F99D;
+      --lime-300: #BEF264;
+      --lime-400: #A3E635;
+      --lime-500: #84CC16;
+      --lime-600: #65A30D;
+      --lime-800: #3F6212;
+
+      --ink:      #0A0A0A;
+      --ink-2:    #18181B;
+      --body:     #3F3F46;
+      --muted:    #71717A;
+      --line:     #E4E4E7;
+      --line-2:   #EEEEF0;
+      --surface:  #FAFAF9;
+      --white:    #FFFFFF;
+      --dark:     #0A0A0A;
+      --dark-2:   #151515;
+      --dark-line: #262626;
+      --dark-body: #A1A1AA;
+
+      --display: 'Space Grotesk', sans-serif;
+      --body-f:  'Inter', sans-serif;
+      --radius: 16px;
+    }
+
+    html { scroll-behavior: auto; }
+
+    body {
+      background: var(--white); color: var(--body); font-family: var(--body-f);
+      overflow-x: hidden; -webkit-font-smoothing: antialiased;
+      font-size: 16px; line-height: 1.6; letter-spacing: -0.01em; cursor: none;
+    }
+    @media (pointer: coarse) { body { cursor: auto; } }
+
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button { font-family: inherit; border: none; background: none; }
+    [data-lucide] { width: 20px; height: 20px; max-width: none; stroke-width: 1.75; flex-shrink: 0; }
+
+    /* ══ CURSOR ══ */
+    #c-dot { position: fixed; width: 7px; height: 7px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width .2s ease, height .2s ease, background .2s ease, opacity .3s ease; will-change: left, top; }
+    #c-ring { position: fixed; width: 36px; height: 36px; border: 1.5px solid rgba(101,163,13,0.45); border-radius: 50%; pointer-events: none; z-index: 9997; transform: translate(-50%, -50%); transition: width .35s ease, height .35s ease, border-color .35s ease, opacity .35s ease, background .35s ease; will-change: left, top; }
+    body.cur-hover #c-dot { width: 12px; height: 12px; background: var(--lime-600); }
+    body.cur-hover #c-ring { width: 52px; height: 52px; border-color: rgba(101,163,13,.28); }
+    body.cur-dark #c-dot { background: var(--lime-400); }
+    body.cur-btn #c-dot { opacity: 0; }
+    body.cur-btn #c-ring { width: 62px; height: 62px; border-color: var(--lime-500); background: rgba(132,204,22,.08); }
+    @media (pointer: coarse) { #c-dot, #c-ring { display: none; } }
+
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--lime-600); outline-offset: 3px; border-radius: 4px; }
+
+    /* ══ DOT NAV (desktop only) ══ */
+    .dot-nav { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 300; display: flex; flex-direction: column; gap: 20px; }
+    @media (max-width: 1023px) { .dot-nav { display: none; } }
+    .dot-link { display: flex; align-items: center; gap: 10px; text-decoration: none; justify-content: flex-end; }
+    .dot-link .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); border: 1px solid var(--line); transition: all .3s ease; flex-shrink: 0; }
+    .dot-link .dot-label { font-size: .72rem; font-weight: 600; color: var(--ink-2); opacity: 0; transform: translateX(6px); transition: all .25s ease; white-space: nowrap; background: var(--white); padding: 5px 12px; border-radius: 100px; border: 1px solid var(--line); box-shadow: 0 4px 14px rgba(0,0,0,.07); }
+    .dot-link:hover .dot-label { opacity: 1; transform: translateX(0); }
+    .dot-link:hover .dot { background: var(--lime-400); border-color: var(--lime-400); }
+    .dot-link.active .dot { background: var(--lime-500); border-color: var(--lime-500); width: 10px; height: 10px; box-shadow: 0 0 0 4px rgba(132,204,22,.18); }
+    .dot-link.active .dot-label { color: var(--lime-700); opacity: 1; transform: translateX(0); }
+
+    /* ── NAV ── */
+    nav.topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; padding: 18px 48px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: rgba(255,255,255,0.78); border-bottom: 1px solid transparent; transition: padding 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+    nav.topnav.scrolled { padding: 13px 48px; border-bottom-color: var(--line); box-shadow: 0 1px 0 rgba(0,0,0,0.02); }
+    .nav-logo { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+    .nav-logo .dot { color: var(--lime-600); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a:not(.nav-cta) { position: relative; color: var(--body); text-decoration: none; font-size: 0.86rem; font-weight: 500; letter-spacing: 0.01em; transition: color 0.2s; touch-action: manipulation; }
+    .nav-links a:not(.nav-cta)::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background: var(--lime-500); transform: scaleX(0); transform-origin: left center; border-radius: 2px; transition: transform 0.35s cubic-bezier(0.25,1,0.5,1); }
+    .nav-links a:not(.nav-cta):hover { color: var(--ink); }
+    .nav-links a:not(.nav-cta):hover::after { transform: scaleX(1); }
+    .nav-cta { display: inline-flex; align-items: center; gap: 6px; background: var(--lime-400); color: var(--ink) !important; padding: 10px 20px; border-radius: 8px; font-size: 0.86rem; font-weight: 600 !important; text-decoration: none; transition: background 0.2s, transform 0.2s; touch-action: manipulation; }
+    .nav-cta:hover { background: var(--lime-300); transform: translateY(-1px); }
+    .nav-burger { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 8px; color: var(--ink); cursor: pointer; touch-action: manipulation; }
+    .nav-burger:hover { background: var(--surface); }
+    .nav-burger .icon-close { display: none; }
+    body.menu-open .nav-burger .icon-open { display: none; }
+    body.menu-open .nav-burger .icon-close { display: flex; }
+
+    #mobileMenu { position: fixed; inset: 0; z-index: 400; background: var(--white); display: flex; flex-direction: column; padding: 100px 32px 40px; transform: translateY(-100%); transition: transform 0.5s cubic-bezier(0.65,0,0.35,1); visibility: hidden; }
+    body.menu-open #mobileMenu { transform: translateY(0); visibility: visible; }
+    #mobileMenu ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    #mobileMenu a { display: block; padding: 15px 4px; font-family: var(--display); font-size: 1.5rem; font-weight: 600; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+    #mobileMenu .mm-cta { margin-top: 28px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--lime-400); color: var(--ink); padding: 16px; border-radius: 10px; font-weight: 600; text-decoration: none; }
+
+    /* ── HERO ── */
+    #hero { min-height: 100vh; display: flex; align-items: center; position: relative; padding: 140px 48px 70px; overflow: hidden; background: var(--white); }
+    .blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.16; animation: drift 14s ease-in-out infinite alternate; }
+    .blob-1 { width: 620px; height: 620px; background: radial-gradient(circle, var(--lime-300) 0%, var(--lime-500) 55%, transparent 80%); top: -200px; right: -200px; animation-duration: 15s; }
+    .blob-2 { width: 420px; height: 420px; background: radial-gradient(circle, var(--lime-200) 0%, var(--lime-400) 60%, transparent 80%); bottom: -160px; left: -140px; opacity: 0.13; animation-duration: 11s; animation-delay: -3s; }
+    @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px, 24px) scale(1.12); } }
+
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(10,10,10,0.028) 1px, transparent 1px), linear-gradient(90deg, rgba(10,10,10,0.028) 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse at 30% 40%, black 15%, transparent 62%); }
+
+    .hero-layout { position: relative; z-index: 2; width: 100%; max-width: 1360px; margin: 0 auto; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 40px; align-items: center; }
+    @media (max-width: 1023px) { .hero-layout { grid-template-columns: 1fr; } }
+
+    .hero-content { max-width: 620px; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lime-800); background: var(--lime-50); border: 1px solid var(--lime-200); padding: 7px 16px 7px 12px; border-radius: 100px; margin-bottom: 30px; }
+    .hero-eyebrow::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--lime-500); animation: pulse 2s infinite; flex-shrink: 0; }
+    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+
+    .hero-name { font-family: var(--display); font-size: clamp(2.9rem, 5.6vw, 5.4rem); font-weight: 700; line-height: 1.04; letter-spacing: -0.04em; margin-bottom: 22px; color: var(--ink); min-height: 2.2em; }
+    @media (max-width: 1023px) { .hero-name { text-align: center; } }
+    .hero-name .line-1 { display: block; padding-bottom: 0.08em; }
+    .hero-name .line-2 { display: block; color: var(--lime-600); padding-bottom: 0.08em; }
+
+    .hero-sub { font-size: clamp(1.02rem, 1.6vw, 1.18rem); color: var(--body); font-weight: 400; line-height: 1.7; max-width: 520px; margin: 0 0 36px; }
+    @media (max-width: 1023px) { .hero-sub { margin: 0 auto 36px; text-align: center; } }
+    .hero-sub strong { color: var(--ink); font-weight: 600; }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; position: relative; z-index: 3; margin-bottom: 34px; }
+    @media (max-width: 1023px) { .hero-actions { justify-content: center; } }
+
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--lime-400); color: var(--ink); padding: 15px 30px; border-radius: 10px; font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: all 0.25s; will-change: transform; touch-action: manipulation; }
+    .btn-primary:hover { background: var(--lime-300); box-shadow: 0 10px 30px rgba(132,204,22,0.35); }
+    .btn-primary svg { width: 17px; height: 17px; }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--ink); padding: 15px 30px; border-radius: 10px; font-size: 0.95rem; font-weight: 500; text-decoration: none; border: 1.5px solid var(--line); transition: all 0.25s; will-change: transform; touch-action: manipulation; }
+    .btn-secondary:hover { border-color: var(--ink); }
+
+    .trust-row { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+    @media (max-width: 1023px) { .trust-row { justify-content: center; } }
+    .trust-item { display: flex; align-items: center; gap: 7px; font-size: 0.83rem; font-weight: 500; color: var(--muted); }
+    .trust-item svg { width: 16px; height: 16px; color: var(--lime-600); flex-shrink: 0; }
+
+    /* ── HERO VISUAL (bento float cards, desktop only) ── */
+    .hero-visual { position: relative; height: 540px; }
+    @media (max-width: 1023px) { .hero-visual { display: none; } }
+
+    .hv-orb { position: absolute; top: 8%; right: 6%; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, var(--lime-300) 0%, var(--lime-500) 45%, transparent 75%); filter: blur(50px); opacity: 0.5; }
+
+    .float-card { position: absolute; background: var(--white); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 20px 50px rgba(0,0,0,0.08); padding: 18px 20px; animation: floatY 6s ease-in-out infinite; }
+    @keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    @media (prefers-reduced-motion: reduce) { .float-card { animation: none; } }
+
+    .fc-partner { top: 4%; left: 2%; display: flex; align-items: center; gap: 12px; animation-duration: 7s; }
+    .fc-partner .fc-ico { width: 40px; height: 40px; border-radius: 10px; background: var(--lime-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .fc-partner .fc-ico svg { width: 19px; height: 19px; color: var(--lime-700); }
+    .fc-partner strong { display: block; font-size: 0.88rem; font-weight: 700; color: var(--ink); }
+    .fc-partner span { font-size: 0.76rem; color: var(--muted); }
+    .fc-shopify { top: 2%; left: auto; right: 2%; animation-duration: 7.2s; animation-delay: -3s; }
+
+    .fc-stat { top: 34%; left: 16%; text-align: left; animation-duration: 8s; animation-delay: -2s; }
+    .fc-stat .fc-num { font-family: var(--display); font-size: 2.4rem; font-weight: 700; color: var(--ink); line-height: 1; }
+    .fc-stat .fc-num span { color: var(--lime-600); }
+    .fc-stat .fc-cap { font-size: 0.76rem; color: var(--muted); margin-top: 4px; font-weight: 500; }
+
+    .fc-msg { bottom: 22%; right: 0%; max-width: 250px; animation-duration: 6.5s; animation-delay: -4s; }
+    .fc-msg .fc-msg-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .fc-msg .fc-msg-head svg { width: 15px; height: 15px; color: var(--lime-600); }
+    .fc-msg .fc-msg-head span { font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .fc-msg p { font-size: 0.87rem; color: var(--ink-2); font-weight: 500; line-height: 1.5; }
+
+    .fc-avail { bottom: 2%; left: 10%; display: flex; align-items: center; gap: 10px; animation-duration: 7.5s; animation-delay: -1s; }
+    .fc-avail .fc-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--lime-500); box-shadow: 0 0 0 4px rgba(132,204,22,0.18); flex-shrink: 0; animation: pulse 2s infinite; }
+    .fc-avail span { font-size: 0.84rem; font-weight: 600; color: var(--ink-2); }
+
+    .scroll-hint { position: absolute; bottom: 24px; left: 48px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; z-index: 2; pointer-events: none; }
+    @media (max-width: 1023px) { .scroll-hint { left: 50%; transform: translateX(-50%); align-items: center; } }
+    .scroll-hint span { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--lime-500), transparent); animation: scrollPulse 2.2s ease-in-out infinite; }
+    @keyframes scrollPulse { 0%,100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+    /* ── MARQUEE (dark anchor strip) ── */
+    .marquee { width: 100%; overflow: hidden; background: var(--ink); padding: 20px 0; }
+    .marquee-track { display: flex; align-items: center; width: max-content; animation: marqueeScroll 34s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+    @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-item { font-family: var(--display); font-size: 1.05rem; font-weight: 600; color: var(--white); padding: 0 26px; white-space: nowrap; }
+    .marquee-sep { width: 6px; height: 6px; border-radius: 50%; background: var(--lime-400); flex-shrink: 0; }
+
+    /* ── PARTNER STRIP ── */
+    .partner-strip { background: var(--lime-50); border-top: 1px solid var(--lime-100); border-bottom: 1px solid var(--lime-100); padding: 16px 48px; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; text-align: center; }
+    .partner-strip svg { width: 18px; height: 18px; color: var(--lime-600); flex-shrink: 0; }
+    .partner-strip p { font-size: 0.87rem; font-weight: 500; color: var(--ink-2); }
+    .partner-strip strong { font-weight: 700; color: var(--ink); }
+
+    /* ── STATS BAR (animated counters) ── */
+    .stats-bar { border-bottom: 1px solid var(--line); padding: 48px 48px; display: flex; justify-content: center; gap: 90px; overflow: hidden; background: var(--white); }
+    .stat-item { text-align: center; }
+    .stat-num { font-family: var(--display); font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; color: var(--ink); line-height: 1; display: flex; align-items: baseline; justify-content: center; gap: 2px; }
+    .stat-num .stat-suffix, .stat-num .stat-prefix { color: var(--lime-600); }
+    .stat-num.infinity { font-size: 2.7rem; animation: pulse 2.6s ease-in-out infinite; }
+    .stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.04em; margin-top: 8px; font-weight: 500; }
+
+    /* ── SECTIONS (shared) ── */
+    section { padding: 110px 48px; }
+    .section-inner { max-width: 1120px; margin: 0 auto; }
+    .section-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lime-600); margin-bottom: 18px; }
+    .section-title { font-family: var(--display); font-size: clamp(2rem, 4vw, 3.1rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.12; color: var(--ink); margin-bottom: 20px; }
+    .section-desc { font-size: 1.05rem; color: var(--muted); line-height: 1.8; max-width: 540px; font-weight: 400; }
+    .char-wrap { display: inline-block; overflow: hidden; vertical-align: bottom; line-height: 1.18; }
+    .char-inner { display: inline-block; will-change: transform; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 80px; align-items: center; margin-top: 56px; }
+    .about-visual { position: relative; width: 100%; aspect-ratio: 1 / 1; }
+    .about-card-main { position: absolute; inset: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .about-card-main::before { content: ''; position: absolute; top: -70px; right: -70px; width: 220px; height: 220px; background: radial-gradient(circle, var(--lime-200), transparent 70%); border-radius: 50%; }
+    .about-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; z-index: 1; }
+    .about-badge { position: absolute; bottom: 24px; left: 24px; right: 24px; z-index: 2; background: rgba(255,255,255,0.32); backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%); border: 1px solid rgba(255,255,255,0.45); padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 28px rgba(0,0,0,0.14); }
+    .about-badge svg { width: 20px; height: 20px; color: var(--lime-600); flex-shrink: 0; }
+    .about-badge div { font-size: 0.85rem; font-weight: 600; color: var(--ink); }
+    .about-badge small { display: block; font-size: 0.72rem; font-weight: 400; color: var(--muted); margin-top: 1px; }
+    .about-body { font-size: 1.08rem; color: var(--body); line-height: 1.85; font-weight: 400; margin-bottom: 32px; }
+    .about-body strong { color: var(--ink); font-weight: 600; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tag { background: var(--surface); border: 1px solid var(--line); color: var(--ink-2); padding: 7px 16px; border-radius: 100px; font-size: 0.83rem; font-weight: 500; transition: all 0.2s; cursor: default; }
+    .tag:hover { border-color: var(--lime-400); background: var(--lime-50); color: var(--lime-800); }
+
+    /* ── HAKKINDA ── */
+    .hk-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 80px; margin-top: 56px; padding-top: 48px; border-top: 1px solid var(--line); align-items: start; }
+    @media (max-width: 900px) { .hk-grid { grid-template-columns: 1fr; gap: 44px; } }
+    .hk-side-title { font-family: var(--display); font-size: 0.82rem; font-weight: 700; color: var(--ink); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.07em; }
+    .hk-side-title:not(:first-child) { margin-top: 36px; }
+    .hk-contact-list { display: flex; flex-direction: column; }
+    .hk-contact-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); text-decoration: none; color: inherit; }
+    .hk-contact-item:last-child { border-bottom: none; }
+    .hk-contact-icon { width: 40px; height: 40px; background: var(--lime-50); border: 1px solid var(--lime-100); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .hk-contact-icon svg { width: 18px; height: 18px; color: var(--lime-700); }
+    .hk-contact-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+    .hk-contact-value { font-size: 0.94rem; font-weight: 600; color: var(--ink); }
+    .hk-social-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .hk-social-link { display: inline-flex; align-items: center; gap: 8px; background: var(--white); border: 1px solid var(--line); color: var(--ink-2); padding: 9px 16px 9px 12px; border-radius: 100px; font-size: 0.83rem; font-weight: 500; text-decoration: none; transition: all 0.2s; }
+    .hk-social-link svg { width: 16px; height: 16px; color: var(--lime-600); }
+    .hk-social-link:hover { border-color: var(--lime-400); background: var(--lime-50); color: var(--lime-800); }
+
+    /* ── STATEMENT (scroll scrub) ── */
+    .statement { padding: 90px 48px; background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .statement-text { font-family: var(--display); font-size: clamp(1.5rem, 3.2vw, 2.5rem); font-weight: 600; line-height: 1.4; letter-spacing: -0.02em; max-width: 980px; margin: 0 auto; text-align: center; color: var(--ink); }
+    .statement-text .word { color: var(--line); display: inline-block; }
+
+    /* ── IKAS PARTNERSHIP ── */
+    #ikas { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .ikas-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 72px; align-items: center; margin-top: 48px; }
+    .ikas-list { display: flex; flex-direction: column; gap: 16px; margin: 32px 0 36px; }
+    .ikas-item { display: flex; align-items: flex-start; gap: 14px; }
+    .ikas-item .ico { width: 34px; height: 34px; border-radius: 9px; background: var(--lime-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .ikas-item .ico svg { width: 17px; height: 17px; color: var(--lime-700); }
+    .ikas-item p { font-size: 0.96rem; color: var(--ink-2); font-weight: 500; padding-top: 6px; }
+    .ikas-card { background: var(--ink); border-radius: 20px; padding: 40px 34px; position: relative; overflow: hidden; }
+    .ikas-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(163,230,53,0.18), transparent 70%); border-radius: 50%; }
+    .ikas-wordmark { font-family: var(--display); font-size: 2.1rem; font-weight: 700; color: var(--white); letter-spacing: -0.02em; margin-bottom: 6px; position: relative; z-index: 1; }
+    .ikas-wordmark span { color: var(--lime-400); }
+    .ikas-wordmark-plus { font-size: 1.05rem; font-weight: 500; color: rgba(255,255,255,0.5); letter-spacing: -0.01em; }
+    .ikas-card-role { font-size: 0.85rem; color: var(--dark-body); margin-bottom: 28px; position: relative; z-index: 1; }
+    .ikas-cert { display: inline-flex; align-items: center; gap: 8px; background: rgba(163,230,53,0.12); border: 1px solid rgba(163,230,53,0.3); color: var(--lime-400); padding: 8px 16px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; margin-bottom: 28px; position: relative; z-index: 1; }
+    .ikas-cert svg { width: 16px; height: 16px; }
+    .ikas-card-name { font-size: 0.95rem; font-weight: 600; color: var(--white); position: relative; z-index: 1; }
+    .ikas-card-name small { display: block; font-size: 0.78rem; font-weight: 400; color: var(--dark-body); margin-top: 3px; }
+
+    /* ── SERVICES (bento grid) ── */
+    #services { background: var(--surface); }
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; gap: 24px; }
+    .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(200px, auto); gap: 20px; }
+    @media (max-width: 1023px) { .services-grid { grid-template-columns: repeat(2, 1fr); } .service-card.b-large { grid-row: span 1 !important; } }
+    @media (max-width: 640px) { .services-grid { grid-template-columns: 1fr; } .service-card { grid-column: span 1 !important; grid-row: auto !important; } }
+
+    .service-card.b-large { grid-column: span 2; grid-row: span 2; }
+    .service-card.b-wide  { grid-column: span 2; grid-row: span 1; }
+
+    .service-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 28px; position: relative; overflow: hidden; transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; cursor: default; transform-style: preserve-3d; will-change: transform; display: flex; flex-direction: column; }
+    .service-card:hover { border-color: var(--lime-300); box-shadow: 0 24px 48px rgba(0,0,0,0.07); }
+    .service-card.b-large { padding: 40px; }
+    .service-card.b-large .service-title { font-size: 1.55rem; }
+    .service-card.b-large .service-desc { font-size: 1rem; max-width: 460px; }
+
+    .service-icon { width: 46px; height: 46px; background: var(--lime-50); border: 1px solid var(--lime-100); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: all 0.3s; }
+    .service-icon svg { width: 22px; height: 22px; color: var(--lime-700); }
+    .service-card:hover .service-icon { background: var(--lime-400); transform: scale(1.08); }
+    .service-card:hover .service-icon svg { color: var(--ink); }
+    .service-title { font-family: var(--display); font-size: 1.14rem; font-weight: 600; margin-bottom: 9px; letter-spacing: -0.015em; color: var(--ink); }
+    .service-desc { font-size: 0.89rem; color: var(--muted); line-height: 1.65; font-weight: 400; }
+    .service-tag { display: inline-block; margin-top: auto; padding-top: 16px; font-size: 0.75rem; color: var(--lime-700); letter-spacing: 0.04em; font-weight: 600; }
+
+    .mini-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 22px; }
+    .mini-chip { background: var(--lime-50); border: 1px solid var(--lime-200); color: var(--lime-800); font-size: 0.75rem; font-weight: 600; padding: 5px 13px; border-radius: 100px; }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 56px; }
+    @media (max-width: 900px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .projects-grid { grid-template-columns: 1fr; } }
+
+    .project-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 26px 26px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: border-color 0.3s ease, box-shadow 0.3s ease; will-change: transform; transform-style: preserve-3d; }
+    .project-card:hover { border-color: var(--lime-300); box-shadow: 0 24px 48px rgba(0,0,0,0.07); background: var(--white); }
+    .project-live-badge { position: absolute; top: 18px; right: 18px; display: flex; align-items: center; gap: 5px; background: var(--lime-50); border: 1px solid var(--lime-200); color: var(--lime-700); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; }
+    .project-live-badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--lime-500); animation: pulse 2s infinite; }
+    .project-soon-badge { position: absolute; top: 18px; right: 18px; background: var(--white); border: 1px solid var(--line); color: var(--muted); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; }
+    .project-icon { width: 46px; height: 46px; background: var(--lime-50); border: 1px solid var(--lime-100); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: all 0.3s; }
+    .project-icon--logo { padding: 0; overflow: hidden; }
+    .project-icon--logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+    .project-icon svg { width: 22px; height: 22px; color: var(--lime-700); }
+    .project-card:hover .project-icon { background: var(--lime-400); transform: scale(1.08); }
+    .project-card:hover .project-icon svg { color: var(--ink); }
+    .project-name { font-family: var(--display); font-size: 1.18rem; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 10px; color: var(--ink); }
+    .project-desc { font-size: 0.89rem; color: var(--muted); line-height: 1.7; font-weight: 400; flex: 1; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; margin-bottom: 20px; }
+    .project-tech { background: var(--white); border: 1px solid var(--line); color: var(--ink-2); font-size: 0.72rem; font-weight: 500; padding: 3px 10px; border-radius: 100px; }
+    .project-link { display: inline-flex; align-items: center; gap: 6px; background: transparent; border: 1.5px solid var(--line); color: var(--ink); padding: 9px 18px; border-radius: 8px; font-size: 0.84rem; font-weight: 600; text-decoration: none; transition: all 0.25s; align-self: flex-start; touch-action: manipulation; }
+    .project-link:hover { border-color: var(--lime-500); background: var(--lime-50); color: var(--lime-800); }
+    .project-link svg { width: 14px; height: 14px; transition: transform 0.2s; }
+    .project-link:hover svg { transform: translate(2px, -2px); }
+    .project-link.disabled { opacity: 0.4; pointer-events: none; }
+
+    /* ── SITES (story-style) ── */
+    .stories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 20px; margin-top: 56px; }
+    @media (max-width: 480px) { .stories-grid { gap: 22px 12px; } }
+    .story-item { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .story-circle { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 50%; overflow: hidden; background: var(--surface); border: 1px solid var(--line); transition: transform 0.35s ease, box-shadow 0.35s ease; }
+    .story-circle img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .story-item:hover .story-circle { transform: scale(1.08); box-shadow: 0 16px 36px rgba(0,0,0,0.14); }
+    .story-item.soon .story-circle { border-style: dashed; display: flex; align-items: center; justify-content: center; opacity: 0.55; }
+    .story-item.soon .story-circle svg { width: 26%; height: 26%; color: var(--muted); }
+    .story-caption { margin-top: 12px; font-size: 0.82rem; font-weight: 500; color: var(--ink-2); line-height: 1.4; }
+    .story-item.soon .story-caption { color: var(--muted); font-weight: 400; }
+
+    /* ── PROCESS ── */
+    #process { background: var(--white); }
+    .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 56px; position: relative; }
+    @media (max-width: 900px) { .process-steps { grid-template-columns: 1fr 1fr; gap: 32px; } .process-steps::before { display: none; } }
+    .process-steps::before { content: ''; position: absolute; top: 27px; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent); }
+    .step { padding: 0 20px; text-align: center; }
+    .step-num { width: 54px; height: 54px; border: 1.5px solid var(--line); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--lime-700); background: var(--white); position: relative; z-index: 1; transition: all 0.3s; }
+    .step:hover .step-num { background: var(--lime-400); color: var(--ink); border-color: var(--lime-400); transform: scale(1.08); }
+    .step-title { font-family: var(--display); font-size: 1.02rem; font-weight: 600; margin-bottom: 10px; color: var(--ink); }
+    .step-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.65; font-weight: 400; }
+
+    /* ── CONTACT + FOOTER ── */
+    #contact { background: var(--dark); }
+    #contact .section-eyebrow { color: var(--lime-400); }
+    #contact .section-title { color: var(--white); }
+    #contact .section-desc { color: var(--dark-body); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 56px; }
+    @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
+    .contact-detail { display: flex; align-items: center; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--dark-line); }
+    .contact-detail:last-child { border-bottom: none; }
+    .contact-icon { width: 42px; height: 42px; background: rgba(163,230,53,0.1); border: 1px solid rgba(163,230,53,0.22); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-icon svg { width: 19px; height: 19px; color: var(--lime-400); }
+    .contact-label { font-size: 0.75rem; color: var(--dark-body); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+    .contact-value { font-size: 0.96rem; font-weight: 600; color: var(--white); }
+    .contact-cta-box { background: var(--dark-2); border: 1px solid var(--dark-line); border-radius: 20px; padding: 46px 38px; text-align: center; }
+    .contact-cta-title { font-family: var(--display); font-size: 1.65rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; color: var(--white); }
+    .contact-cta-sub { font-size: 0.9rem; color: var(--dark-body); margin-bottom: 30px; line-height: 1.7; }
+    .btn-whatsapp { display: inline-flex; align-items: center; gap: 10px; background: var(--lime-400); color: var(--ink); padding: 16px 32px; border-radius: 10px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: all 0.25s; width: 100%; justify-content: center; will-change: transform; touch-action: manipulation; }
+    .btn-whatsapp:hover { background: var(--lime-300); box-shadow: 0 10px 30px rgba(163,230,53,0.25); }
+    .btn-whatsapp svg { width: 20px; height: 20px; }
+    .response-note { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.78rem; color: var(--dark-body); margin-top: 16px; }
+    .response-note svg { width: 14px; height: 14px; color: var(--lime-400); }
+
+    footer { border-top: 1px solid var(--dark-line); padding: 30px 48px; background: var(--dark); display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--white); display: inline-flex; align-items: center; gap: 6px; }
+    .footer-logo .dot { color: var(--lime-400); }
+    .footer-copy { font-size: 0.8rem; color: var(--dark-body); }
+
+    .cursor-glow { position: fixed; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(132,204,22,0.06) 0%, transparent 70%); pointer-events: none; z-index: 0; transform: translate(-50%, -50%); transition: left 0.15s ease, top 0.15s ease; }
+
+    @media (max-width: 768px) {
+      nav.topnav, .nav-burger { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+      #hero { padding: 110px 20px 60px; }
+      .partner-strip, .stats-bar { padding: 20px; }
+      .stats-bar { gap: 28px; flex-wrap: wrap; }
+      section { padding: 64px 20px; }
+      .statement { padding: 64px 20px; }
+      .about-grid, .ikas-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-visual { max-width: 320px; margin: 0 auto; }
+      .services-header { flex-direction: column; align-items: flex-start; gap: 18px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 20px; }
+      .hero-name { min-height: auto; }
+      .ikas-card { padding: 32px 26px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="c-dot"></div>
+  <div id="c-ring"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- ══ DOT NAV ══ -->
+  <nav class="dot-nav" id="dotNav" aria-label="Bölüm gezinme">
+    <a href="#about" class="dot-link" data-target="about"><span class="dot-label">Hakkımda</span><span class="dot"></span></a>
+    <a href="#ikas" class="dot-link" data-target="ikas"><span class="dot-label">Ortaklıklar</span><span class="dot"></span></a>
+    <a href="#services" class="dot-link" data-target="services"><span class="dot-label">Hizmetler</span><span class="dot"></span></a>
+    <a href="#projects" class="dot-link" data-target="projects"><span class="dot-label">Projeler</span><span class="dot"></span></a>
+    <a href="#sites" class="dot-link" data-target="sites"><span class="dot-label">Siteler</span><span class="dot"></span></a>
+    <a href="#process" class="dot-link" data-target="process"><span class="dot-label">Süreç</span><span class="dot"></span></a>
+    <a href="#contact" class="dot-link" data-target="contact"><span class="dot-label">İletişim</span><span class="dot"></span></a>
+  </nav>
+
+  <!-- ══ NAV ══ -->
+  <nav class="topnav" id="navbar">
+    <a href="#" class="nav-logo">Kaan Tan<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">Hakkımda</a></li>
+      <li><a href="#ikas">Ortaklıklar</a></li>
+      <li><a href="#services">Hizmetler</a></li>
+      <li><a href="#process">Süreç</a></li>
+      <li><a href="#projects">Projelerim</a></li>
+      <li><a href="#sites">Siteler</a></li>
+      <li><a href="#contact" class="nav-cta">İletişime Geç</a></li>
+    </ul>
+    <button class="nav-burger" id="burgerBtn" aria-label="Menüyü aç/kapat" aria-expanded="false">
+      <i data-lucide="menu" class="icon-open"></i>
+      <i data-lucide="x" class="icon-close"></i>
+    </button>
+  </nav>
+
+  <!-- ══ MOBILE MENU ══ -->
+  <div id="mobileMenu">
+    <ul>
+      <li><a href="#about">Hakkımda</a></li>
+      <li><a href="#ikas">Ortaklıklar</a></li>
+      <li><a href="#services">Hizmetler</a></li>
+      <li><a href="#projects">Projelerim</a></li>
+      <li><a href="#sites">Siteler</a></li>
+      <li><a href="#process">Süreç</a></li>
+    </ul>
+    <a href="https://wa.me/905422979212" target="_blank" rel="noopener" class="mm-cta">
+      <i data-lucide="message-circle"></i> WhatsApp'tan Yaz
+    </a>
+  </div>
+
+  <!-- ══ HERO ══ -->
+  <section id="hero">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="hero-grid"></div>
+
+    <div class="hero-layout">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Solopreneur · Türkiye</div>
+
+        <h1 class="hero-name">
+          <span class="line-1" id="heroLine1">Kaan Tan</span>
+          <span class="line-2" id="heroLine2">Dijital Çözüm Ortağınız</span>
+        </h1>
+
+        <p class="hero-sub">
+          Web sitesi, otomasyon, yapay zeka ve İkas e-ticaret altyapısı —
+          <strong>işinizi büyütecek dijital çözümleri</strong> tek elden, hızlı ve profesyonelce hayata geçiriyorum.
+        </p>
+
+        <div class="hero-actions">
+          <a href="https://wa.me/905422979212" target="_blank" rel="noopener" class="btn-primary">
+            Hemen Başlayalım <i data-lucide="arrow-right"></i>
+          </a>
+          <a href="#services" class="btn-secondary">Ne Yapabiliriz?</a>
+        </div>
+
+        <div class="trust-row">
+          <div class="trust-item"><i data-lucide="handshake"></i> İkas İş Ortağı</div>
+          <div class="trust-item"><i data-lucide="shopping-bag"></i> Shopify İş Ortağı</div>
+          <div class="trust-item"><i data-lucide="award"></i> 12+ Yıl Deneyim</div>
+          <div class="trust-item"><i data-lucide="clock"></i> 30 Dakika Yanıt</div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hv-orb"></div>
+
+        <div class="float-card fc-partner">
+          <div class="fc-ico"><i data-lucide="handshake"></i></div>
+          <div><strong>İkas İş Ortağı</strong><span>E-ticaret çözümleri</span></div>
+        </div>
+
+        <div class="float-card fc-partner fc-shopify">
+          <div class="fc-ico"><i data-lucide="shopping-bag"></i></div>
+          <div><strong>Shopify İş Ortağı</strong><span>Global e-ticaret</span></div>
+        </div>
+
+        <div class="float-card fc-stat">
+          <div class="fc-num"><span class="count" data-to="30">0</span><span>dk</span></div>
+          <div class="fc-cap">Ortalama Yanıt Süresi</div>
+        </div>
+
+        <div class="float-card fc-msg">
+          <div class="fc-msg-head"><i data-lucide="message-circle"></i><span>WhatsApp</span></div>
+          <p>Merhaba, proje detaylarını konuşalım.</p>
+        </div>
+
+        <div class="float-card fc-avail">
+          <span class="fc-dot"></span>
+          <span>Yeni Projelere Açığım</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Kaydır</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ══ MARQUEE ══ -->
+  <div class="marquee">
+    <div class="marquee-track" id="marqueeTrack">
+      <span class="marquee-item">Web Tasarımı</span><span class="marquee-sep"></span>
+      <span class="marquee-item">Süreç Otomasyonu</span><span class="marquee-sep"></span>
+      <span class="marquee-item">Yapay Zeka Entegrasyonu</span><span class="marquee-sep"></span>
+      <span class="marquee-item">İkas E-Ticaret</span><span class="marquee-sep"></span>
+      <span class="marquee-item">Chrome Eklentisi</span><span class="marquee-sep"></span>
+      <span class="marquee-item">Masaüstü Uygulama</span><span class="marquee-sep"></span>
+      <span class="marquee-item">SEO Optimizasyonu</span><span class="marquee-sep"></span>
+      <span class="marquee-item">UI/UX Tasarım</span><span class="marquee-sep"></span>
+      <span class="marquee-item">Web Tasarımı</span><span class="marquee-sep"></span>
+      <span class="marquee-item">Süreç Otomasyonu</span><span class="marquee-sep"></span>
+      <span class="marquee-item">Yapay Zeka Entegrasyonu</span><span class="marquee-sep"></span>
+      <span class="marquee-item">İkas E-Ticaret</span><span class="marquee-sep"></span>
+      <span class="marquee-item">Chrome Eklentisi</span><span class="marquee-sep"></span>
+      <span class="marquee-item">Masaüstü Uygulama</span><span class="marquee-sep"></span>
+      <span class="marquee-item">SEO Optimizasyonu</span><span class="marquee-sep"></span>
+      <span class="marquee-item">UI/UX Tasarım</span><span class="marquee-sep"></span>
+    </div>
+  </div>
+
+  <!-- ══ PARTNER STRIP ══ -->
+  <div class="partner-strip">
+    <i data-lucide="shield-check"></i>
+    <p><strong>İkas</strong> e-ticaret altyapısında iş ortağıyım — mağaza kurulumundan otomasyona uçtan uca destek.</p>
+  </div>
+
+  <!-- ══ STATS ══ -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num"><span class="count" data-to="12">0</span><span class="stat-suffix">+</span></div>
+      <div class="stat-label">Yıl Deneyim</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="stat-prefix">%</span><span class="count" data-to="100">0</span></div>
+      <div class="stat-label">Müşteri Memnuniyeti</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="count" data-to="30">0</span><span class="stat-suffix">dk</span></div>
+      <div class="stat-label">Yanıt Süresi</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num infinity">∞</div>
+      <div class="stat-label">Revizyon Hakkı</div>
+    </div>
+  </div>
+
+  <!-- ══ ABOUT ══ -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-eyebrow">Hakkımda</div>
+        <h2 class="section-title">Bir kişi, <br>sınırsız çözüm.</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-visual reveal">
+          <div class="about-card-main">
+            <img src="assets/about3.png" alt="Kaan Tan" class="about-photo">
+            <div class="about-badge">
+              <i data-lucide="user-check"></i>
+              <div>Solopreneur<small>Tek elden, hızlı teslimat</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-text reveal">
+          <p class="about-body">
+            Merhaba, ben <strong>Kaan Tan.</strong> Tek başıma çalışan, büyük ajans maliyeti olmayan bir dijital çözüm üreticisiyim.
+            <br><br>
+            Web tasarımından otomasyon sistemlerine, tarayıcı eklentilerinden İkas altyapılı e-ticaret sitelerine kadar — <strong>işinizi büyütecek her şeyi</strong> hızla hayata geçiriyorum.
+          </p>
+          <div class="skill-tags">
+            <span class="tag">Web Tasarım</span>
+            <span class="tag">İkas E-Ticaret</span>
+            <span class="tag">Otomasyon</span>
+            <span class="tag">Yapay Zeka</span>
+            <span class="tag">Chrome Extension</span>
+            <span class="tag">Masaüstü Uygulama</span>
+            <span class="tag">SEO</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hk-grid">
+        <div class="hk-bio reveal">
+          <p class="about-body hk-bio-p">2015'ten beri yazılım geliştiriyorum. 10 yılı aşkın süredir kod yazan, web siteleri ve e-ticaret sistemleri kuran, İstanbul merkezli bir yazılım geliştiricisiyim. KT. markası altında hem kendi ürünlerimi geliştiriyorum hem de işletmelere özel projeler üretiyorum.</p>
+          <p class="about-body hk-bio-p">ikas partneri ve Shopify partneri olarak, Türkiye'nin ve dünyanın en çok kullanılan e-ticaret altyapılarında hem uygulama geliştiriyor hem de bu platformlar üzerinde mağaza kurulumu, entegrasyon ve özel çözüm ihtiyaçlarına destek oluyorum.</p>
+          <p class="about-body hk-bio-p">Yaptığım işler geniş bir yelpazede: e-ticaret altyapıları için mağaza içi uygulamalar (şu an ikas App Store'da Kartio, Takiplio ve Barlio uygulamalarım yayında), kurumsal ve bireysel işletmeler için özel web siteleri, yönetim panelleri, bayi/dağıtıcı sistemleri gibi B2B2C platformları, ve ihtiyaca göre uçtan uca özel yazılım çözümleri geliştiriyorum. Kısacası, bir fikri alıp çalışan bir ürüne dönüştürme sürecinin her aşamasında yer alıyorum — tasarımdan geliştirmeye, entegrasyondan yayına kadar.</p>
+          <p class="about-body hk-bio-p" style="margin-bottom:0">Küçük bir işletmenin ilk web sitesinden, büyüyen bir e-ticaret markasının özel yazılım altyapısına kadar geniş bir yelpazede çalışıyorum. Eğer bir projeniz varsa veya e-ticaret tarafında yardıma ihtiyacınız varsa, benimle iletişime geçebilirsiniz.</p>
+        </div>
+
+        <div class="hk-side reveal">
+          <div class="hk-side-title">İletişim</div>
+          <div class="hk-contact-list">
+            <a href="tel:+905422979212" class="hk-contact-item">
+              <div class="hk-contact-icon"><i data-lucide="phone"></i></div>
+              <div><div class="hk-contact-label">Telefon</div><div class="hk-contact-value">+90 542 297 9212</div></div>
+            </a>
+            <a href="mailto:kaantanpr@gmail.com" class="hk-contact-item">
+              <div class="hk-contact-icon"><i data-lucide="mail"></i></div>
+              <div><div class="hk-contact-label">E-posta</div><div class="hk-contact-value">kaantanpr@gmail.com</div></div>
+            </a>
+            <a href="https://kaantan.com.tr" class="hk-contact-item">
+              <div class="hk-contact-icon"><i data-lucide="globe"></i></div>
+              <div><div class="hk-contact-label">Web</div><div class="hk-contact-value">kaantan.com.tr</div></div>
+            </a>
+          </div>
+
+          <div class="hk-side-title">Sosyal Medya &amp; Platformlar</div>
+          <div class="hk-social-grid">
+            <a href="https://instagram.com/qkaantan" target="_blank" rel="noopener" class="hk-social-link"><i data-lucide="camera"></i> @qkaantan</a>
+            <a href="https://tiktok.com/@qkaantan" target="_blank" rel="noopener" class="hk-social-link"><i data-lucide="music-2"></i> @qkaantan</a>
+            <a href="https://linkedin.com/in/vekaantan" target="_blank" rel="noopener" class="hk-social-link"><i data-lucide="briefcase"></i> /in/vekaantan</a>
+            <a href="https://youtube.com/@qkaantan" target="_blank" rel="noopener" class="hk-social-link"><i data-lucide="circle-play"></i> @qkaantan</a>
+            <a href="https://www.behance.net/kaantan2" target="_blank" rel="noopener" class="hk-social-link"><i data-lucide="palette"></i> kaantan2</a>
+            <a href="https://github.com/Kaaantn" target="_blank" rel="noopener" class="hk-social-link"><i data-lucide="terminal"></i> Kaaantn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ STATEMENT ══ -->
+  <section class="statement">
+    <div class="section-inner">
+      <p class="statement-text" id="statementText">Web sitesinden otomasyona, yapay zekadan İkas altyapılı e-ticarete işinizi büyütecek her şeyi tek elden hayata geçiriyorum.</p>
+    </div>
+  </section>
+
+  <!-- ══ IKAS PARTNERSHIP ══ -->
+  <section id="ikas">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-eyebrow">İkas &amp; Shopify İş Ortaklığı</div>
+        <h2 class="section-title">E-ticaret sitenizi<br>büyütüyoruz.</h2>
+      </div>
+
+      <div class="ikas-grid">
+        <div class="ikas-text reveal">
+          <p class="section-desc" style="max-width:none; margin-bottom: 8px;">
+            Türkiye'nin hızla büyüyen e-ticaret altyapısı <strong style="color:var(--ink)">İkas</strong>'ın ve global e-ticaret devi <strong style="color:var(--ink)">Shopify</strong>'ın iş ortağıyım. Mağaza kurulumundan tema özelleştirmeye, entegrasyonlardan otomasyona kadar İkas ve Shopify tabanlı projelerinizi uçtan uca hayata geçiriyorum.
+          </p>
+
+          <div class="ikas-list">
+            <div class="ikas-item"><div class="ico"><i data-lucide="shopping-bag"></i></div><p>Mağaza kurulumu ve platform taşıma</p></div>
+            <div class="ikas-item"><div class="ico"><i data-lucide="layout-template"></i></div><p>Markanıza özel tema tasarımı ve özelleştirme</p></div>
+            <div class="ikas-item"><div class="ico"><i data-lucide="plug"></i></div><p>Ödeme, kargo ve pazaryeri entegrasyonları</p></div>
+            <div class="ikas-item"><div class="ico"><i data-lucide="bell"></i></div><p>Sipariş ve stok otomasyonu, bildirim sistemleri</p></div>
+            <div class="ikas-item"><div class="ico"><i data-lucide="search"></i></div><p>Hız ve SEO optimizasyonu</p></div>
+          </div>
+
+          <a href="https://wa.me/905422979212?text=Merhaba%20Kaan%2C%20e-ticaret%20projem%20hakk%C4%B1nda%20konu%C5%9Fmak%20istiyorum." target="_blank" rel="noopener" class="btn-primary">
+            E-Ticaret Projemi Konuşalım <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="ikas-card reveal">
+          <div class="ikas-wordmark">ikas<span>.</span> <span class="ikas-wordmark-plus">+ Shopify</span></div>
+          <div class="ikas-card-role">E-ticaret Altyapı Platformları</div>
+          <div class="ikas-cert"><i data-lucide="handshake"></i> İkas &amp; Shopify İş Ortağı</div>
+          <div class="ikas-card-name">Kaan Tan<small>Solopreneur · Türkiye</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SERVICES ══ -->
+  <section id="services">
+    <div class="section-inner">
+      <div class="services-header reveal">
+        <div>
+          <div class="section-eyebrow">Hizmetler</div>
+          <h2 class="section-title">Ne yapabilirim?</h2>
+        </div>
+        <p class="section-desc" style="max-width:320px">
+          Tek seferlik proje veya uzun vadeli iş birliği — her ikisi de mümkün.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card b-large reveal">
+          <div class="service-icon"><i data-lucide="globe"></i></div>
+          <h3 class="service-title">Profesyonel Web Sitesi</h3>
+          <p class="service-desc">Kurumsal, portföy veya e-ticaret — markanıza özel, hızlı, mobil uyumlu ve arama motorlarına hazır web siteleri tasarlıyor ve geliştiriyorum.</p>
+          <div class="mini-chips">
+            <span class="mini-chip">Kurumsal</span>
+            <span class="mini-chip">Portföy</span>
+            <span class="mini-chip">E-Ticaret</span>
+          </div>
+        </div>
+
+        <div class="service-card b-wide reveal">
+          <div class="service-icon"><i data-lucide="shopping-bag"></i></div>
+          <h3 class="service-title">İkas E-Ticaret Kurulumu</h3>
+          <p class="service-desc">İkas altyapısında mağaza kurulumu, tema özelleştirme ve entegrasyonlar — iş ortağı desteğiyle uçtan uca.</p>
+          <span class="service-tag">İkas İş Ortağı</span>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i data-lucide="zap"></i></div>
+          <h3 class="service-title">Süreç Otomasyonu</h3>
+          <p class="service-desc">Form, e-posta, bildirim, veri aktarımı — elle yapılan her şey otomatikleşebilir.</p>
+          <span class="service-tag">Zaman Kazandırır</span>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i data-lucide="cpu"></i></div>
+          <h3 class="service-title">Yapay Zeka Entegrasyonu</h3>
+          <p class="service-desc">Müşteri hizmetleri botu, içerik üretimi, veri analizi veya akıllı öneri sistemleri.</p>
+          <span class="service-tag">Rekabet Avantajı</span>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i data-lucide="puzzle"></i></div>
+          <h3 class="service-title">Chrome Eklentisi</h3>
+          <p class="service-desc">Ekibinizin kullandığı araçlara entegre, markanıza özel tarayıcı eklentisi geliştirme.</p>
+          <span class="service-tag">Prodüktivite</span>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i data-lucide="monitor"></i></div>
+          <h3 class="service-title">Masaüstü Uygulama</h3>
+          <p class="service-desc">Windows veya Mac için özel iş uygulamaları — muhasebe, stok takip, iç araçlar.</p>
+          <span class="service-tag">Özel Yazılım</span>
+        </div>
+
+        <div class="service-card b-wide reveal">
+          <div class="service-icon"><i data-lucide="wrench"></i></div>
+          <h3 class="service-title">Bakım &amp; Destek</h3>
+          <p class="service-desc">Siteniz ve araçlarınız sürekli güncel, güvende ve takipte. WhatsApp üzerinden anlık destek.</p>
+          <span class="service-tag">Sürekli Destek</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROJECTS ══ -->
+  <section id="projects">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-eyebrow">Yaptıklarım</div>
+        <h2 class="section-title">Canlıda çalışan<br>projeler.</h2>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project-card reveal">
+          <div class="project-live-badge">Canlı</div>
+          <div class="project-icon project-icon--logo"><img src="assets/icon-1024.png" alt="Kartio logosu" loading="lazy"></div>
+          <h3 class="project-name">Kartio</h3>
+          <p class="project-desc">ikas App Store'da yayınlanan sipariş ve hediye kartı uygulaması. Mağaza sahibi isim, tip, süsleme ve renk seçiyor; A4 sayfaya dizilmiş, kesime hazır PDF çıktısı otomatik oluşuyor.</p>
+          <div class="project-stack">
+            <span class="project-tech">Next.js</span><span class="project-tech">ikas OAuth2</span><span class="project-tech">Prisma</span><span class="project-tech">jsPDF</span>
+          </div>
+          <a href="https://apps.ikas.com/tr/uygulama/87c77f53-71b6-45fa-9b23-fb0d3d109878" target="_blank" rel="noopener" class="project-link">Uygulamaya Git <i data-lucide="arrow-up-right"></i></a>
+        </div>
+
+        <div class="project-card reveal" style="opacity:0.5">
+          <div class="project-soon-badge">Yakında</div>
+          <div class="project-icon"><i data-lucide="rocket"></i></div>
+          <h3 class="project-name">Proje 2</h3>
+          <p class="project-desc">Daha fazlası yolda.</p>
+          <div class="project-stack"><span class="project-tech">?</span></div>
+          <a class="project-link disabled">Yakında</a>
+        </div>
+
+        <div class="project-card reveal" style="opacity:0.5">
+          <div class="project-soon-badge">Yakında</div>
+          <div class="project-icon"><i data-lucide="rocket"></i></div>
+          <h3 class="project-name">Proje 3</h3>
+          <p class="project-desc">Daha fazlası yolda.</p>
+          <div class="project-stack"><span class="project-tech">?</span></div>
+          <a class="project-link disabled">Yakında</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SITES ══ -->
+  <section id="sites">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-eyebrow">Yaptığım Siteler</div>
+        <h2 class="section-title">Tamamlanan Çalışmalar</h2>
+      </div>
+
+      <div class="stories-grid">
+        <div class="story-item reveal">
+          <div class="story-circle"><img src="assets/marmara.png" alt="Marmara Games logosu" loading="lazy"></div>
+          <p class="story-caption">Web site yapıldı.</p>
+        </div>
+
+        <div class="story-item reveal">
+          <div class="story-circle"><img src="assets/starshoes.jpg" alt="Starshoes logosu" loading="lazy"></div>
+          <p class="story-caption">Meta reklam hesabı açıldı ve yönetimi devam ediyor.</p>
+        </div>
+
+        <div class="story-item reveal">
+          <div class="story-circle"><img src="assets/safa.jpg" alt="Safa Mağaza logosu" loading="lazy"></div>
+          <p class="story-caption">Meta Piksel hesabı açıldı.</p>
+        </div>
+
+        <div class="story-item soon reveal">
+          <div class="story-circle"><i data-lucide="hourglass"></i></div>
+          <p class="story-caption">Yapım Aşamasında</p>
+        </div>
+
+        <div class="story-item soon reveal">
+          <div class="story-circle"><i data-lucide="hourglass"></i></div>
+          <p class="story-caption">Yapım Aşamasında</p>
+        </div>
+
+        <div class="story-item soon reveal">
+          <div class="story-circle"><i data-lucide="hourglass"></i></div>
+          <p class="story-caption">Yapım Aşamasında</p>
+        </div>
+
+        <div class="story-item soon reveal">
+          <div class="story-circle"><i data-lucide="hourglass"></i></div>
+          <p class="story-caption">Yapım Aşamasında</p>
+        </div>
+
+        <div class="story-item soon reveal">
+          <div class="story-circle"><i data-lucide="hourglass"></i></div>
+          <p class="story-caption">Yapım Aşamasında</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROCESS ══ -->
+  <section id="process">
+    <div class="section-inner">
+      <div class="reveal" style="text-align:center; max-width:600px; margin: 0 auto 20px;">
+        <div class="section-eyebrow" style="justify-content:center; display:flex">Nasıl Çalışırız</div>
+        <h2 class="section-title">Basit süreç,<br>hızlı sonuç.</h2>
+      </div>
+
+      <div class="process-steps">
+        <div class="step reveal">
+          <div class="step-num">01</div>
+          <h4 class="step-title">İletişime Geç</h4>
+          <p class="step-desc">WhatsApp'tan mesaj atın, ihtiyaçlarınızı anlatın. Ortalama 30 dakikada dönüş yapıyorum.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">02</div>
+          <h4 class="step-title">Planlama</h4>
+          <p class="step-desc">İçerik ve tasarım tercihlerinizi alıyorum. Size özel bir plan hazırlıyorum.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">03</div>
+          <h4 class="step-title">Geliştirme</h4>
+          <p class="step-desc">Sitenizi veya çözümünüzü hızla hayata geçiriyorum. Sizi süreçte bilgilendiriyorum.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">04</div>
+          <h4 class="step-title">Teslim &amp; Destek</h4>
+          <p class="step-desc">Projeyi teslim ediyorum. Revizyon ve sorularınız için her zaman buradayım.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT ══ -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="contact-grid">
+        <div class="contact-text reveal">
+          <div class="section-eyebrow">İletişim</div>
+          <h2 class="section-title">Konuşalım.</h2>
+          <p class="section-desc" style="margin-bottom:40px">
+            Projeniz büyük ya da küçük olsun fark etmez. Ne yapmak istediğinizi anlatın, birlikte en iyi çözümü bulalım.
+          </p>
+
+          <div class="contact-detail">
+            <div class="contact-icon"><i data-lucide="message-circle"></i></div>
+            <div><div class="contact-label">WhatsApp</div><div class="contact-value">+90 542 297 92 12</div></div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-icon"><i data-lucide="map-pin"></i></div>
+            <div><div class="contact-label">Konum</div><div class="contact-value">Türkiye · Remote çalışıyorum</div></div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-icon"><i data-lucide="clock"></i></div>
+            <div><div class="contact-label">Yanıt Süresi</div><div class="contact-value">Genellikle 30 dakika içinde</div></div>
+          </div>
+        </div>
+
+        <div class="contact-cta-box reveal">
+          <h3 class="contact-cta-title">Projenizi hemen<br>hayata geçirelim</h3>
+          <p class="contact-cta-sub">
+            Ne yapmak istediğinizi anlatın, genellikle 30 dakika içinde dönüş yapıyorum.
+          </p>
+          <a href="https://wa.me/905422979212?text=Merhaba%20Kaan,%20projem%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" class="btn-whatsapp">
+            <i data-lucide="message-circle"></i> WhatsApp'tan Yaz
+          </a>
+          <p class="response-note"><i data-lucide="zap"></i> Ortalama 30 dakikada dönüş yapıyorum</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-logo">Kaan Tan<span class="dot">.</span></div>
+    <div class="footer-copy">© 2026 · Tüm hakları saklıdır.</div>
+  </footer>
+
+  <!-- ══ LIBRARIES ══ -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+  lucide.createIcons();
+
+  gsap.registerPlugin(ScrollTrigger);
+  const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches;
+  const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── LENIS ── */
+  const lenis = new Lenis({ duration: 1.15, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), orientation: 'vertical', smoothWheel: true });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(time => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  /* ── CURSOR + MAGNETIC ── */
+  if (!IS_TOUCH) {
+    const dot = document.getElementById('c-dot');
+    const ring = document.getElementById('c-ring');
+    const glow = document.getElementById('cursorGlow');
+    let mx = -200, my = -200, rx = -200, ry = -200;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+      glow.style.left = mx + 'px'; glow.style.top = my + 'px';
+    });
+    (function rafRing() {
+      rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(rafRing);
+    })();
+    document.querySelectorAll('a, button, .tag, .step, .service-card, .project-card, .dot-link').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cur-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
+    });
+    document.querySelectorAll('#contact a, #contact button, footer a').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cur-dark'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cur-dark'));
+    });
+    document.querySelectorAll('.btn-primary, .btn-secondary, .btn-whatsapp, .nav-cta, .project-link').forEach(btn => {
+      btn.addEventListener('mouseenter', () => { document.body.classList.remove('cur-hover'); document.body.classList.add('cur-btn'); });
+      btn.addEventListener('mouseleave', () => {
+        document.body.classList.remove('cur-btn');
+        gsap.to(btn, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.35)' });
+      });
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width * 0.5;
+        const y = e.clientY - r.top - r.height * 0.5;
+        gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.4, ease: 'power2.out' });
+      });
+    });
+  }
+
+  /* ── CHAR SPLIT (headings) ── */
+  function splitHeadingChars(el) {
+    el.setAttribute('aria-label', el.textContent);
+    const parts = el.innerHTML.split(/<br\s*\/?>/i);
+    el.innerHTML = '';
+    const inners = [];
+    parts.forEach((part, li) => {
+      const tmp = document.createElement('span'); tmp.innerHTML = part;
+      const text = tmp.textContent || '';
+      text.split('').forEach(char => {
+        const wrap = document.createElement('span'); const inner = document.createElement('span');
+        wrap.className = 'char-wrap'; inner.className = 'char-inner';
+        inner.textContent = (char === ' ') ? ' ' : char;
+        wrap.appendChild(inner); el.appendChild(wrap); inners.push(inner);
+      });
+      if (li < parts.length - 1) el.appendChild(document.createElement('br'));
+    });
+    return inners;
+  }
+
+  /* ── WORD SPLIT (statement scrub) ── */
+  function splitWords(el) {
+    const text = el.textContent.trim();
+    el.innerHTML = text.split(/\s+/).map(w => `<span class="word">${w}</span>`).join(' ');
+    return el.querySelectorAll('.word');
+  }
+
+  /* ── HERO (instant, no intro animation) ── */
+  gsap.set(['.hero-eyebrow', '.hero-name .line-2', '.hero-sub', '.hero-actions', '.trust-row', '.scroll-hint', '.float-card'], { opacity: 1, y: 0 });
+
+  /* ── HERO PARALLAX ── */
+  gsap.to('.blob-1', { scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 2 }, y: -130, x: 40, ease: 'none' });
+  gsap.to('.blob-2', { scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.5 }, y: -80, ease: 'none' });
+  gsap.to('.hero-content', { scrollTrigger: { trigger: '#hero', start: 'top top', end: '65% top', scrub: 1.2 }, y: -80, opacity: 0, ease: 'none' });
+
+  /* ── SECTION HEADINGS ── */
+  document.querySelectorAll('.section-title').forEach(el => {
+    const chars = splitHeadingChars(el);
+    gsap.set(chars, { yPercent: 115, opacity: 0 });
+    ScrollTrigger.create({ trigger: el, start: 'top 88%', once: true, onEnter: () => gsap.to(chars, { yPercent: 0, opacity: 1, duration: 0.75, stagger: 0.018, ease: 'power4.out' }) });
+  });
+  document.querySelectorAll('.section-eyebrow').forEach(el => {
+    gsap.from(el, { scrollTrigger: { trigger: el, start: 'top 90%', once: true }, opacity: 0, y: 12, duration: 0.6, ease: 'power2.out' });
+  });
+
+  /* ── ANIMATED COUNTERS ── */
+  function animateCounters(container) {
+    container.querySelectorAll('.count').forEach(el => {
+      const to = parseFloat(el.dataset.to);
+      const obj = { val: 0 };
+      gsap.to(obj, { val: to, duration: 1.7, ease: 'power2.out', onUpdate: () => { el.textContent = Math.round(obj.val); } });
+    });
+  }
+  ScrollTrigger.create({ trigger: '.stats-bar', start: 'top 85%', once: true, onEnter: () => animateCounters(document.querySelector('.stats-bar')) });
+  ScrollTrigger.create({ trigger: '.hero-visual', start: 'top 90%', once: true, onEnter: () => animateCounters(document.querySelector('.hero-visual')) });
+  gsap.from('.stat-item', { scrollTrigger: { trigger: '.stats-bar', start: 'top 88%', once: true }, y: 36, opacity: 0, duration: 0.85, stagger: 0.12, ease: 'power3.out' });
+
+  /* ── STATEMENT SCRUB ── */
+  const statementWords = splitWords(document.getElementById('statementText'));
+  gsap.to(statementWords, {
+    color: '#0A0A0A', stagger: 0.04, ease: 'none',
+    scrollTrigger: { trigger: '.statement', start: 'top 75%', end: 'bottom 60%', scrub: 0.6 }
+  });
+
+  /* ── DOT NAV ACTIVE STATE ── */
+  const dotLinks = document.querySelectorAll('.dot-link');
+  ['about', 'ikas', 'services', 'projects', 'sites', 'process', 'contact'].forEach(id => {
+    const sec = document.getElementById(id);
+    if (!sec) return;
+    ScrollTrigger.create({
+      trigger: sec, start: 'top 55%', end: 'bottom 55%',
+      onToggle: self => { if (self.isActive) dotLinks.forEach(l => l.classList.toggle('active', l.dataset.target === id)); }
+    });
+  });
+
+  /* ── ABOUT ── */
+  gsap.from('.about-visual', { scrollTrigger: { trigger: '.about-grid', start: 'top 80%', once: true }, x: -60, opacity: 0, duration: 1.05, ease: 'power4.out' });
+  gsap.from('.about-body', { scrollTrigger: { trigger: '.about-text', start: 'top 82%', once: true }, x: 60, opacity: 0, duration: 1.05, ease: 'power4.out' });
+  gsap.from('.tag', { scrollTrigger: { trigger: '.skill-tags', start: 'top 88%', once: true }, y: 20, opacity: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' });
+
+  /* ── HAKKINDA ── */
+  gsap.from('.hk-bio-p', { scrollTrigger: { trigger: '.hk-bio', start: 'top 82%', once: true }, y: 24, opacity: 0, duration: 0.6, ease: 'power3.out' });
+  gsap.from('.hk-contact-item', { scrollTrigger: { trigger: '.hk-side', start: 'top 82%', once: true }, x: 24, opacity: 0, duration: 0.5, ease: 'power3.out' });
+  gsap.from('.hk-social-link', { scrollTrigger: { trigger: '.hk-social-grid', start: 'top 88%', once: true }, y: 16, opacity: 0, duration: 0.45, ease: 'power3.out' });
+
+  /* ── IKAS ── */
+  gsap.from('.ikas-item', { scrollTrigger: { trigger: '.ikas-list', start: 'top 85%', once: true }, x: -30, opacity: 0, duration: 0.6, stagger: 0.09, ease: 'power3.out' });
+  gsap.from('.ikas-card', { scrollTrigger: { trigger: '.ikas-card', start: 'top 82%', once: true }, x: 50, opacity: 0, duration: 0.9, ease: 'power4.out' });
+
+  /* ── SERVICES ── */
+  gsap.from('.services-header .section-desc', { scrollTrigger: { trigger: '.services-header', start: 'top 82%', once: true }, x: 36, opacity: 0, duration: 0.75, ease: 'power3.out' });
+  gsap.from('.service-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 82%', once: true }, y: 60, opacity: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out' });
+
+  /* ── PROJECTS ── */
+  gsap.from('.project-card', { scrollTrigger: { trigger: '.projects-grid', start: 'top 82%', once: true }, y: 60, opacity: 0, duration: 0.8, stagger: 0.11, ease: 'power3.out' });
+
+  /* ── SITES ── */
+  gsap.from('.story-item', { scrollTrigger: { trigger: '.stories-grid', start: 'top 85%', once: true }, y: 30, opacity: 0, duration: 0.6, stagger: 0.07, ease: 'power3.out' });
+
+  if (!IS_TOUCH) {
+    document.querySelectorAll('.project-card, .service-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5;
+        const ny = (e.clientY - r.top) / r.height - 0.5;
+        gsap.to(card, { rotateY: nx * 8, rotateX: -ny * 8, transformPerspective: 900, duration: 0.45, ease: 'power2.out' });
+      });
+      card.addEventListener('mouseleave', () => { gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.9, ease: 'elastic.out(1, 0.38)' }); });
+    });
+  }
+
+  /* ── PROCESS ── */
+  gsap.from('.step', { scrollTrigger: { trigger: '.process-steps', start: 'top 82%', once: true }, y: 50, opacity: 0, duration: 0.7, stagger: 0.13, ease: 'power3.out' });
+
+  /* ── CONTACT ── */
+  gsap.from('.contact-text', { scrollTrigger: { trigger: '.contact-grid', start: 'top 80%', once: true }, x: -60, opacity: 0, duration: 1.05, ease: 'power4.out' });
+  gsap.from('.contact-cta-box', { scrollTrigger: { trigger: '.contact-grid', start: 'top 80%', once: true }, x: 60, opacity: 0, duration: 1.05, ease: 'power4.out', delay: 0.08 });
+  gsap.from('.contact-detail', { scrollTrigger: { trigger: '.contact-text', start: 'top 78%', once: true }, x: -28, opacity: 0, duration: 0.55, stagger: 0.11, ease: 'power3.out', delay: 0.28 });
+
+  /* ── NAV SCROLL SHRINK ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+
+  /* ── MOBILE MENU ── */
+  const burgerBtn = document.getElementById('burgerBtn');
+  function toggleMenu(open) {
+    const isOpen = open !== undefined ? open : !document.body.classList.contains('menu-open');
+    document.body.classList.toggle('menu-open', isOpen);
+    burgerBtn.setAttribute('aria-expanded', String(isOpen));
+    if (isOpen) { lenis.stop(); } else { lenis.start(); }
+  }
+  burgerBtn.addEventListener('click', () => toggleMenu());
+  document.querySelectorAll('#mobileMenu a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
+
+  /* ── SMOOTH ANCHOR LINKS ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -80, duration: 1.5 }); }
+    });
+  });
+
+  /* ── FLOATING PARTICLES ── */
+  if (!REDUCED_MOTION) {
+    const heroEl = document.getElementById('hero');
+    function spawnParticle() {
+      const p = document.createElement('div');
+      Object.assign(p.style, {
+        position: 'absolute', left: Math.random() * 100 + '%', bottom: '80px',
+        width: (2 + Math.random() * 2) + 'px', height: (2 + Math.random() * 2) + 'px',
+        borderRadius: '50%', background: 'var(--lime-400)', opacity: '0', zIndex: '1',
+        pointerEvents: 'none'
+      });
+      const dur = 3 + Math.random() * 4;
+      p.animate(
+        [{ transform: 'translateY(0) translateX(0)', opacity: 0 }, { opacity: 0.55, offset: 0.12 }, { opacity: 0.25, offset: 0.88 }, { transform: 'translateY(-130px) translateX(18px)', opacity: 0 }],
+        { duration: dur * 1000, easing: 'linear' }
+      );
+      heroEl.appendChild(p);
+      setTimeout(() => p.remove(), (dur + 0.2) * 1000);
+    }
+    setInterval(spawnParticle, 650);
+    for (let i = 0; i < 5; i++) spawnParticle();
+  }
+  </script>
+
+  <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f78c1fa189fa4a7f909bcf7e69f7b930"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

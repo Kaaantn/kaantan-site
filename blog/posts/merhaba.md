@@ -1,6 +1,6 @@
 ---
 title: "Bloga Merhaba: Burada Neler Paylaşacağım?"
-date: 2026-07-27
+date: 2026-06-15
 description: "İkas, Shopify ve yazılım geliştirme üzerine yeni başlayan bu blogda neler bulacağınızı kısaca anlatıyorum."
 ---
 

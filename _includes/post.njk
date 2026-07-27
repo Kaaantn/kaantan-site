@@ -1,0 +1,17 @@
+---
+layout: base.njk
+---
+<div class="wrap">
+  <a href="/blog/" class="back-link">← Tüm yazılar</a>
+  <div class="post-eyebrow">Blog</div>
+  <h1 class="post-title">{{ title }}</h1>
+  <div class="post-meta">{{ date | tarih }}</div>
+  {% if cover %}<img src="{{ cover }}" alt="{{ title }}" class="post-cover">{% endif %}
+  <div class="post-body">
+    {{ content | safe }}
+  </div>
+  <div class="cta-box">
+    <p>Bir projeniz mi var? Konuşalım.</p>
+    <a href="https://wa.me/905422979212" target="_blank" rel="noopener">WhatsApp'tan Yaz →</a>
+  </div>
+</div>

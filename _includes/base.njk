@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title }} — Kaan Tan Blog</title>
+  <meta name="description" content="{{ description }}" />
+  <meta property="og:title" content="{{ title }}" />
+  <meta property="og:description" content="{{ description }}" />
+  <meta property="og:type" content="article" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2384CC16'/%3E%3Cpath d='M11 7v18M11 16l9-9M11 16l9 9' stroke='%230A0A0A' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  {% if schema %}
+  <script type="application/ld+json">{{ schema | safe }}</script>
+  {% endif %}
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --lime-50: #F7FEE7; --lime-100: #ECFCCB; --lime-200: #D9F99D; --lime-300: #BEF264;
+      --lime-400: #A3E635; --lime-500: #84CC16; --lime-600: #65A30D; --lime-700: #4D7C0F; --lime-800: #3F6212;
+      --ink: #0A0A0A; --ink-2: #18181B; --body: #3F3F46; --muted: #71717A;
+      --line: #E4E4E7; --surface: #FAFAF9; --white: #FFFFFF;
+      --display: 'Space Grotesk', sans-serif; --body-f: 'Inter', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--body-f); color: var(--body); background: var(--white); line-height: 1.6; }
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 48px; border-bottom: 1px solid var(--line); }
+    @media (max-width: 640px) { .nav { padding: 18px 20px; } }
+    .nav-logo { font-family: var(--display); font-weight: 700; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
+    .nav-logo span { color: var(--lime-600); }
+    .nav-links { display: flex; gap: 26px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--body); font-size: 0.9rem; font-weight: 500; }
+    .nav-links a:hover { color: var(--ink); }
+
+    .wrap { max-width: 760px; margin: 0 auto; padding: 60px 24px 100px; }
+
+    .post-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lime-600); margin-bottom: 14px; }
+    .post-title { font-family: var(--display); font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: var(--ink); margin-bottom: 16px; }
+    .post-meta { font-size: 0.86rem; color: var(--muted); margin-bottom: 40px; }
+    .post-cover { width: 100%; border-radius: 16px; border: 1px solid var(--line); margin-bottom: 40px; object-fit: cover; }
+
+    .post-body { font-size: 1.05rem; color: var(--body); }
+    .post-body p { margin-bottom: 22px; }
+    .post-body h2 { font-family: var(--display); font-size: 1.5rem; font-weight: 700; color: var(--ink); margin: 42px 0 16px; letter-spacing: -0.01em; }
+    .post-body h3 { font-family: var(--display); font-size: 1.2rem; font-weight: 600; color: var(--ink); margin: 32px 0 14px; }
+    .post-body ul, .post-body ol { margin: 0 0 22px 22px; }
+    .post-body li { margin-bottom: 8px; }
+    .post-body a { color: var(--lime-700); text-decoration: underline; }
+    .post-body strong { color: var(--ink); font-weight: 600; }
+    .post-body blockquote { border-left: 3px solid var(--lime-400); padding-left: 18px; color: var(--muted); font-style: italic; margin-bottom: 22px; }
+    .post-body img { border-radius: 12px; margin: 12px 0 22px; border: 1px solid var(--line); }
+    .post-body code { background: var(--surface); border: 1px solid var(--line); padding: 2px 6px; border-radius: 5px; font-size: 0.9em; }
+    .post-body pre { background: var(--ink); color: var(--white); padding: 18px; border-radius: 10px; overflow-x: auto; margin-bottom: 22px; }
+    .post-body pre code { background: none; border: none; padding: 0; }
+
+    .back-link { display: flex; width: fit-content; align-items: center; gap: 6px; font-size: 0.88rem; font-weight: 600; color: var(--body); text-decoration: none; margin-bottom: 36px; }
+    .back-link:hover { color: var(--ink); }
+
+    .cta-box { margin-top: 60px; padding: 32px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; text-align: center; }
+    .cta-box p { margin-bottom: 16px; color: var(--ink-2); font-weight: 500; }
+    .cta-box a { display: inline-flex; align-items: center; gap: 8px; background: var(--lime-400); color: var(--ink); padding: 13px 26px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.92rem; }
+
+    footer { border-top: 1px solid var(--line); padding: 30px 48px; display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.85rem; }
+    @media (max-width: 640px) { footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px 20px; } }
+    footer a { text-decoration: none; color: var(--muted); }
+    footer a:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo">Kaan Tan<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="/">Anasayfa</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/#contact">İletişim</a></li>
+    </ul>
+  </nav>
+
+  {{ content | safe }}
+
+  <footer>
+    <div>Kaan Tan<span style="color:var(--lime-600)">.</span> © 2026 · Tüm hakları saklıdır.</div>
+    <a href="/">kaantan.com.tr</a>
+  </footer>
+</body>
+</html>

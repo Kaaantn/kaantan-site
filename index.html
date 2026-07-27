@@ -457,6 +457,7 @@
       <li><a href="#process">Süreç</a></li>
       <li><a href="#projects">Projelerim</a></li>
       <li><a href="#sites">Siteler</a></li>
+      <li><a href="/blog/">Blog</a></li>
       <li><a href="#contact" class="nav-cta">İletişime Geç</a></li>
     </ul>
     <button class="nav-burger" id="burgerBtn" aria-label="Menüyü aç/kapat" aria-expanded="false">
@@ -474,6 +475,7 @@
       <li><a href="#projects">Projelerim</a></li>
       <li><a href="#sites">Siteler</a></li>
       <li><a href="#process">Süreç</a></li>
+      <li><a href="/blog/">Blog</a></li>
     </ul>
     <a href="https://wa.me/905422979212" target="_blank" rel="noopener" class="mm-cta">
       <i data-lucide="message-circle"></i> WhatsApp'tan Yaz
@@ -1188,5 +1190,16 @@
   </script>
 
   <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f78c1fa189fa4a7f909bcf7e69f7b930"}'></script><!-- End Cloudflare Web Analytics -->
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+        }
+      });
+    }
+  </script>
 </body>
 </html>

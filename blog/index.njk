@@ -1,0 +1,21 @@
+---
+layout: base.njk
+title: Blog
+description: "Kaan Tan'ın e-ticaret, İkas, Shopify ve yazılım geliştirme üzerine yazıları."
+permalink: "/blog/index.html"
+---
+<div class="wrap">
+  <div class="post-eyebrow">Blog</div>
+  <h1 class="post-title">Yazılar</h1>
+  <p style="color:var(--muted); margin-bottom:40px;">E-ticaret, İkas, Shopify ve yazılım geliştirme üzerine notlar.</p>
+
+  {% for post in collections.posts | reverse %}
+  <a href="{{ post.url }}" style="display:block; padding:24px 0; border-bottom:1px solid var(--line); text-decoration:none;">
+    <div style="font-size:0.82rem; color:var(--muted); margin-bottom:6px;">{{ post.data.date | tarih }}</div>
+    <div style="font-family:var(--display); font-size:1.3rem; font-weight:600; color:var(--ink); margin-bottom:6px;">{{ post.data.title }}</div>
+    <div style="color:var(--body); font-size:0.95rem;">{{ post.data.description }}</div>
+  </a>
+  {% else %}
+  <p style="color:var(--muted);">Henüz yazı yok, yakında burada olacak.</p>
+  {% endfor %}
+</div>

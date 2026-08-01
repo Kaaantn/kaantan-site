@@ -1,18 +1,9 @@
 {
   "bio": "Web Sitesi, Otomasyon & Yapay Zeka Uzmanı\nİkas & Shopify İş Ortağı",
   "socialLinks": [
-    {
-      "platform": "youtube",
-      "url": "https://youtube.com/@qkaantan"
-    },
-    {
-      "platform": "tiktok",
-      "url": "https://tiktok.com/@qkaantan"
-    },
-    {
-      "platform": "instagram",
-      "url": "https://instagram.com/qkaantan"
-    }
+    { "platform": "youtube", "url": "https://youtube.com/@qkaantan", "live": true },
+    { "platform": "tiktok", "url": "https://tiktok.com/@qkaantan", "followerCount": "" },
+    { "platform": "instagram", "url": "https://instagram.com/qkaantan", "followerCount": "" }
   ],
   "displayName": "Kaan Tan",
   "phone": "+905422979212",

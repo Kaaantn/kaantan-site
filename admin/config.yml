@@ -47,6 +47,8 @@ collections:
             fields:
               - { label: "Platform", name: "platform", widget: "select", options: ["instagram", "tiktok", "youtube", "linkedin", "github", "behance"] }
               - { label: "URL", name: "url", widget: "string" }
+              - { label: "Takipçi/Abone Sayısını Canlı Çek (sadece YouTube için çalışır)", name: "live", widget: "boolean", default: false, required: false }
+              - { label: "Takipçi/Abone Sayısı (elle gir - YouTube dışındaki platformlar için)", name: "followerCount", widget: "string", required: false, hint: "Örn: 12500 ya da 12.5K. Boş bırakırsan sayı gösterilmez." }
           - label: "Linkler"
             name: "links"
             widget: "list"

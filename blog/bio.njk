@@ -38,10 +38,12 @@ eleventyExcludeFromCollections: true
     .contact-btn:hover { background: var(--white); border-color: var(--ink-2); }
     .contact-btn svg { width: 15px; height: 15px; }
 
-    .social-row { display: flex; justify-content: center; gap: 12px; margin-top: 16px; }
+    .social-row { display: flex; justify-content: center; gap: 16px; margin-top: 16px; }
+    .social-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
     .social-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); color: var(--ink-2); transition: border-color 0.2s, color 0.2s; }
-    .social-btn:hover { border-color: var(--ink); color: var(--ink); }
+    .social-item:hover .social-btn { border-color: var(--ink); color: var(--ink); }
     .social-btn svg { width: 18px; height: 18px; }
+    .social-count { font-size: 0.72rem; font-weight: 600; color: var(--muted); min-height: 1em; }
 
     .links { padding: 26px 20px 28px; display: flex; flex-direction: column; gap: 12px; }
     .link-card { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
@@ -81,14 +83,21 @@ eleventyExcludeFromCollections: true
       {% if bio.socialLinks.length %}
       <div class="social-row">
         {% for s in bio.socialLinks %}
-        <a href="{{ s.url }}" target="_blank" rel="noopener" class="social-btn">
-          {% if s.platform == "youtube" %}<i data-lucide="circle-play"></i>
-          {% elif s.platform == "tiktok" %}<i data-lucide="music-2"></i>
-          {% elif s.platform == "instagram" %}<i data-lucide="camera"></i>
-          {% elif s.platform == "linkedin" %}<i data-lucide="briefcase"></i>
-          {% elif s.platform == "github" %}<i data-lucide="terminal"></i>
-          {% elif s.platform == "behance" %}<i data-lucide="palette"></i>
-          {% else %}<i data-lucide="link"></i>{% endif %}
+        <a href="{{ s.url }}" target="_blank" rel="noopener" class="social-item">
+          <div class="social-btn">
+            {% if s.platform == "youtube" %}<i data-lucide="circle-play"></i>
+            {% elif s.platform == "tiktok" %}<i data-lucide="music-2"></i>
+            {% elif s.platform == "instagram" %}<i data-lucide="camera"></i>
+            {% elif s.platform == "linkedin" %}<i data-lucide="briefcase"></i>
+            {% elif s.platform == "github" %}<i data-lucide="terminal"></i>
+            {% elif s.platform == "behance" %}<i data-lucide="palette"></i>
+            {% else %}<i data-lucide="link"></i>{% endif %}
+          </div>
+          {% if s.live %}
+          <span class="social-count" data-live="{{ s.platform }}"></span>
+          {% elif s.followerCount %}
+          <span class="social-count">{{ s.followerCount }}</span>
+          {% endif %}
         </a>
         {% endfor %}
       </div>
@@ -118,6 +127,18 @@ eleventyExcludeFromCollections: true
   </div>
 
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-  <script>lucide.createIcons();</script>
+  <script>
+    lucide.createIcons();
+
+    fetch('/.netlify/functions/social-stats')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (typeof data.youtube === 'number') {
+          var el = document.querySelector('[data-live="youtube"]');
+          if (el) el.textContent = data.youtube.toLocaleString('tr-TR') + ' abone';
+        }
+      })
+      .catch(function () { /* sessizce yut, sayı gösterilmez */ });
+  </script>
 </body>
 </html>

@@ -38,12 +38,18 @@ eleventyExcludeFromCollections: true
     .contact-btn:hover { background: var(--white); border-color: var(--ink-2); }
     .contact-btn svg { width: 15px; height: 15px; }
 
-    .social-row { display: flex; justify-content: center; gap: 16px; margin-top: 16px; }
-    .social-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-    .social-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); color: var(--ink-2); transition: border-color 0.2s, color 0.2s; }
-    .social-item:hover .social-btn { border-color: var(--ink); color: var(--ink); }
-    .social-btn svg { width: 18px; height: 18px; }
-    .social-count { font-size: 0.72rem; font-weight: 600; color: var(--muted); min-height: 1em; }
+    .follow-row { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+    .follow-pill { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 5px; border-radius: 100px; color: var(--white); font-size: 0.8rem; font-weight: 700; transition: transform 0.15s, opacity 0.15s; white-space: nowrap; }
+    .follow-pill:hover { transform: translateY(-1px); opacity: 0.92; }
+    .fp-icon { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,0.22); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .fp-icon svg { width: 14px; height: 14px; }
+    .fp-count { font-weight: 500; opacity: 0.85; }
+    .follow-pill.tiktok { background: #000000; }
+    .follow-pill.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .follow-pill.youtube { background: #FF0000; }
+    .follow-pill.linkedin { background: #0A66C2; }
+    .follow-pill.github { background: #171515; }
+    .follow-pill.behance { background: #1769FF; }
 
     .links { padding: 26px 20px 28px; display: flex; flex-direction: column; gap: 12px; }
     .link-card { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
@@ -81,22 +87,26 @@ eleventyExcludeFromCollections: true
       {% endif %}
 
       {% if bio.socialLinks.length %}
-      <div class="social-row">
+      <div class="follow-row">
         {% for s in bio.socialLinks %}
-        <a href="{{ s.url }}" target="_blank" rel="noopener" class="social-item">
-          <div class="social-btn">
-            {% if s.platform == "youtube" %}<i data-lucide="circle-play"></i>
-            {% elif s.platform == "tiktok" %}<i data-lucide="music-2"></i>
-            {% elif s.platform == "instagram" %}<i data-lucide="camera"></i>
+        <a href="{{ s.url }}" target="_blank" rel="noopener" class="follow-pill {{ s.platform }}">
+          <div class="fp-icon">
+            {% if s.platform == "youtube" %}
+              <svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            {% elif s.platform == "tiktok" %}
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="18" r="3" fill="white" stroke="none"/><path d="M10 18V4l7-1.5V9"/><circle cx="17" cy="10.5" r="3"/></svg>
+            {% elif s.platform == "instagram" %}
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="5"/><circle cx="18" cy="6" r="1.1" fill="white" stroke="none"/></svg>
             {% elif s.platform == "linkedin" %}<i data-lucide="briefcase"></i>
             {% elif s.platform == "github" %}<i data-lucide="terminal"></i>
             {% elif s.platform == "behance" %}<i data-lucide="palette"></i>
             {% else %}<i data-lucide="link"></i>{% endif %}
           </div>
+          {% if s.platform == "youtube" %}Abone Ol{% else %}Takip Et{% endif %}
           {% if s.live %}
-          <span class="social-count" data-live="{{ s.platform }}"></span>
+          <span class="fp-count" data-live="{{ s.platform }}"></span>
           {% elif s.followerCount %}
-          <span class="social-count">{{ s.followerCount }}</span>
+          <span class="fp-count">{{ s.followerCount }}</span>
           {% endif %}
         </a>
         {% endfor %}

@@ -1,18 +1,25 @@
 {
-  "displayName": "Kaan Tan",
-  "location": "İstanbul",
   "bio": "Web Sitesi, Otomasyon & Yapay Zeka Uzmanı\nİkas & Shopify İş Ortağı",
-  "avatar": "/assets/bio/avatar.png",
-  "bannerColor": "#A3E635",
-  "showEmail": true,
-  "email": "kaantanpr@gmail.com",
-  "showPhone": true,
-  "phone": "+905422979212",
   "socialLinks": [
-    { "platform": "youtube", "url": "https://youtube.com/@qkaantan" },
-    { "platform": "tiktok", "url": "https://tiktok.com/@qkaantan" },
-    { "platform": "instagram", "url": "https://instagram.com/qkaantan" }
+    {
+      "platform": "youtube",
+      "url": "https://youtube.com/@qkaantan"
+    },
+    {
+      "platform": "tiktok",
+      "url": "https://tiktok.com/@qkaantan"
+    },
+    {
+      "platform": "instagram",
+      "url": "https://instagram.com/qkaantan"
+    }
   ],
+  "displayName": "Kaan Tan",
+  "phone": "+905422979212",
+  "showPhone": true,
+  "location": "İstanbul",
+  "bannerColor": "#A3E635",
+  "avatar": "/assets/bio/qkaantan.jpg",
   "links": [
     {
       "title": "Typeless - Konuşun, Yazmayın.",
@@ -26,5 +33,7 @@
       "url": "https://kaantan.com.tr/",
       "icon": "search"
     }
-  ]
+  ],
+  "email": "kaantanpr@gmail.com",
+  "showEmail": true
 }

@@ -22,3 +22,36 @@ collections:
       - { label: "Açıklama (SEO / önizleme için)", name: "description", widget: "text" }
       - { label: "Kapak Görseli", name: "cover", widget: "image", required: false }
       - { label: "İçerik", name: "body", widget: "markdown" }
+
+  - name: "bio"
+    label: "Bio Sayfası"
+    files:
+      - name: "bio"
+        label: "Bio Sayfası İçeriği"
+        file: "blog/_data/bio.json"
+        media_folder: "/assets/bio"
+        public_folder: "/assets/bio"
+        fields:
+          - { label: "İsim", name: "displayName", widget: "string" }
+          - { label: "Konum", name: "location", widget: "string", required: false }
+          - { label: "Bio Metni", name: "bio", widget: "text", hint: "Yeni satır için Enter'a basabilirsiniz." }
+          - { label: "Profil Fotoğrafı", name: "avatar", widget: "image" }
+          - { label: "Banner / Vurgu Rengi", name: "bannerColor", widget: "string", hint: "Hex renk kodu, örn: #A3E635" }
+          - { label: "E-posta Butonunu Göster", name: "showEmail", widget: "boolean", default: true }
+          - { label: "E-posta Adresi", name: "email", widget: "string", required: false }
+          - { label: "Telefon Butonunu Göster", name: "showPhone", widget: "boolean", default: true }
+          - { label: "Telefon Numarası", name: "phone", widget: "string", required: false }
+          - label: "Sosyal Medya İkonları"
+            name: "socialLinks"
+            widget: "list"
+            fields:
+              - { label: "Platform", name: "platform", widget: "select", options: ["instagram", "tiktok", "youtube", "linkedin", "github", "behance"] }
+              - { label: "URL", name: "url", widget: "string" }
+          - label: "Linkler"
+            name: "links"
+            widget: "list"
+            fields:
+              - { label: "Başlık", name: "title", widget: "string" }
+              - { label: "Alt Yazı (görünen adres/açıklama)", name: "subtitle", widget: "string", required: false }
+              - { label: "URL", name: "url", widget: "string" }
+              - { label: "İkon", name: "icon", widget: "select", options: ["mic", "search", "link", "star", "shopping-bag", "globe", "message-circle"] }

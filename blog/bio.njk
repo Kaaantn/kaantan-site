@@ -54,11 +54,12 @@ eleventyExcludeFromCollections: true
     .links { padding: 26px 20px 28px; display: flex; flex-direction: column; gap: 12px; }
     .link-card { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
     .link-card:hover { border-color: {{ bio.bannerColor }}; background: var(--white); transform: translateY(-1px); }
-    .link-icon { flex-shrink: 0; width: 42px; height: 42px; border-radius: 11px; background: {{ bio.bannerColor }}; display: flex; align-items: center; justify-content: center; }
-    .link-icon svg { width: 20px; height: 20px; color: var(--ink); }
+    .link-icon { flex-shrink: 0; width: 42px; height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; }
+    .link-icon svg { width: 20px; height: 20px; }
     .link-text { flex: 1; min-width: 0; }
     .link-title { font-size: 0.94rem; font-weight: 600; color: var(--ink); }
     .link-sub { font-size: 0.78rem; color: var(--muted); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .link-perk { display: inline-block; margin-top: 5px; font-size: 0.7rem; font-weight: 700; color: #3F6212; background: #F7FEE7; border: 1px solid #ECFCCB; padding: 2px 9px; border-radius: 100px; }
     .link-arrow { flex-shrink: 0; width: 16px; height: 16px; color: var(--muted); }
   </style>
 </head>
@@ -78,10 +79,10 @@ eleventyExcludeFromCollections: true
       {% if bio.showEmail or bio.showPhone %}
       <div class="contact-row">
         {% if bio.showEmail %}
-        <a href="mailto:{{ bio.email }}" class="contact-btn"><i data-lucide="mail"></i>Email</a>
+        <a href="mailto:{{ bio.email }}" class="contact-btn"><i data-lucide="mail"></i>E-posta</a>
         {% endif %}
         {% if bio.showPhone %}
-        <a href="tel:{{ bio.phone }}" class="contact-btn"><i data-lucide="phone"></i>Call</a>
+        <a href="tel:{{ bio.phone }}" class="contact-btn"><i data-lucide="phone"></i>Ara</a>
         {% endif %}
       </div>
       {% endif %}
@@ -117,18 +118,23 @@ eleventyExcludeFromCollections: true
     <div class="links">
       {% for link in bio.links %}
       <a href="{{ link.url }}" target="_blank" rel="noopener" class="link-card">
-        <div class="link-icon">
+        <div class="link-icon" style="background:{{ link.color | default(bio.bannerColor) }}; color:{{ link.iconColor | default('#0A0A0A') }};">
           {% if link.icon == "mic" %}<i data-lucide="mic"></i>
           {% elif link.icon == "search" %}<i data-lucide="search"></i>
           {% elif link.icon == "star" %}<i data-lucide="star"></i>
           {% elif link.icon == "shopping-bag" %}<i data-lucide="shopping-bag"></i>
           {% elif link.icon == "globe" %}<i data-lucide="globe"></i>
           {% elif link.icon == "message-circle" %}<i data-lucide="message-circle"></i>
+          {% elif link.icon == "activity" %}<i data-lucide="activity"></i>
+          {% elif link.icon == "terminal" %}<i data-lucide="terminal"></i>
+          {% elif link.icon == "kt-logo" %}
+            <svg viewBox="0 0 32 32" fill="none"><path d="M11 7v18M11 16l9-9M11 16l9 9" stroke="{{ link.iconColor | default('#0A0A0A') }}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           {% else %}<i data-lucide="link"></i>{% endif %}
         </div>
         <div class="link-text">
           <div class="link-title">{{ link.title }}</div>
           {% if link.subtitle %}<div class="link-sub">{{ link.subtitle }}</div>{% endif %}
+          {% if link.perk %}<div class="link-perk">{{ link.perk }}</div>{% endif %}
         </div>
         <i data-lucide="arrow-right" class="link-arrow"></i>
       </a>

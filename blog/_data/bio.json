@@ -1,9 +1,21 @@
 {
   "bio": "Web Sitesi, Otomasyon & Yapay Zeka Uzmanı\nİkas & Shopify İş Ortağı",
   "socialLinks": [
-    { "platform": "youtube", "url": "https://youtube.com/@qkaantan", "live": true },
-    { "platform": "tiktok", "url": "https://www.tiktok.com/@aspkaan0", "followerCount": "8.3K" },
-    { "platform": "instagram", "url": "https://www.instagram.com/qkaantan/", "followerCount": "6K" }
+    {
+      "platform": "youtube",
+      "url": "https://youtube.com/@qkaantan",
+      "live": true
+    },
+    {
+      "platform": "tiktok",
+      "url": "https://www.tiktok.com/@aspkaan0",
+      "followerCount": "8.3K"
+    },
+    {
+      "platform": "instagram",
+      "url": "https://www.instagram.com/qkaantan/",
+      "followerCount": "6K"
+    }
   ],
   "displayName": "Kaan Tan",
   "phone": "+905422979212",
@@ -29,7 +41,7 @@
       "iconColor": "#FFFFFF"
     },
     {
-      "title": "Replit - Tek Promptla Uygulama ve Web Sitesi Oluştur",
+      "title": "Replit - Tek Promptla Uygulama Oluştur",
       "subtitle": "replit.com/refer/qkaantan",
       "url": "https://replit.com/refer/qkaantan",
       "icon": "terminal",

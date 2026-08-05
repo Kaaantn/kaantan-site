@@ -54,7 +54,8 @@
       "icon": "shopping-bag",
       "title": "100 Yapay Zeka Aracı",
       "subtitle": "Bilmen Gereken Rehber Serisi #1",
-      "color": "#6D40FF"
+      "color": "#6D40FF",
+      "iconColor": "#FFFFFF"
     },
     {
       "title": "Hakkımda - Tüm Bilgiler",

@@ -25,6 +25,15 @@
   "avatar": "/assets/bio/qkaantan.jpg",
   "links": [
     {
+      "title": "AutoAE - Düzenleme Yok, Sadece Tıkla, Özelleştir ve Paylaş.",
+      "subtitle": "autoae.online",
+      "url": "https://autoae.online/?linkId=lp_115715&sourceId=kaan-tan&tenantId=autoae",
+      "icon": "image",
+      "iconImage": "/assets/bio/autoae-logo.png",
+      "color": "#FFFFFF",
+      "iconColor": "#0A0A0A"
+    },
+    {
       "title": "Typeless - Konuşun, Yazmayın.",
       "subtitle": "typeless.com/?via=kaan-tan",
       "url": "https://www.typeless.com/?via=kaan-tan",

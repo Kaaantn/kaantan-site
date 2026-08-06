@@ -56,7 +56,8 @@ collections:
               - { label: "Başlık", name: "title", widget: "string" }
               - { label: "Alt Yazı (görünen adres/açıklama)", name: "subtitle", widget: "string", required: false }
               - { label: "URL", name: "url", widget: "string" }
-              - { label: "İkon", name: "icon", widget: "select", options: ["mic", "search", "link", "star", "shopping-bag", "globe", "message-circle", "activity", "terminal", "kt-logo"] }
+              - { label: "İkon", name: "icon", widget: "select", options: ["mic", "search", "link", "star", "shopping-bag", "globe", "message-circle", "activity", "terminal", "kt-logo", "image"] }
+              - { label: "Özel Logo Görseli (sadece İkon = 'image' seçiliyse)", name: "iconImage", widget: "image", required: false, hint: "Kendi logonu yüklemek istersen İkon alanından 'image' seç ve buraya yükle." }
               - { label: "İkon Kutusu Rengi", name: "color", widget: "string", required: false, hint: "Hex renk kodu, örn: #000000. Boş bırakırsan banner rengi kullanılır." }
               - { label: "İkon Rengi", name: "iconColor", widget: "string", required: false, hint: "Koyu arka plan için #FFFFFF, açık arka plan için #0A0A0A gibi." }
               - { label: "Avantaj Rozeti (opsiyonel)", name: "perk", widget: "string", required: false, hint: "Örn: Kayıt olana 20$ ücretsiz kredi. Boş bırakırsan rozet gösterilmez." }

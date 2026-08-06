@@ -61,3 +61,25 @@ collections:
               - { label: "İkon Kutusu Rengi", name: "color", widget: "string", required: false, hint: "Hex renk kodu, örn: #000000. Boş bırakırsan banner rengi kullanılır." }
               - { label: "İkon Rengi", name: "iconColor", widget: "string", required: false, hint: "Koyu arka plan için #FFFFFF, açık arka plan için #0A0A0A gibi." }
               - { label: "Avantaj Rozeti (opsiyonel)", name: "perk", widget: "string", required: false, hint: "Örn: Kayıt olana 20$ ücretsiz kredi. Boş bırakırsan rozet gösterilmez." }
+
+  - name: "shop"
+    label: "Shop Sayfası"
+    files:
+      - name: "shop"
+        label: "Shop Sayfası İçeriği"
+        file: "blog/_data/shop.json"
+        fields:
+          - { label: "Üst Açıklama", name: "intro", widget: "text" }
+          - { label: "Shopier Mağaza Linki", name: "storeUrl", widget: "string" }
+          - label: "Ürünler"
+            name: "products"
+            widget: "list"
+            fields:
+              - { label: "Ürün Adı", name: "title", widget: "string" }
+              - { label: "Alt Başlık", name: "subtitle", widget: "string", required: false }
+              - { label: "Görsel URL", name: "image", widget: "string", hint: "Shopier ürün görselinin linki (Shopier ürün sayfasındaki görsele sağ tık > Görsel adresini kopyala)." }
+              - { label: "Fiyat", name: "price", widget: "string", hint: "Örn: 149 TL" }
+              - { label: "Eski Fiyat (opsiyonel)", name: "oldPrice", widget: "string", required: false }
+              - { label: "Rozet (opsiyonel)", name: "badge", widget: "string", required: false, hint: "Örn: %63 İndirim" }
+              - { label: "Ürün Tipi (opsiyonel)", name: "type", widget: "string", required: false, hint: "Örn: Dijital Ürün" }
+              - { label: "Shopier Ürün Linki", name: "url", widget: "string" }

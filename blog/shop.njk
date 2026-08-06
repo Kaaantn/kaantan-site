@@ -1,0 +1,65 @@
+---
+layout: base.njk
+title: Shop
+description: "Kaan Tan'ın Shopier mağazasındaki dijital ürünler ve yapay zeka rehberleri."
+permalink: "/shop/index.html"
+eleventyExcludeFromCollections: true
+---
+<div class="wrap shop-wrap">
+  <div class="post-eyebrow">Shop</div>
+  <h1 class="post-title">Dijital Ürünler</h1>
+  <p style="color:var(--muted); margin-bottom:40px; max-width:600px;">{{ shop.intro }}</p>
+
+  <div class="shop-grid">
+    {% for p in shop.products %}
+    <a href="{{ p.url }}" target="_blank" rel="noopener" class="shop-card">
+      <div class="shop-card-img">
+        <img src="{{ p.image }}" alt="{{ p.title }}" loading="lazy">
+        {% if p.badge %}<span class="shop-badge">{{ p.badge }}</span>{% endif %}
+      </div>
+      <div class="shop-card-body">
+        {% if p.type %}<div class="shop-type">{{ p.type }}</div>{% endif %}
+        <div class="shop-name">{{ p.title }}</div>
+        {% if p.subtitle %}<div class="shop-sub">{{ p.subtitle }}</div>{% endif %}
+        <div class="shop-price-row">
+          <span class="shop-price">{{ p.price }}</span>
+          {% if p.oldPrice %}<span class="shop-old-price">{{ p.oldPrice }}</span>{% endif %}
+        </div>
+        <div class="shop-cta">Shopier'da İncele <i data-lucide="arrow-up-right"></i></div>
+      </div>
+    </a>
+    {% else %}
+    <p style="color:var(--muted);">Şu anda listelenen ürün yok, yakında burada olacak.</p>
+    {% endfor %}
+  </div>
+
+  <p style="margin-top:48px; color:var(--muted); font-size:0.88rem;">
+    Tüm ödemeler Shopier'ın güvenli altyapısı üzerinden gerçekleştirilir. Sorularınız için
+    <a href="/#contact" style="color:var(--lime-700); font-weight:600;">iletişime geçebilirsiniz</a>.
+  </p>
+</div>
+
+<style>
+  .shop-wrap { max-width: 1040px; }
+  .shop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 8px; }
+  @media (max-width: 900px) { .shop-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .shop-grid { grid-template-columns: 1fr; } }
+  .shop-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; text-decoration: none; transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease; }
+  .shop-card:hover { border-color: var(--lime-400); box-shadow: 0 20px 40px rgba(0,0,0,0.08); transform: translateY(-3px); }
+  .shop-card-img { position: relative; width: 100%; aspect-ratio: 1 / 1; background: var(--white); overflow: hidden; }
+  .shop-card-img img { width: 100%; height: 100%; object-fit: cover; }
+  .shop-badge { position: absolute; top: 12px; left: 12px; background: var(--ink); color: var(--white); font-size: 0.7rem; font-weight: 700; padding: 5px 10px; border-radius: 100px; }
+  .shop-card-body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 4px; }
+  .shop-type { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--lime-600); }
+  .shop-name { font-family: var(--display); font-size: 1.05rem; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; margin-top: 2px; }
+  .shop-sub { font-size: 0.85rem; color: var(--muted); }
+  .shop-price-row { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; }
+  .shop-price { font-family: var(--display); font-size: 1.15rem; font-weight: 700; color: var(--ink); }
+  .shop-old-price { font-size: 0.85rem; color: var(--muted); text-decoration: line-through; }
+  .shop-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 0.85rem; font-weight: 600; color: var(--ink-2); }
+  .shop-cta svg { width: 14px; height: 14px; }
+  .shop-card:hover .shop-cta { color: var(--lime-700); }
+</style>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script>lucide.createIcons();</script>

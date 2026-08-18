@@ -25,6 +25,15 @@
   "avatar": "/assets/bio/profil.jpg",
   "links": [
     {
+      "title": "Atlas Find - İş Geliştirme ve Satış Platformu",
+      "subtitle": "app.atlasfind.co",
+      "url": "https://app.atlasfind.co/?ref=KAANTAN",
+      "icon": "image",
+      "iconImage": "/assets/bio/atlas-logo.png",
+      "color": "#FFFFFF",
+      "iconColor": "#0A0A0A"
+    },
+    {
       "title": "AutoAE - Düzenleme Yok, Sadece Tıkla, Özelleştir ve Paylaş.",
       "subtitle": "autoae.online",
       "url": "https://autoae.online/?linkId=lp_115715&sourceId=kaan-tan&tenantId=autoae",

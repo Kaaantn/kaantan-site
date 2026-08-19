@@ -1,0 +1,18 @@
+---
+permalink: "/sitemap.xml"
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://kaantan.com.tr/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://kaantan.com.tr/blog/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kaantan.com.tr/shop/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  {% for post in collections.posts %}
+  <url>
+    <loc>https://kaantan.com.tr{{ post.url }}</loc>
+    <lastmod>{{ post.data.date | isoDate }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  {% endfor %}
+</urlset>

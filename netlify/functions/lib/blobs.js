@@ -1,15 +1,25 @@
 const { getStore } = require("@netlify/blobs");
 
+// Automatic context injection for @netlify/blobs is unreliable for CommonJS
+// functions bundled outside Netlify's own build pipeline (MissingBlobsEnvironmentError).
+// Fall back to explicit siteID/token when provided.
+function storeOptions(name) {
+  if (process.env.NETLIFY_BLOBS_TOKEN && process.env.SITE_ID) {
+    return { name, siteID: process.env.SITE_ID, token: process.env.NETLIFY_BLOBS_TOKEN };
+  }
+  return name;
+}
+
 function configStore() {
-  return getStore("ig-automation-configs");
+  return getStore(storeOptions("ig-automation-configs"));
 }
 
 function stateStore() {
-  return getStore("ig-automation-state");
+  return getStore(storeOptions("ig-automation-state"));
 }
 
 function rateStore() {
-  return getStore("ig-automation-rate");
+  return getStore(storeOptions("ig-automation-rate"));
 }
 
 const CONFIGS_KEY = "configs";

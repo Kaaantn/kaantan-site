@@ -38,6 +38,10 @@ async function graphGet(path) {
 }
 
 // First message in a thread, addressed to a comment. Opens the messaging window.
+// NOTE: the "/{comment-id}/private_replies" edge is legacy/Facebook-Login-only and
+// returns a generic "does not support this operation" (subcode 33) for Instagram
+// Login tokens. Instagram Login flow requires POST /me/messages with
+// recipient.comment_id instead: https://developers.facebook.com/docs/instagram-platform/private-replies/
 function sendPrivateReply(commentId, text, buttons) {
   const message = buttons
     ? {
@@ -47,7 +51,7 @@ function sendPrivateReply(commentId, text, buttons) {
         },
       }
     : { text };
-  return graphPost(`/${commentId}/private_replies`, { message });
+  return graphPost(`/me/messages`, { recipient: { comment_id: commentId }, message });
 }
 
 // Follow-up message inside an already-open thread, addressed by IGSID.

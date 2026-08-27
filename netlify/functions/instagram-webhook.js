@@ -5,12 +5,15 @@ const meta = require("./lib/meta");
 const PROFILE_URL = process.env.IG_PROFILE_URL || "https://instagram.com/";
 const SITE_URL = process.env.URL || "https://kaantan.com.tr";
 
+// Deliberately non-committal about delivery — Meta's API returns HTTP 200
+// even when the recipient's message-request settings silently block the
+// DM, with no synchronous or webhook signal to tell us which happened.
 const PUBLIC_REPLY_VARIANTS = [
-  "DM'ine attım, kontrol et 📩",
-  "Gönderdim, kutunu kontrol et 👀",
-  "Attım bile, DM'e bak 🚀",
-  "Mesaj kutunda seni bekliyor 📬",
-  "Gönderildi, umarım ulaşmıştır 🙌",
+  "DM'ini kontrol et 📩",
+  "Mesaj kutunu kontrol etmeyi unutma 👀",
+  "DM'ine bir bak 🤞",
+  "Kutunu kontrol etmeyi unutma 📬",
+  "DM'inden kontrol et 🙌",
 ];
 
 const FAILURE_REPLY_VARIANTS = [

@@ -15,16 +15,12 @@ exports.handler = async function () {
     dotCount: (token.match(/\./g) || []).length,
   };
 
-  const testCommentId = "18062389934766206";
-  const detailUrl = `https://graph.instagram.com/${GRAPH_VERSION}/${testCommentId}?fields=text,username,timestamp,parent_id,user,from,hidden&access_token=${token}`;
-  const detailRes = await fetch(detailUrl).then((r) => r.json()).catch((e) => ({ error: String(e) }));
-
-  const permUrl = `https://graph.instagram.com/${GRAPH_VERSION}/me/permissions?access_token=${token}`;
-  const permRes = await fetch(permUrl).then((r) => r.json()).catch((e) => ({ error: String(e) }));
+  const convUrl = `https://graph.instagram.com/${GRAPH_VERSION}/me/conversations?platform=instagram&access_token=${token}`;
+  const convRes = await fetch(convUrl).then((r) => r.json()).catch((e) => ({ error: String(e) }));
 
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ debugInfo, commentDetail: detailRes, permissionsViaIg: permRes }, null, 2),
+    body: JSON.stringify({ debugInfo, conversationsTest: convRes }, null, 2),
   };
 };

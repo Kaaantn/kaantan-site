@@ -15,19 +15,18 @@ exports.handler = async function () {
     dotCount: (token.match(/\./g) || []).length,
   };
 
-  const convUrl = `https://graph.instagram.com/${GRAPH_VERSION}/me/conversations?platform=instagram&limit=3&access_token=${token}`;
-  const convRes = await fetch(convUrl).then((r) => r.json()).catch((e) => ({ error: String(e) }));
-
-  const details = [];
-  for (const conv of (convRes.data || []).slice(0, 3)) {
-    const msgUrl = `https://graph.instagram.com/${GRAPH_VERSION}/${conv.id}?fields=messages.limit(5){message,from,to,created_time}&access_token=${token}`;
-    const msgRes = await fetch(msgUrl).then((r) => r.json()).catch((e) => ({ error: String(e) }));
-    details.push({ conversationId: conv.id, updated_time: conv.updated_time, msgRes });
-  }
+  // mehmet761758 already has a real thread with qkaantan (human replied manually).
+  const testIgsid = "938138928659282";
+  const sendUrl = `https://graph.instagram.com/${GRAPH_VERSION}/me/messages?access_token=${token}`;
+  const sendRes = await fetch(sendUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ recipient: { id: testIgsid }, message: { text: "Test - bot mesaj testi" } }),
+  }).then((r) => r.json()).catch((e) => ({ error: String(e) }));
 
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ debugInfo, conversationDetails: details }, null, 2),
+    body: JSON.stringify({ debugInfo, plainMessageTest: sendRes }, null, 2),
   };
 };

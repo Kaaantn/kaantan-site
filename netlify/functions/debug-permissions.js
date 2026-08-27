@@ -16,15 +16,16 @@ exports.handler = async function () {
   };
 
   const testCommentId = "18062389934766206";
-  const getUrl = `https://graph.instagram.com/${GRAPH_VERSION}/${testCommentId}?fields=text,username,timestamp,media&access_token=${token}`;
-  const getRes = await fetch(getUrl).then((r) => r.json()).catch((e) => ({ error: String(e) }));
-
-  const mediaUrl = `https://graph.instagram.com/${GRAPH_VERSION}/me/media?fields=id,media_type,media_product_type,permalink,comments_count&limit=5&access_token=${token}`;
-  const mediaRes = await fetch(mediaUrl).then((r) => r.json()).catch((e) => ({ error: String(e) }));
+  const replyUrl = `https://graph.instagram.com/${GRAPH_VERSION}/${testCommentId}/private_replies?access_token=${token}`;
+  const replyRes = await fetch(replyUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: { text: "Test" } }),
+  }).then((r) => r.json()).catch((e) => ({ error: String(e) }));
 
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ debugInfo, commentGetTest: getRes, recentMedia: mediaRes }, null, 2),
+    body: JSON.stringify({ debugInfo, jsonBodyReplyTest: replyRes }, null, 2),
   };
 };

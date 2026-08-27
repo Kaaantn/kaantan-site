@@ -11,6 +11,13 @@ exports.handler = async function () {
     return { statusCode: 500, body: JSON.stringify({ error: "IG_PAGE_ACCESS_TOKEN not set" }) };
   }
 
+  const debug = {
+    length: token.length,
+    prefix: token.slice(0, 6),
+    suffix: token.slice(-4),
+    hasWhitespace: /\s/.test(token),
+  };
+
   const url = `https://graph.facebook.com/${GRAPH_VERSION}/${IG_USER_ID}/subscribed_apps?subscribed_fields=comments,messages,messaging_postbacks&access_token=${token}`;
   const res = await fetch(url, { method: "POST" });
   const data = await res.json().catch(() => ({}));
@@ -18,6 +25,6 @@ exports.handler = async function () {
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ok: res.ok, status: res.status, data }),
+    body: JSON.stringify({ ok: res.ok, status: res.status, data, debug }),
   };
 };

@@ -1,0 +1,307 @@
+---
+permalink: "/panel/index.html"
+eleventyExcludeFromCollections: true
+---
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel — Kaan Tan</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --lime-400: #A78BFA; --lime-500: #8B5CF6; --lime-600: #7C3AED;
+      --ink: #F5F3F8; --ink-2: #DAD6E3; --body: #B7B2C4; --muted: #8A8494;
+      --line: rgba(255,255,255,0.10); --surface: #16131E; --white: #0B0A10;
+      --danger: #F87171;
+      --display: 'Space Grotesk', sans-serif; --body-f: 'Inter', sans-serif;
+    }
+    body { font-family: var(--body-f); background: var(--white); color: var(--body); min-height: 100vh; line-height: 1.5; }
+    a { color: inherit; }
+    input, textarea { font-family: inherit; }
+
+    .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 100px; }
+    h1 { font-family: var(--display); font-size: 1.6rem; color: var(--ink); margin-bottom: 6px; }
+    .sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 32px; }
+
+    .gate { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; text-align: center; gap: 16px; }
+    .gate p { color: var(--muted); max-width: 360px; }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; background: var(--lime-500); color: #0A0A10; border: none; padding: 11px 22px; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+    .btn:hover { background: var(--lime-400); }
+    .btn.secondary { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+    .btn.danger { background: rgba(248,113,113,0.12); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; margin-bottom: 20px; }
+    .card h2 { font-family: var(--display); font-size: 1.05rem; color: var(--ink); margin-bottom: 14px; }
+
+    label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin: 14px 0 6px; }
+    label:first-child { margin-top: 0; }
+    input[type="text"], textarea { width: 100%; background: var(--white); border: 1px solid var(--line); color: var(--ink); padding: 10px 12px; border-radius: 8px; font-size: 0.92rem; }
+    input[type="text"]:focus, textarea:focus { outline: 1.5px solid var(--lime-500); }
+    textarea { resize: vertical; min-height: 60px; }
+    .hint { font-size: 0.76rem; color: var(--muted); margin-top: 4px; }
+    .row { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
+    .row label { margin: 0; }
+
+    .post-item { border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; }
+    .post-item.inactive { opacity: 0.5; }
+    .post-item-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .post-title { font-weight: 600; color: var(--ink); font-size: 0.94rem; }
+    .post-meta { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+    .post-words { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .word-chip { background: rgba(139,92,246,0.14); border: 1px solid rgba(139,92,246,0.28); color: #DED2FE; font-size: 0.74rem; font-weight: 600; padding: 3px 10px; border-radius: 100px; }
+    .post-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .post-actions button { background: none; border: 1px solid var(--line); color: var(--muted); padding: 6px 10px; border-radius: 7px; font-size: 0.78rem; cursor: pointer; }
+    .post-actions button:hover { color: var(--ink); border-color: var(--ink-2); }
+
+    .empty { color: var(--muted); font-size: 0.88rem; padding: 20px 0; text-align: center; }
+    .status-msg { font-size: 0.82rem; margin-top: 10px; }
+    .status-msg.error { color: var(--danger); }
+    .status-msg.ok { color: var(--lime-400); }
+    #userBar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 0.82rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div id="gate" class="gate">
+    <h1>Panel</h1>
+    <p>Instagram yorum otomasyonu yönetim paneli. Devam etmek için giriş yapmalısın.</p>
+    <button class="btn" id="loginBtn">Giriş Yap</button>
+  </div>
+
+  <div id="app" class="wrap" style="display:none">
+    <div id="userBar">
+      <span id="userEmail"></span>
+      <button class="btn secondary" id="logoutBtn" style="padding:7px 14px;font-size:0.8rem">Çıkış</button>
+    </div>
+
+    <h1>Instagram Yorum Otomasyonu</h1>
+    <p class="sub">Post/kelime/link eşleşmelerini buradan yönet.</p>
+
+    <div class="card">
+      <h2>Varsayılan (fallback) kelime</h2>
+      <label>Post için ayrı kelime tanımlanmadıysa devreye girecek genel kelime</label>
+      <input type="text" id="fallbackWord" placeholder="örn. LİNK" />
+      <div class="row">
+        <button class="btn secondary" id="saveFallbackBtn">Kaydet</button>
+      </div>
+      <div class="status-msg" id="fallbackStatus"></div>
+    </div>
+
+    <div class="card">
+      <h2 id="formTitle">Yeni post ekle</h2>
+      <input type="hidden" id="postId" />
+      <label>Post linki veya medya ID</label>
+      <input type="text" id="postLink" placeholder="https://instagram.com/p/... veya medya ID" />
+      <label>Tetikleyici kelime(ler) — virgülle ayır</label>
+      <input type="text" id="triggerWords" placeholder="KOLSUZ, LİNK" />
+      <label>Gönderilecek link</label>
+      <input type="text" id="link" placeholder="https://..." />
+      <label>Özel mesaj metni (opsiyonel)</label>
+      <textarea id="messageOverride" placeholder="Boş bırakırsan varsayılan metinler kullanılır"></textarea>
+      <div class="row">
+        <input type="checkbox" id="active" checked />
+        <label style="margin:0">Aktif</label>
+      </div>
+      <div class="row">
+        <button class="btn" id="saveBtn">Kaydet</button>
+        <button class="btn secondary" id="cancelEditBtn" style="display:none">Vazgeç</button>
+      </div>
+      <div class="status-msg" id="formStatus"></div>
+    </div>
+
+    <div class="card">
+      <h2>Kayıtlı postlar</h2>
+      <div id="postList"><div class="empty">Yükleniyor…</div></div>
+    </div>
+  </div>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    const gate = document.getElementById('gate');
+    const app = document.getElementById('app');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userEmail = document.getElementById('userEmail');
+
+    let currentUser = null;
+
+    function showApp(user) {
+      currentUser = user;
+      gate.style.display = 'none';
+      app.style.display = 'block';
+      userEmail.textContent = user.email || '';
+      loadConfigs();
+    }
+
+    function showGate() {
+      currentUser = null;
+      gate.style.display = 'flex';
+      app.style.display = 'none';
+    }
+
+    if (window.netlifyIdentity) {
+      netlifyIdentity.on('init', user => { if (user) showApp(user); else showGate(); });
+      netlifyIdentity.on('login', user => { showApp(user); netlifyIdentity.close(); });
+      netlifyIdentity.on('logout', () => showGate());
+      netlifyIdentity.init();
+    }
+
+    loginBtn.addEventListener('click', () => netlifyIdentity.open('login'));
+    logoutBtn.addEventListener('click', () => netlifyIdentity.logout());
+
+    async function authedFetch(url, options) {
+      const user = netlifyIdentity.currentUser();
+      const token = user ? await user.jwt() : null;
+      const opts = options || {};
+      opts.headers = Object.assign({}, opts.headers, token ? { Authorization: 'Bearer ' + token } : {});
+      return fetch(url, opts);
+    }
+
+    let configsCache = { fallbackWord: '', posts: [] };
+    let editingId = null;
+
+    async function loadConfigs() {
+      const res = await authedFetch('/.netlify/functions/panel-configs');
+      if (!res.ok) {
+        document.getElementById('postList').innerHTML = '<div class="empty">Yüklenemedi, tekrar giriş yapmayı dene.</div>';
+        return;
+      }
+      configsCache = await res.json();
+      document.getElementById('fallbackWord').value = configsCache.fallbackWord || '';
+      renderPosts();
+    }
+
+    function renderPosts() {
+      const list = document.getElementById('postList');
+      const posts = configsCache.posts || [];
+      if (!posts.length) {
+        list.innerHTML = '<div class="empty">Henüz post eklenmedi.</div>';
+        return;
+      }
+      list.innerHTML = posts.map(p => `
+        <div class="post-item ${p.active === false ? 'inactive' : ''}">
+          <div class="post-item-top">
+            <div>
+              <div class="post-title">${escapeHtml(p.postLink || p.mediaId || '(link yok)')}</div>
+              <div class="post-meta">${p.active === false ? 'Pasif' : 'Aktif'} · Link: ${escapeHtml(p.link || '-')}</div>
+            </div>
+            <div class="post-actions">
+              <button data-edit="${p.id}">Düzenle</button>
+              <button data-delete="${p.id}">Sil</button>
+            </div>
+          </div>
+          <div class="post-words">${(p.triggerWords || []).map(w => `<span class="word-chip">${escapeHtml(w)}</span>`).join('') || '<span class="word-chip">varsayılan kelime</span>'}</div>
+        </div>
+      `).join('');
+
+      list.querySelectorAll('[data-edit]').forEach(btn => {
+        btn.addEventListener('click', () => startEdit(btn.getAttribute('data-edit')));
+      });
+      list.querySelectorAll('[data-delete]').forEach(btn => {
+        btn.addEventListener('click', () => deletePost(btn.getAttribute('data-delete')));
+      });
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function startEdit(id) {
+      const p = (configsCache.posts || []).find(x => x.id === id);
+      if (!p) return;
+      editingId = id;
+      document.getElementById('formTitle').textContent = 'Postu düzenle';
+      document.getElementById('postId').value = p.id;
+      document.getElementById('postLink').value = p.postLink || p.mediaId || '';
+      document.getElementById('triggerWords').value = (p.triggerWords || []).join(', ');
+      document.getElementById('link').value = p.link || '';
+      document.getElementById('messageOverride').value = p.messageOverride || '';
+      document.getElementById('active').checked = p.active !== false;
+      document.getElementById('cancelEditBtn').style.display = 'inline-flex';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetForm() {
+      editingId = null;
+      document.getElementById('formTitle').textContent = 'Yeni post ekle';
+      document.getElementById('postId').value = '';
+      document.getElementById('postLink').value = '';
+      document.getElementById('triggerWords').value = '';
+      document.getElementById('link').value = '';
+      document.getElementById('messageOverride').value = '';
+      document.getElementById('active').checked = true;
+      document.getElementById('cancelEditBtn').style.display = 'none';
+    }
+
+    document.getElementById('cancelEditBtn').addEventListener('click', resetForm);
+
+    document.getElementById('saveBtn').addEventListener('click', async () => {
+      const statusEl = document.getElementById('formStatus');
+      const postLink = document.getElementById('postLink').value.trim();
+      const link = document.getElementById('link').value.trim();
+      if (!postLink || !link) {
+        statusEl.textContent = 'Post linki ve gönderilecek link zorunlu.';
+        statusEl.className = 'status-msg error';
+        return;
+      }
+      const post = {
+        id: editingId || undefined,
+        postLink,
+        triggerWords: document.getElementById('triggerWords').value.split(',').map(s => s.trim()).filter(Boolean),
+        link,
+        messageOverride: document.getElementById('messageOverride').value.trim(),
+        active: document.getElementById('active').checked,
+      };
+      const res = await authedFetch('/.netlify/functions/panel-configs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ post }),
+      });
+      if (res.ok) {
+        configsCache = await res.json();
+        renderPosts();
+        resetForm();
+        statusEl.textContent = 'Kaydedildi.';
+        statusEl.className = 'status-msg ok';
+      } else {
+        statusEl.textContent = 'Kaydedilemedi.';
+        statusEl.className = 'status-msg error';
+      }
+    });
+
+    async function deletePost(id) {
+      if (!confirm('Bu post silinsin mi?')) return;
+      const res = await authedFetch('/.netlify/functions/panel-configs?id=' + encodeURIComponent(id), { method: 'DELETE' });
+      if (res.ok) {
+        configsCache = await res.json();
+        renderPosts();
+      }
+    }
+
+    document.getElementById('saveFallbackBtn').addEventListener('click', async () => {
+      const statusEl = document.getElementById('fallbackStatus');
+      const fallbackWord = document.getElementById('fallbackWord').value.trim();
+      const res = await authedFetch('/.netlify/functions/panel-configs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fallbackWord }),
+      });
+      if (res.ok) {
+        statusEl.textContent = 'Kaydedildi.';
+        statusEl.className = 'status-msg ok';
+      } else {
+        statusEl.textContent = 'Kaydedilemedi.';
+        statusEl.className = 'status-msg error';
+      }
+    });
+  </script>
+</body>
+</html>

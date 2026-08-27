@@ -15,12 +15,17 @@ exports.handler = async function () {
     dotCount: (token.match(/\./g) || []).length,
   };
 
-  const meUrl = `https://graph.facebook.com/${GRAPH_VERSION}/me?fields=id,username&access_token=${token}`;
-  const meRes = await fetch(meUrl).then((r) => r.json()).catch((e) => ({ error: String(e) }));
+  const fbUrl = `https://graph.facebook.com/${GRAPH_VERSION}/me?fields=id,username&access_token=${token}`;
+  const igUrl = `https://graph.instagram.com/${GRAPH_VERSION}/me?fields=id,username&access_token=${token}`;
+
+  const [fbRes, igRes] = await Promise.all([
+    fetch(fbUrl).then((r) => r.json()).catch((e) => ({ error: String(e) })),
+    fetch(igUrl).then((r) => r.json()).catch((e) => ({ error: String(e) })),
+  ]);
 
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ debugInfo, me: meRes }, null, 2),
+    body: JSON.stringify({ debugInfo, viaGraphFacebook: fbRes, viaGraphInstagram: igRes }, null, 2),
   };
 };

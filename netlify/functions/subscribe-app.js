@@ -18,7 +18,8 @@ exports.handler = async function () {
     hasWhitespace: /\s/.test(token),
   };
 
-  const url = `https://graph.facebook.com/${GRAPH_VERSION}/${IG_USER_ID}/subscribed_apps?subscribed_fields=comments,messages,messaging_postbacks&access_token=${token}`;
+  const testCommentId = "18048620966649021";
+  const url = `https://graph.facebook.com/${GRAPH_VERSION}/${testCommentId}/private_replies?message=Test&access_token=${token}`;
   const res = await fetch(url, { method: "POST" });
   const data = await res.json().catch(() => ({}));
 

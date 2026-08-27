@@ -3,6 +3,7 @@ const { allowSend } = require("./lib/rateLimit");
 const meta = require("./lib/meta");
 
 const PROFILE_URL = process.env.IG_PROFILE_URL || "https://instagram.com/";
+const SITE_URL = process.env.URL || "https://kaantan.com.tr";
 
 const PUBLIC_REPLY_VARIANTS = [
   "DM'ine attım, kontrol et 📩",
@@ -12,8 +13,14 @@ const PUBLIC_REPLY_VARIANTS = [
   "Gönderildi, umarım ulaşmıştır 🙌",
 ];
 
-function randomPublicReply() {
-  return PUBLIC_REPLY_VARIANTS[Math.floor(Math.random() * PUBLIC_REPLY_VARIANTS.length)];
+const FAILURE_REPLY_VARIANTS = [
+  "Mesajların kapalı maalesef, DM atamadım 😕",
+  "Sana ulaşamadım, mesaj isteklerin kısıtlı olabilir 🙁",
+  "DM gönderemedim, ayarların kapalı olabilir 😕",
+];
+
+function randomOf(list) {
+  return list[Math.floor(Math.random() * list.length)];
 }
 
 function trMatch(text, word) {
@@ -43,6 +50,7 @@ async function handleCommentEvent(value) {
   const commentId = value.id;
   const mediaId = value.media && value.media.id;
   const text = value.text || "";
+  const username = (value.from && value.from.username) || null;
   if (!commentId) return;
 
   // Idempotency: never react to the same comment twice.
@@ -64,22 +72,27 @@ async function handleCommentEvent(value) {
     [meta.postbackButton("Linki gönder 🔗", `CHECK_FOLLOW_${commentId}`)]
   );
 
-  if (ok) {
-    await meta.replyToComment(commentId, randomPublicReply());
-  }
+  await meta.replyToComment(commentId, ok ? randomOf(PUBLIC_REPLY_VARIANTS) : randomOf(FAILURE_REPLY_VARIANTS));
 
   await setState(commentId, {
-    status: "pending_follow",
+    status: ok ? "pending_follow" : "dm_failed",
+    dmFailed: !ok,
+    username,
     mediaId: mediaId || null,
     configId: cfg.id,
     igsid: null,
   });
 }
 
-async function sendLink(igsid, commentId, cfg, greeting) {
+function trackingLink(commentId, cfg) {
+  return `${SITE_URL}/.netlify/functions/link-click?c=${encodeURIComponent(commentId)}&p=${encodeURIComponent(cfg.id)}`;
+}
+
+async function sendLink(igsid, commentId, cfg, greeting, state) {
   const message = (cfg && cfg.messageOverride) || greeting;
-  await meta.sendMessage(igsid, message, [meta.webUrlButton("Linke git 🚀", cfg.link)]);
+  await meta.sendMessage(igsid, message, [meta.webUrlButton("Linke git 🚀", trackingLink(commentId, cfg))]);
   await setState(commentId, {
+    ...state,
     status: "link_sent",
     mediaId: cfg.mediaId || null,
     configId: cfg.id,
@@ -102,11 +115,21 @@ async function handleFollowCheck(commentId, igsid, isRecheck) {
 
   const following = await meta.isFollowingBusiness(igsid);
 
+  const wasFollowingInitially = isRecheck ? state && state.wasFollowingInitially : following;
+  const becameFollower = Boolean(isRecheck && following && state && state.wasFollowingInitially === false);
+
+  const nextState = {
+    ...state,
+    clickedGetLink: !isRecheck ? true : state && state.clickedGetLink,
+    wasFollowingInitially,
+    becameFollower: becameFollower || (state && state.becameFollower) || false,
+  };
+
   if (following) {
     const greeting = isRecheck
       ? "Teşekkürler! 🙏 İşte linkin:"
       : "Zaten takipteymişsin, harika! 🎉 Al bakalım:";
-    await sendLink(igsid, commentId, cfg, greeting);
+    await sendLink(igsid, commentId, cfg, greeting, nextState);
     return;
   }
 
@@ -124,6 +147,7 @@ async function handleFollowCheck(commentId, igsid, isRecheck) {
   }
 
   await setState(commentId, {
+    ...nextState,
     status: "pending_follow",
     mediaId: cfg.mediaId || null,
     configId: cfg.id,

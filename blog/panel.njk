@@ -67,6 +67,18 @@ eleventyExcludeFromCollections: true
     .status-msg.error { color: var(--danger); }
     .status-msg.ok { color: var(--lime-400); }
     #userBar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 0.82rem; color: var(--muted); }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+    .stat-box { background: var(--white); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+    .stat-box .num { font-family: var(--display); font-size: 1.4rem; color: var(--ink); }
+    .stat-box .lbl { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+    .stat-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.8rem; }
+    .stat-table th { text-align: left; color: var(--muted); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.03em; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+    .stat-table td { padding: 7px 8px; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+    .stat-table tr:last-child td { border-bottom: none; }
+    .yes { color: var(--lime-400); }
+    .no { color: var(--muted); }
   </style>
 </head>
 <body>
@@ -121,6 +133,25 @@ eleventyExcludeFromCollections: true
       <h2>Kayıtlı postlar</h2>
       <div id="postList"><div class="empty">Yükleniyor…</div></div>
     </div>
+
+    <div class="card">
+      <h2>İstatistikler</h2>
+      <div class="stat-grid" id="statGrid">
+        <div class="empty">Yükleniyor…</div>
+      </div>
+      <table class="stat-table" id="statTable" style="display:none">
+        <thead>
+          <tr>
+            <th>Kullanıcı</th>
+            <th>DM</th>
+            <th>Linki istedi</th>
+            <th>Takipçi oldu</th>
+            <th>Son linke tıkladı</th>
+          </tr>
+        </thead>
+        <tbody id="statRows"></tbody>
+      </table>
+    </div>
   </div>
 
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -139,6 +170,7 @@ eleventyExcludeFromCollections: true
       app.style.display = 'block';
       userEmail.textContent = user.email || '';
       loadConfigs();
+      loadStats();
     }
 
     function showGate() {
@@ -208,6 +240,46 @@ eleventyExcludeFromCollections: true
       list.querySelectorAll('[data-delete]').forEach(btn => {
         btn.addEventListener('click', () => deletePost(btn.getAttribute('data-delete')));
       });
+    }
+
+    async function loadStats() {
+      const res = await authedFetch('/.netlify/functions/panel-stats');
+      if (!res.ok) {
+        document.getElementById('statGrid').innerHTML = '<div class="empty">Yüklenemedi.</div>';
+        return;
+      }
+      const data = await res.json();
+      renderStats(data);
+    }
+
+    function renderStats(data) {
+      const t = data.totals || {};
+      document.getElementById('statGrid').innerHTML = `
+        <div class="stat-box"><div class="num">${t.dmSent || 0}</div><div class="lbl">DM gönderildi</div></div>
+        <div class="stat-box"><div class="num">${t.dmFailed || 0}</div><div class="lbl">DM atılamadı</div></div>
+        <div class="stat-box"><div class="num">${t.clickedGetLink || 0}</div><div class="lbl">Linki istedi</div></div>
+        <div class="stat-box"><div class="num">${t.becameFollower || 0}</div><div class="lbl">Yeni takipçi oldu</div></div>
+        <div class="stat-box"><div class="num">${t.linkClicked || 0}</div><div class="lbl">Son linke tıkladı</div></div>
+      `;
+
+      const rows = data.rows || [];
+      const table = document.getElementById('statTable');
+      const tbody = document.getElementById('statRows');
+      if (!rows.length) {
+        table.style.display = 'none';
+        return;
+      }
+      table.style.display = 'table';
+      const mark = (v) => v ? '<span class="yes">✔</span>' : '<span class="no">—</span>';
+      tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td>${escapeHtml(r.username || '(bilinmiyor)')}</td>
+          <td>${r.dmFailed ? '<span class="no">Atılamadı</span>' : '<span class="yes">Gönderildi</span>'}</td>
+          <td>${mark(r.clickedGetLink)}</td>
+          <td>${mark(r.becameFollower)}</td>
+          <td>${mark(r.linkClicked)}</td>
+        </tr>
+      `).join('');
     }
 
     function escapeHtml(s) {

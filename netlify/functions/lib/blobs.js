@@ -47,6 +47,21 @@ async function setState(commentId, state) {
   });
 }
 
+// Lists comment states for the panel's analytics view. Capped since Blobs
+// listing has no server-side filtering — fine at this project's volume.
+async function listStates(limit = 500) {
+  const store = stateStore();
+  const { blobs } = await store.list({ prefix: "state:" });
+  const keys = blobs.slice(-limit).map((b) => b.key);
+  const items = await Promise.all(
+    keys.map(async (key) => {
+      const data = await store.get(key, { type: "json" });
+      return data ? { commentId: key.slice("state:".length), ...data } : null;
+    })
+  );
+  return items.filter(Boolean);
+}
+
 module.exports = {
   configStore,
   stateStore,
@@ -55,4 +70,5 @@ module.exports = {
   saveConfigs,
   getState,
   setState,
+  listStates,
 };

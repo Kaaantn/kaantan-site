@@ -15,17 +15,13 @@ exports.handler = async function () {
     dotCount: (token.match(/\./g) || []).length,
   };
 
-  const fbUrl = `https://graph.facebook.com/${GRAPH_VERSION}/me?fields=id,username&access_token=${token}`;
-  const igUrl = `https://graph.instagram.com/${GRAPH_VERSION}/me?fields=id,username&access_token=${token}`;
-
-  const [fbRes, igRes] = await Promise.all([
-    fetch(fbUrl).then((r) => r.json()).catch((e) => ({ error: String(e) })),
-    fetch(igUrl).then((r) => r.json()).catch((e) => ({ error: String(e) })),
-  ]);
+  const testCommentId = "18138069292609821";
+  const replyUrl = `https://graph.instagram.com/${GRAPH_VERSION}/${testCommentId}/private_replies?message=Test&access_token=${token}`;
+  const replyRes = await fetch(replyUrl, { method: "POST" }).then((r) => r.json()).catch((e) => ({ error: String(e) }));
 
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ debugInfo, viaGraphFacebook: fbRes, viaGraphInstagram: igRes }, null, 2),
+    body: JSON.stringify({ debugInfo, privateReplyTest: replyRes }, null, 2),
   };
 };

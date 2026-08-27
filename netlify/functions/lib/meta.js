@@ -9,7 +9,7 @@ const GRAPH_BASE = `https://graph.facebook.com/${GRAPH_VERSION}`;
 function pageToken() {
   const token = process.env.IG_PAGE_ACCESS_TOKEN;
   if (!token) throw new Error("IG_PAGE_ACCESS_TOKEN env var is not set");
-  return token;
+  return token.trim();
 }
 
 async function graphPost(path, body) {

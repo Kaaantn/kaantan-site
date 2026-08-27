@@ -4,6 +4,18 @@ const meta = require("./lib/meta");
 
 const PROFILE_URL = process.env.IG_PROFILE_URL || "https://instagram.com/";
 
+const PUBLIC_REPLY_VARIANTS = [
+  "DM'ine attım, kontrol et 📩",
+  "Gönderdim, kutunu kontrol et 👀",
+  "Attım bile, DM'e bak 🚀",
+  "Mesaj kutunda seni bekliyor 📬",
+  "Gönderildi, umarım ulaşmıştır 🙌",
+];
+
+function randomPublicReply() {
+  return PUBLIC_REPLY_VARIANTS[Math.floor(Math.random() * PUBLIC_REPLY_VARIANTS.length)];
+}
+
 function trMatch(text, word) {
   if (!text || !word) return false;
   return text.toLocaleLowerCase("tr").includes(word.toLocaleLowerCase("tr"));
@@ -46,9 +58,15 @@ async function handleCommentEvent(value) {
     return;
   }
 
-  await meta.sendPrivateReply(commentId, "Selam, aşağıya tıkla, linki hemen atayım", [
-    meta.postbackButton("Linki gönder", `CHECK_FOLLOW_${commentId}`),
-  ]);
+  const { ok } = await meta.sendPrivateReply(
+    commentId,
+    "Selam! 👋 Az sonra linki göndereceğim, aşağıya tıkla ✨",
+    [meta.postbackButton("Linki gönder 🔗", `CHECK_FOLLOW_${commentId}`)]
+  );
+
+  if (ok) {
+    await meta.replyToComment(commentId, randomPublicReply());
+  }
 
   await setState(commentId, {
     status: "pending_follow",
@@ -60,7 +78,7 @@ async function handleCommentEvent(value) {
 
 async function sendLink(igsid, commentId, cfg, greeting) {
   const message = (cfg && cfg.messageOverride) || greeting;
-  await meta.sendMessage(igsid, message, [meta.webUrlButton("Linke git", cfg.link)]);
+  await meta.sendMessage(igsid, message, [meta.webUrlButton("Linke git 🚀", cfg.link)]);
   await setState(commentId, {
     status: "link_sent",
     mediaId: cfg.mediaId || null,
@@ -85,21 +103,23 @@ async function handleFollowCheck(commentId, igsid, isRecheck) {
   const following = await meta.isFollowingBusiness(igsid);
 
   if (following) {
-    const greeting = isRecheck ? "Teşekkürler, linkin burada:" : "Zaten takipteymişsin, al bakalım:";
+    const greeting = isRecheck
+      ? "Teşekkürler! 🙏 İşte linkin:"
+      : "Zaten takipteymişsin, harika! 🎉 Al bakalım:";
     await sendLink(igsid, commentId, cfg, greeting);
     return;
   }
 
   if (!isRecheck) {
-    await meta.sendMessage(igsid, "Önce profili takip et, sonra devam edelim", [
-      meta.webUrlButton("Profile git", PROFILE_URL),
-      meta.postbackButton("Takip ettim", `RECHECK_FOLLOW_${commentId}`),
+    await meta.sendMessage(igsid, "Neredeyse tamam! 🙌 Önce profili takip et, sonra devam edelim 👇", [
+      meta.webUrlButton("Profile git 👤", PROFILE_URL),
+      meta.postbackButton("Takip ettim ✅", `RECHECK_FOLLOW_${commentId}`),
     ]);
   } else {
     await meta.sendMessage(
       igsid,
-      "Henüz sistemde görünmedi, birkaç saniye sonra tekrar dener misin?",
-      [meta.postbackButton("Tekrar dene", `RECHECK_FOLLOW_${commentId}`)]
+      "Henüz göremedim seni takipçilerimde 🤔 Birkaç saniye bekleyip tekrar dener misin?",
+      [meta.postbackButton("Tekrar dene 🔄", `RECHECK_FOLLOW_${commentId}`)]
     );
   }
 

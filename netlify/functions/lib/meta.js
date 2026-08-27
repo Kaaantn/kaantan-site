@@ -67,6 +67,11 @@ function sendMessage(igsid, text, buttons) {
   return graphPost(`/me/messages`, { recipient: { id: igsid }, message });
 }
 
+// Public reply, visible under the comment itself (not a DM).
+function replyToComment(commentId, text) {
+  return graphPost(`/${commentId}/replies`, { message: text });
+}
+
 async function isFollowingBusiness(igsid) {
   const { ok, data } = await graphGet(`/${igsid}?fields=is_user_follow_business`);
   return ok ? Boolean(data.is_user_follow_business) : null; // null = couldn't determine
@@ -83,6 +88,7 @@ function webUrlButton(title, url) {
 module.exports = {
   sendPrivateReply,
   sendMessage,
+  replyToComment,
   isFollowingBusiness,
   postbackButton,
   webUrlButton,

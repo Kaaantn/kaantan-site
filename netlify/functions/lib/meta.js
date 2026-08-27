@@ -4,7 +4,10 @@
 // once the app is live — Meta occasionally renames fields between API versions.
 
 const GRAPH_VERSION = "v21.0";
-const GRAPH_BASE = `https://graph.facebook.com/${GRAPH_VERSION}`;
+// Instagram API with Instagram Login issues IGAA-prefixed tokens that are only
+// valid against graph.instagram.com (graph.facebook.com rejects them with
+// "Cannot parse access token" even though the token itself is fine).
+const GRAPH_BASE = `https://graph.instagram.com/${GRAPH_VERSION}`;
 
 function pageToken() {
   const token = process.env.IG_PAGE_ACCESS_TOKEN;

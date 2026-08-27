@@ -15,18 +15,20 @@ exports.handler = async function () {
     dotCount: (token.match(/\./g) || []).length,
   };
 
-  // mehmet761758 already has a real thread with qkaantan (human replied manually).
-  const testIgsid = "938138928659282";
-  const sendUrl = `https://graph.instagram.com/${GRAPH_VERSION}/me/messages?access_token=${token}`;
-  const sendRes = await fetch(sendUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ recipient: { id: testIgsid }, message: { text: "Test - bot mesaj testi" } }),
-  }).then((r) => r.json()).catch((e) => ({ error: String(e) }));
+  // Find a recent comment on a reel and check its author's id, without sending anything yet.
+  const mediaUrl = `https://graph.instagram.com/${GRAPH_VERSION}/me/media?fields=id&limit=3&access_token=${token}`;
+  const mediaRes = await fetch(mediaUrl).then((r) => r.json()).catch((e) => ({ error: String(e) }));
+
+  const recentComments = [];
+  for (const m of (mediaRes.data || [])) {
+    const cUrl = `https://graph.instagram.com/${GRAPH_VERSION}/${m.id}/comments?fields=id,text,timestamp,from&limit=10&access_token=${token}`;
+    const cRes = await fetch(cUrl).then((r) => r.json()).catch((e) => ({ error: String(e) }));
+    for (const c of (cRes.data || [])) recentComments.push(c);
+  }
 
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ debugInfo, plainMessageTest: sendRes }, null, 2),
+    body: JSON.stringify({ debugInfo, recentComments }, null, 2),
   };
 };

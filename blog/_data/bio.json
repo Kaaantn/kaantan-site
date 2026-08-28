@@ -25,6 +25,15 @@
   "avatar": "/assets/bio/profil.jpg",
   "links": [
     {
+      "title": "ChatLLM - Tüm Yapay Zeka Modelleri Tek Yerde",
+      "subtitle": "chatllm.abacus.ai",
+      "url": "https://chatllm.abacus.ai/qka",
+      "icon": "star",
+      "color": "#0EA5E9",
+      "iconColor": "#FFFFFF",
+      "perk": "İlk ay $10 yerine $7"
+    },
+    {
       "title": "Atlas Find - İş Geliştirme ve Satış Platformu",
       "subtitle": "app.atlasfind.co",
       "url": "https://app.atlasfind.co/?ref=KAANTAN",

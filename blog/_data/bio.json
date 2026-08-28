@@ -28,8 +28,9 @@
       "title": "ChatLLM - Tüm Yapay Zeka Modelleri Tek Yerde",
       "subtitle": "chatllm.abacus.ai",
       "url": "https://chatllm.abacus.ai/qka",
-      "icon": "star",
-      "color": "#0EA5E9",
+      "icon": "image",
+      "iconImage": "/assets/abacus.png",
+      "color": "#031321",
       "iconColor": "#FFFFFF",
       "perk": "İlk ay $10 yerine $7"
     },

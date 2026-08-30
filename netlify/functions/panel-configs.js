@@ -44,6 +44,12 @@ exports.handler = async function (event, context) {
       return { statusCode: 200, headers, body: JSON.stringify(configs) };
     }
 
+    if (typeof body.publicReplyEnabled === "boolean") {
+      configs.publicReplyEnabled = body.publicReplyEnabled;
+      await saveConfigs(configs);
+      return { statusCode: 200, headers, body: JSON.stringify(configs) };
+    }
+
     if (!body.post) {
       return { statusCode: 400, headers, body: JSON.stringify({ error: "post gerekli" }) };
     }

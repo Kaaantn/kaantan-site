@@ -79,6 +79,16 @@ eleventyExcludeFromCollections: true
     .stat-table tr:last-child td { border-bottom: none; }
     .yes { color: var(--lime-400); }
     .no { color: var(--muted); }
+
+    .switch-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .switch-row .switch-text { font-size: 0.88rem; color: var(--ink-2); }
+    .switch-row .hint { margin-top: 2px; }
+    .switch { position: relative; display: inline-block; width: 46px; height: 26px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .switch .slider { position: absolute; inset: 0; background: var(--line); border-radius: 100px; cursor: pointer; transition: background 0.2s; }
+    .switch .slider::before { content: ""; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px; background: var(--ink); border-radius: 50%; transition: transform 0.2s; }
+    .switch input:checked + .slider { background: var(--lime-500); }
+    .switch input:checked + .slider::before { transform: translateX(20px); background: #0A0A10; }
   </style>
 </head>
 <body>
@@ -96,6 +106,20 @@ eleventyExcludeFromCollections: true
 
     <h1>Instagram Yorum Otomasyonu</h1>
     <p class="sub">Post/kelime/link eşleşmelerini buradan yönet.</p>
+
+    <div class="card">
+      <div class="switch-row">
+        <div>
+          <h2 style="margin-bottom:2px">Yorumlara genel yanıt</h2>
+          <div class="switch-text hint">Kapatırsan bot yorumun altına yanıt yazmaz; DM ve takip kontrolü aynen çalışmaya devam eder.</div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="publicReplyToggle" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="status-msg" id="publicReplyStatus"></div>
+    </div>
 
     <div class="card">
       <h2>Varsayılan (fallback) kelime</h2>
@@ -208,6 +232,7 @@ eleventyExcludeFromCollections: true
       }
       configsCache = await res.json();
       document.getElementById('fallbackWord').value = configsCache.fallbackWord || '';
+      document.getElementById('publicReplyToggle').checked = configsCache.publicReplyEnabled !== false;
       renderPosts();
     }
 
@@ -357,6 +382,25 @@ eleventyExcludeFromCollections: true
         renderPosts();
       }
     }
+
+    document.getElementById('publicReplyToggle').addEventListener('change', async (e) => {
+      const statusEl = document.getElementById('publicReplyStatus');
+      const publicReplyEnabled = e.target.checked;
+      const res = await authedFetch('/.netlify/functions/panel-configs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ publicReplyEnabled }),
+      });
+      if (res.ok) {
+        configsCache = await res.json();
+        statusEl.textContent = publicReplyEnabled ? 'Açık — kaydedildi.' : 'Kapalı — kaydedildi.';
+        statusEl.className = 'status-msg ok';
+      } else {
+        e.target.checked = !publicReplyEnabled;
+        statusEl.textContent = 'Kaydedilemedi.';
+        statusEl.className = 'status-msg error';
+      }
+    });
 
     document.getElementById('saveFallbackBtn').addEventListener('click', async () => {
       const statusEl = document.getElementById('fallbackStatus');

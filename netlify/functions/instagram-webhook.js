@@ -75,7 +75,9 @@ async function handleCommentEvent(value) {
     [meta.postbackButton("Linki gönder 🔗", `CHECK_FOLLOW_${commentId}`)]
   );
 
-  await meta.replyToComment(commentId, ok ? randomOf(PUBLIC_REPLY_VARIANTS) : randomOf(FAILURE_REPLY_VARIANTS));
+  if (configs.publicReplyEnabled !== false) {
+    await meta.replyToComment(commentId, ok ? randomOf(PUBLIC_REPLY_VARIANTS) : randomOf(FAILURE_REPLY_VARIANTS));
+  }
 
   await setState(commentId, {
     status: ok ? "pending_follow" : "dm_failed",

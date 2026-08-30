@@ -70,6 +70,6 @@ exports.handler = async function (event, context) {
   return {
     statusCode: 200,
     headers,
-    body: JSON.stringify({ totals, byPost: Object.values(byPost), rows: rows.slice(0, 200) }),
+    body: JSON.stringify({ totals, byPost: Object.values(byPost), rows: rows.slice(0, 10) }),
   };
 };

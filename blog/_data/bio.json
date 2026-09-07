@@ -75,6 +75,13 @@
       "icon": "kt-logo",
       "color": "#A3E635",
       "iconColor": "#0A0A0A"
+    },
+    {
+      "title": "SnapGen - Ücretsiz Yapay Zeka Video Oluştur",
+      "subtitle": "snapgen.ai",
+      "url": "https://snapgen.ai/auth/signup?ref=TKN6UU9",
+      "icon": "image",
+      "iconImage": "/assets/bio/snap.png"
     }
   ],
   "email": "kaantanpr@gmail.com",

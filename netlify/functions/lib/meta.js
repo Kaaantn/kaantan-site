@@ -72,6 +72,29 @@ function replyToComment(commentId, text) {
   return graphPost(`/${commentId}/replies`, { message: text });
 }
 
+// Resolves a pasted Instagram post URL to the account's real numeric media
+// id by scanning the account's own media and matching on permalink. Needed
+// because the panel only collects a human-readable link/id, and per-post
+// trigger-word matching requires the actual media id to avoid cross-post
+// bleed (see findConfigForComment in instagram-webhook.js).
+async function findMediaIdByPermalink(postLinkOrId) {
+  const raw = (postLinkOrId || "").trim();
+  if (!raw) return null;
+  if (/^\d+$/.test(raw)) return raw; // already a raw numeric media id
+
+  const normalize = (u) => (u || "").trim().replace(/\/+$/, "").toLowerCase();
+  const target = normalize(raw);
+
+  let url = `${GRAPH_BASE}/me/media?fields=id,permalink&limit=50&access_token=${pageToken()}`;
+  for (let page = 0; page < 20 && url; page++) {
+    const data = await fetch(url).then((r) => r.json()).catch(() => ({}));
+    const match = (data.data || []).find((m) => normalize(m.permalink) === target);
+    if (match) return match.id;
+    url = data.paging && data.paging.next;
+  }
+  return null;
+}
+
 async function isFollowingBusiness(igsid) {
   const { ok, data } = await graphGet(`/${igsid}?fields=is_user_follow_business`);
   return ok ? Boolean(data.is_user_follow_business) : null; // null = couldn't determine
@@ -89,6 +112,7 @@ module.exports = {
   sendPrivateReply,
   sendMessage,
   replyToComment,
+  findMediaIdByPermalink,
   isFollowingBusiness,
   postbackButton,
   webUrlButton,

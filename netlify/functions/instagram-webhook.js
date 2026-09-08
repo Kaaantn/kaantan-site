@@ -32,21 +32,25 @@ function trMatch(text, word) {
 }
 
 function findConfigForComment(configs, mediaId, commentText) {
-  const active = (configs.posts || []).filter((p) => p.active !== false);
-  // Prefer a config that's explicitly tied to this media id.
-  const forMedia = active.find((p) => p.mediaId === mediaId);
-  const candidates = forMedia ? [forMedia] : active;
+  // A post's trigger words (or the fallback word used as its trigger word)
+  // only ever apply to comments on that exact post — never to any other
+  // configured post. Without a real mediaId match, a comment is simply not
+  // for us; matching against every active post's words here previously
+  // caused one post's trigger word to fire on completely different posts.
+  if (!mediaId) return null;
 
-  for (const cfg of candidates) {
-    const words = (cfg.triggerWords && cfg.triggerWords.length
-      ? cfg.triggerWords
-      : configs.fallbackWord
-      ? [configs.fallbackWord]
-      : []
-    );
-    if (words.some((w) => trMatch(commentText, w))) return cfg;
-  }
-  return null;
+  const cfg = (configs.posts || []).find(
+    (p) => p.active !== false && p.mediaId && p.mediaId === mediaId
+  );
+  if (!cfg) return null;
+
+  const words = cfg.triggerWords && cfg.triggerWords.length
+    ? cfg.triggerWords
+    : configs.fallbackWord
+    ? [configs.fallbackWord]
+    : [];
+
+  return words.some((w) => trMatch(commentText, w)) ? cfg : null;
 }
 
 async function handleCommentEvent(value) {

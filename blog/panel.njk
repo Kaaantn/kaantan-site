@@ -249,6 +249,7 @@ eleventyExcludeFromCollections: true
             <div>
               <div class="post-title">${escapeHtml(p.postLink || p.mediaId || '(link yok)')}</div>
               <div class="post-meta">${p.active === false ? 'Pasif' : 'Aktif'} · Link: ${escapeHtml(p.link || '-')}</div>
+              <div class="post-meta">${p.mediaId ? '✔ Bu posta özel eşleşiyor (medya ID doğrulandı)' : '⚠️ Medya ID bulunamadı — bu postun kelimesi tetiklenmeyecek. Post linkini kontrol edip tekrar kaydet.'}</div>
             </div>
             <div class="post-actions">
               <button data-edit="${p.id}">Düzenle</button>

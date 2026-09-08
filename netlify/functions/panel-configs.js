@@ -1,4 +1,5 @@
 const { getConfigs, saveConfigs } = require("./lib/blobs");
+const meta = require("./lib/meta");
 
 function requireUser(context) {
   const user = context.clientContext && context.clientContext.user;
@@ -14,6 +15,28 @@ function newId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
+// Posts saved before mediaId resolution existed (or where resolution failed
+// at save time) sit with mediaId "" — which breaks per-post trigger-word
+// scoping (see findConfigForComment). Heal them opportunistically whenever
+// configs are loaded or saved.
+async function backfillMediaIds(configs) {
+  let changed = false;
+  for (const p of configs.posts || []) {
+    if (!p.mediaId && p.postLink) {
+      try {
+        const resolved = await meta.findMediaIdByPermalink(p.postLink);
+        if (resolved) {
+          p.mediaId = resolved;
+          changed = true;
+        }
+      } catch (e) {
+        console.error("mediaId backfill failed for", p.postLink, e);
+      }
+    }
+  }
+  return changed;
+}
+
 exports.handler = async function (event, context) {
   try {
     requireUser(context);
@@ -25,6 +48,9 @@ exports.handler = async function (event, context) {
 
   if (event.httpMethod === "GET") {
     const configs = await getConfigs();
+    if (await backfillMediaIds(configs)) {
+      await saveConfigs(configs);
+    }
     return { statusCode: 200, headers, body: JSON.stringify(configs) };
   }
 
@@ -62,11 +88,23 @@ exports.handler = async function (event, context) {
       if (idx === -1) {
         return { statusCode: 404, headers, body: JSON.stringify({ error: "Bulunamadı" }) };
       }
-      configs.posts[idx] = { ...configs.posts[idx], ...post };
+      const existing = configs.posts[idx];
+      const merged = { ...existing, ...post };
+      // Re-resolve the media id whenever the link changed or it's still missing —
+      // per-post trigger words only apply when this is set correctly.
+      if (merged.postLink && (merged.postLink !== existing.postLink || !merged.mediaId)) {
+        const resolved = await meta.findMediaIdByPermalink(merged.postLink);
+        if (resolved) merged.mediaId = resolved;
+      }
+      configs.posts[idx] = merged;
     } else {
+      let mediaId = post.mediaId || "";
+      if (!mediaId && post.postLink) {
+        mediaId = (await meta.findMediaIdByPermalink(post.postLink)) || "";
+      }
       configs.posts.push({
         id: newId(),
-        mediaId: post.mediaId || "",
+        mediaId,
         postLink: post.postLink || "",
         triggerWords: post.triggerWords || [],
         link: post.link || "",

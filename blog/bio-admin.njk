@@ -1,0 +1,605 @@
+---
+permalink: "/bio-admin/index.html"
+eleventyExcludeFromCollections: true
+---
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bio Panel — Kaan Tan</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --lime-400: #A78BFA; --lime-500: #8B5CF6; --lime-600: #7C3AED;
+      --ink: #F5F3F8; --ink-2: #DAD6E3; --body: #B7B2C4; --muted: #8A8494;
+      --line: rgba(255,255,255,0.10); --surface: #16131E; --white: #0B0A10;
+      --danger: #F87171;
+      --display: 'Space Grotesk', sans-serif; --body-f: 'Inter', sans-serif;
+    }
+    body { font-family: var(--body-f); background: var(--white); color: var(--body); min-height: 100vh; line-height: 1.5; }
+    a { color: inherit; }
+    input, textarea, select { font-family: inherit; }
+
+    .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 100px; }
+    h1 { font-family: var(--display); font-size: 1.6rem; color: var(--ink); margin-bottom: 6px; }
+    .sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 32px; }
+    .sub a { color: var(--lime-400); font-weight: 600; }
+
+    .gate { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; text-align: center; gap: 16px; }
+    .gate p { color: var(--muted); max-width: 360px; }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; background: var(--lime-500); color: #0A0A10; border: none; padding: 11px 22px; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+    .btn:hover { background: var(--lime-400); }
+    .btn.secondary { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+    .btn.danger { background: rgba(248,113,113,0.12); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn.small { padding: 6px 12px; font-size: 0.78rem; }
+
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; margin-bottom: 20px; }
+    .card h2 { font-family: var(--display); font-size: 1.05rem; color: var(--ink); margin-bottom: 14px; }
+
+    label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin: 14px 0 6px; }
+    label:first-child { margin-top: 0; }
+    input[type="text"], input[type="email"], input[type="tel"], textarea, select {
+      width: 100%; background: var(--white); border: 1px solid var(--line); color: var(--ink);
+      padding: 10px 12px; border-radius: 8px; font-size: 0.92rem;
+    }
+    input[type="text"]:focus, textarea:focus, select:focus { outline: 1.5px solid var(--lime-500); }
+    textarea { resize: vertical; min-height: 60px; }
+    input[type="color"] { width: 48px; height: 38px; padding: 2px; background: var(--white); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
+    .color-row { display: flex; align-items: center; gap: 10px; }
+    .color-row input[type="text"] { flex: 1; }
+    .hint { font-size: 0.76rem; color: var(--muted); margin-top: 4px; }
+    .row { display: flex; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+    .row label { margin: 0; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+
+    .avatar-row { display: flex; align-items: center; gap: 16px; }
+    .avatar-preview { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; background: var(--white); border: 1px solid var(--line); flex-shrink: 0; }
+    .icon-preview { width: 48px; height: 48px; border-radius: 11px; object-fit: contain; background: var(--white); border: 1px solid var(--line); flex-shrink: 0; padding: 4px; }
+
+    .status-msg { font-size: 0.82rem; margin-top: 10px; }
+    .status-msg.error { color: var(--danger); }
+    .status-msg.ok { color: var(--lime-400); }
+    .empty { color: var(--muted); font-size: 0.88rem; padding: 20px 0; text-align: center; }
+    #userBar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 0.82rem; color: var(--muted); }
+
+    .switch-row { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+    .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .switch .slider { position: absolute; inset: 0; background: var(--line); border-radius: 100px; cursor: pointer; transition: background 0.2s; }
+    .switch .slider::before { content: ""; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: var(--ink); border-radius: 50%; transition: transform 0.2s; }
+    .switch input:checked + .slider { background: var(--lime-500); }
+    .switch input:checked + .slider::before { transform: translateX(18px); background: #0A0A10; }
+    .switch-row .switch-label { font-size: 0.88rem; color: var(--ink-2); }
+
+    .social-item { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+    .social-item .platform-name { font-weight: 600; color: var(--ink); font-size: 0.92rem; text-transform: capitalize; margin-bottom: 8px; }
+    .click-badge { display: inline-block; font-size: 0.72rem; color: var(--lime-400); background: rgba(139,92,246,0.14); border: 1px solid rgba(139,92,246,0.28); padding: 2px 9px; border-radius: 100px; margin-top: 6px; }
+
+    .link-item { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+    .link-item-body { flex: 1; min-width: 0; }
+    .link-item-title { font-weight: 600; color: var(--ink); font-size: 0.92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .link-item-sub { font-size: 0.76rem; color: var(--muted); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .link-item-actions { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; }
+    .link-item-actions button { background: none; border: 1px solid var(--line); color: var(--muted); padding: 6px 10px; border-radius: 7px; font-size: 0.76rem; cursor: pointer; }
+    .link-item-actions button:hover { color: var(--ink); border-color: var(--ink-2); }
+  </style>
+</head>
+<body>
+  <div id="gate" class="gate">
+    <h1>Bio Panel</h1>
+    <p>kaantan.com.tr/bio sayfası yönetim paneli. Devam etmek için giriş yapmalısın.</p>
+    <button class="btn" id="loginBtn">Giriş Yap</button>
+  </div>
+
+  <div id="app" class="wrap" style="display:none">
+    <div id="userBar">
+      <span id="userEmail"></span>
+      <button class="btn secondary" id="logoutBtn" style="padding:7px 14px;font-size:0.8rem">Çıkış</button>
+    </div>
+
+    <h1>Bio Sayfası</h1>
+    <p class="sub">kaantan.com.tr/bio sayfasını buradan yönet. Değişiklikler kaydettiğin an canlıya yansır. <a href="/bio/" target="_blank" rel="noopener">Sayfayı gör →</a> · <a href="/panel/">Yorum Otomasyonu Paneli →</a></p>
+
+    <div class="card">
+      <h2>Profil</h2>
+      <div class="avatar-row">
+        <img class="avatar-preview" id="avatarPreview" alt="">
+        <div>
+          <button class="btn secondary small" id="avatarUploadBtn" type="button">Fotoğrafı değiştir</button>
+          <input type="file" id="avatarFileInput" accept="image/*" hidden>
+        </div>
+      </div>
+      <label>İsim</label>
+      <input type="text" id="displayName">
+      <label>Bio metni</label>
+      <textarea id="bioText"></textarea>
+      <label>Konum</label>
+      <input type="text" id="location">
+      <label>Banner rengi</label>
+      <div class="color-row">
+        <input type="color" id="bannerColorPicker">
+        <input type="text" id="bannerColorText" placeholder="#4F46E5">
+      </div>
+
+      <div class="two-col">
+        <div>
+          <label>Telefon</label>
+          <input type="text" id="phone">
+          <div class="switch-row">
+            <label class="switch"><input type="checkbox" id="showPhone"><span class="slider"></span></label>
+            <span class="switch-label">Profilde göster</span>
+          </div>
+        </div>
+        <div>
+          <label>E-posta</label>
+          <input type="text" id="email">
+          <div class="switch-row">
+            <label class="switch"><input type="checkbox" id="showEmail"><span class="slider"></span></label>
+            <span class="switch-label">Profilde göster</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <button class="btn" id="saveProfileBtn">Profili Kaydet</button>
+      </div>
+      <div class="status-msg" id="profileStatus"></div>
+    </div>
+
+    <div class="card">
+      <h2>Sosyal Medya</h2>
+      <div id="socialList"></div>
+      <div class="row">
+        <button class="btn" id="saveSocialBtn">Sosyal Medyayı Kaydet</button>
+      </div>
+      <div class="status-msg" id="socialStatus"></div>
+    </div>
+
+    <div class="card">
+      <h2 id="linkFormTitle">Yeni link ekle</h2>
+      <input type="hidden" id="linkId">
+      <label>Başlık</label>
+      <input type="text" id="linkTitle" placeholder="Ürün adı - kısa açıklama">
+      <label>Alt başlık (opsiyonel)</label>
+      <input type="text" id="linkSubtitle" placeholder="site.com">
+      <label>Link</label>
+      <input type="text" id="linkUrl" placeholder="https://...">
+      <label>İkon</label>
+      <select id="linkIcon">
+        <option value="image">Özel resim (logo yükle)</option>
+        <option value="mic">Mikrofon</option>
+        <option value="search">Ara</option>
+        <option value="star">Yıldız</option>
+        <option value="shopping-bag">Alışveriş</option>
+        <option value="globe">Web</option>
+        <option value="message-circle">Mesaj</option>
+        <option value="activity">Aktivite</option>
+        <option value="terminal">Terminal</option>
+        <option value="file-text">Belge</option>
+        <option value="kt-logo">KT Logo</option>
+      </select>
+      <div id="linkImageRow">
+        <div class="avatar-row" style="margin-top:10px">
+          <img class="icon-preview" id="linkIconPreview" alt="">
+          <div>
+            <button class="btn secondary small" id="linkImageUploadBtn" type="button">Logo yükle</button>
+            <input type="file" id="linkImageFileInput" accept="image/*" hidden>
+          </div>
+        </div>
+      </div>
+      <div class="two-col" style="margin-top:14px">
+        <div>
+          <label>Arkaplan rengi</label>
+          <div class="color-row">
+            <input type="color" id="linkColorPicker">
+            <input type="text" id="linkColorText" placeholder="#4F46E5">
+          </div>
+        </div>
+        <div>
+          <label>İkon rengi</label>
+          <div class="color-row">
+            <input type="color" id="linkIconColorPicker">
+            <input type="text" id="linkIconColorText" placeholder="#FFFFFF">
+          </div>
+        </div>
+      </div>
+      <label>Rozet metni (opsiyonel)</label>
+      <input type="text" id="linkPerk" placeholder="örn. İlk ay $10 yerine $7">
+      <div class="row">
+        <button class="btn" id="saveLinkBtn">Kaydet</button>
+        <button class="btn secondary" id="cancelLinkEditBtn" style="display:none">Vazgeç</button>
+      </div>
+      <div class="status-msg" id="linkFormStatus"></div>
+    </div>
+
+    <div class="card">
+      <h2>Linkler (sırayla)</h2>
+      <div id="linksList"><div class="empty">Yükleniyor…</div></div>
+    </div>
+  </div>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    var gate = document.getElementById('gate');
+    var app = document.getElementById('app');
+    var loginBtn = document.getElementById('loginBtn');
+    var logoutBtn = document.getElementById('logoutBtn');
+    var userEmail = document.getElementById('userEmail');
+
+    function showApp(user) {
+      gate.style.display = 'none';
+      app.style.display = 'block';
+      userEmail.textContent = user.email || '';
+      loadBio();
+    }
+    function showGate() {
+      gate.style.display = 'flex';
+      app.style.display = 'none';
+    }
+    if (window.netlifyIdentity) {
+      netlifyIdentity.on('init', function (user) { if (user) showApp(user); else showGate(); });
+      netlifyIdentity.on('login', function (user) { showApp(user); netlifyIdentity.close(); });
+      netlifyIdentity.on('logout', showGate);
+      netlifyIdentity.init();
+    }
+    loginBtn.addEventListener('click', function () { netlifyIdentity.open('login'); });
+    logoutBtn.addEventListener('click', function () { netlifyIdentity.logout(); });
+
+    async function authedFetch(url, options) {
+      var user = netlifyIdentity.currentUser();
+      var token = user ? await user.jwt() : null;
+      var opts = options || {};
+      opts.headers = Object.assign({}, opts.headers, token ? { Authorization: 'Bearer ' + token } : {});
+      return fetch(url, opts);
+    }
+
+    var bio = { socialLinks: [], links: [] };
+    var editingLinkId = null;
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    async function loadBio() {
+      var res = await authedFetch('/.netlify/functions/bio-config');
+      if (!res.ok) {
+        document.getElementById('linksList').innerHTML = '<div class="empty">Yüklenemedi, tekrar giriş yapmayı dene.</div>';
+        return;
+      }
+      bio = await res.json();
+      bio.socialLinks = bio.socialLinks || [];
+      bio.links = bio.links || [];
+      renderProfile();
+      renderSocial();
+      renderLinks();
+    }
+
+    async function saveBio(statusElId, okMsg) {
+      var statusEl = document.getElementById(statusElId);
+      var res = await authedFetch('/.netlify/functions/bio-config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ config: bio }),
+      });
+      if (res.ok) {
+        bio = await res.json();
+        statusEl.textContent = okMsg || 'Kaydedildi.';
+        statusEl.className = 'status-msg ok';
+        return true;
+      }
+      statusEl.textContent = 'Kaydedilemedi.';
+      statusEl.className = 'status-msg error';
+      return false;
+    }
+
+    function uploadImage(file) {
+      return new Promise(function (resolve, reject) {
+        if (file.size > 5 * 1024 * 1024) { reject(new Error('Dosya çok büyük (maks 5MB)')); return; }
+        var reader = new FileReader();
+        reader.onload = async function () {
+          try {
+            var dataUrl = reader.result;
+            var base64 = dataUrl.substring(dataUrl.indexOf(',') + 1);
+            var res = await authedFetch('/.netlify/functions/bio-asset', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ contentType: file.type, dataBase64: base64 }),
+            });
+            if (!res.ok) throw new Error('Yükleme başarısız');
+            var data = await res.json();
+            resolve(data.url);
+          } catch (e) { reject(e); }
+        };
+        reader.onerror = function () { reject(new Error('Dosya okunamadı')); };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // ---- Profil ----
+    function renderProfile() {
+      document.getElementById('avatarPreview').src = bio.avatar || '';
+      document.getElementById('displayName').value = bio.displayName || '';
+      document.getElementById('bioText').value = bio.bio || '';
+      document.getElementById('location').value = bio.location || '';
+      document.getElementById('bannerColorPicker').value = bio.bannerColor || '#4F46E5';
+      document.getElementById('bannerColorText').value = bio.bannerColor || '#4F46E5';
+      document.getElementById('phone').value = bio.phone || '';
+      document.getElementById('showPhone').checked = bio.showPhone !== false;
+      document.getElementById('email').value = bio.email || '';
+      document.getElementById('showEmail').checked = bio.showEmail !== false;
+    }
+
+    document.getElementById('bannerColorPicker').addEventListener('input', function (e) {
+      document.getElementById('bannerColorText').value = e.target.value;
+    });
+    document.getElementById('bannerColorText').addEventListener('input', function (e) {
+      if (/^#[0-9A-Fa-f]{6}$/.test(e.target.value)) document.getElementById('bannerColorPicker').value = e.target.value;
+    });
+
+    document.getElementById('avatarUploadBtn').addEventListener('click', function () {
+      document.getElementById('avatarFileInput').click();
+    });
+    document.getElementById('avatarFileInput').addEventListener('change', async function (e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      var statusEl = document.getElementById('profileStatus');
+      try {
+        statusEl.textContent = 'Yükleniyor…';
+        statusEl.className = 'status-msg';
+        var url = await uploadImage(file);
+        bio.avatar = url;
+        document.getElementById('avatarPreview').src = url;
+        statusEl.textContent = 'Yüklendi — kaydetmeyi unutma.';
+        statusEl.className = 'status-msg ok';
+      } catch (err) {
+        statusEl.textContent = err.message || 'Yükleme başarısız.';
+        statusEl.className = 'status-msg error';
+      }
+    });
+
+    document.getElementById('saveProfileBtn').addEventListener('click', async function () {
+      bio.displayName = document.getElementById('displayName').value.trim();
+      bio.bio = document.getElementById('bioText').value.trim();
+      bio.location = document.getElementById('location').value.trim();
+      bio.bannerColor = document.getElementById('bannerColorText').value.trim() || '#4F46E5';
+      bio.phone = document.getElementById('phone').value.trim();
+      bio.showPhone = document.getElementById('showPhone').checked;
+      bio.email = document.getElementById('email').value.trim();
+      bio.showEmail = document.getElementById('showEmail').checked;
+      await saveBio('profileStatus');
+    });
+
+    // ---- Sosyal medya ----
+    var SOCIAL_PLATFORMS = ['youtube', 'tiktok', 'instagram'];
+    var SOCIAL_LABELS = { youtube: 'YouTube', tiktok: 'TikTok', instagram: 'Instagram' };
+
+    function renderSocial() {
+      var list = document.getElementById('socialList');
+      list.innerHTML = SOCIAL_PLATFORMS.map(function (platform) {
+        var s = bio.socialLinks.find(function (x) { return x.platform === platform; }) || { platform: platform };
+        var clicks = s.clicks || 0;
+        return '<div class="social-item" data-platform="' + platform + '">' +
+          '<div class="platform-name">' + SOCIAL_LABELS[platform] + '</div>' +
+          '<label>Profil linki</label>' +
+          '<input type="text" class="social-url" value="' + escapeHtml(s.url || '') + '">' +
+          (platform === 'youtube'
+            ? '<div class="hint">Abone sayısı otomatik (YouTube API) çekilir.</div>'
+            : '<label>Takipçi sayısı (elle güncelle)</label><input type="text" class="social-count" value="' + escapeHtml(s.followerCount || '') + '">'
+          ) +
+          '<div class="click-badge">' + clicks + ' tıklama</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    document.getElementById('saveSocialBtn').addEventListener('click', async function () {
+      var items = document.querySelectorAll('.social-item');
+      items.forEach(function (el) {
+        var platform = el.getAttribute('data-platform');
+        var url = el.querySelector('.social-url').value.trim();
+        var countInput = el.querySelector('.social-count');
+        var existing = bio.socialLinks.find(function (x) { return x.platform === platform; });
+        var next = existing ? Object.assign({}, existing) : { platform: platform };
+        next.url = url;
+        if (platform === 'youtube') next.live = true;
+        if (countInput) next.followerCount = countInput.value.trim();
+        var idx = bio.socialLinks.findIndex(function (x) { return x.platform === platform; });
+        if (idx === -1) bio.socialLinks.push(next); else bio.socialLinks[idx] = next;
+      });
+      await saveBio('socialStatus');
+      renderSocial();
+    });
+
+    // ---- Linkler ----
+    function newId() {
+      return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    }
+
+    function renderLinks() {
+      var list = document.getElementById('linksList');
+      if (!bio.links.length) {
+        list.innerHTML = '<div class="empty">Henüz link eklenmedi.</div>';
+        return;
+      }
+      list.innerHTML = bio.links.map(function (l, i) {
+        var iconHtml = l.icon === 'image' && l.iconImage
+          ? '<img src="' + escapeHtml(l.iconImage) + '" style="width:36px;height:36px;object-fit:contain;border-radius:8px;background:#fff;padding:3px;flex-shrink:0">'
+          : '';
+        return '<div class="link-item">' + iconHtml +
+          '<div class="link-item-body">' +
+            '<div class="link-item-title">' + escapeHtml(l.title) + '</div>' +
+            '<div class="link-item-sub">' + escapeHtml(l.subtitle || l.url) + ' · ' + (l.clicks || 0) + ' tıklama</div>' +
+          '</div>' +
+          '<div class="link-item-actions">' +
+            (i > 0 ? '<button data-up="' + i + '">↑</button>' : '') +
+            (i < bio.links.length - 1 ? '<button data-down="' + i + '">↓</button>' : '') +
+            '<button data-edit="' + l.id + '">Düzenle</button>' +
+            '<button data-delete="' + l.id + '">Sil</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      list.querySelectorAll('[data-up]').forEach(function (btn) {
+        btn.addEventListener('click', function () { moveLink(parseInt(btn.getAttribute('data-up'), 10), -1); });
+      });
+      list.querySelectorAll('[data-down]').forEach(function (btn) {
+        btn.addEventListener('click', function () { moveLink(parseInt(btn.getAttribute('data-down'), 10), 1); });
+      });
+      list.querySelectorAll('[data-edit]').forEach(function (btn) {
+        btn.addEventListener('click', function () { startEditLink(btn.getAttribute('data-edit')); });
+      });
+      list.querySelectorAll('[data-delete]').forEach(function (btn) {
+        btn.addEventListener('click', function () { deleteLink(btn.getAttribute('data-delete')); });
+      });
+    }
+
+    async function moveLink(index, dir) {
+      var target = index + dir;
+      if (target < 0 || target >= bio.links.length) return;
+      var tmp = bio.links[index];
+      bio.links[index] = bio.links[target];
+      bio.links[target] = tmp;
+      renderLinks();
+      await saveBio('linkFormStatus', 'Sıra kaydedildi.');
+    }
+
+    async function deleteLink(id) {
+      if (!confirm('Bu link silinsin mi?')) return;
+      bio.links = bio.links.filter(function (l) { return l.id !== id; });
+      renderLinks();
+      await saveBio('linkFormStatus', 'Silindi.');
+    }
+
+    function updateLinkIconRow() {
+      var icon = document.getElementById('linkIcon').value;
+      document.getElementById('linkImageRow').style.display = icon === 'image' ? 'block' : 'none';
+    }
+    document.getElementById('linkIcon').addEventListener('change', updateLinkIconRow);
+
+    document.getElementById('linkColorPicker').addEventListener('input', function (e) {
+      document.getElementById('linkColorText').value = e.target.value;
+    });
+    document.getElementById('linkColorText').addEventListener('input', function (e) {
+      if (/^#[0-9A-Fa-f]{6}$/.test(e.target.value)) document.getElementById('linkColorPicker').value = e.target.value;
+    });
+    document.getElementById('linkIconColorPicker').addEventListener('input', function (e) {
+      document.getElementById('linkIconColorText').value = e.target.value;
+    });
+    document.getElementById('linkIconColorText').addEventListener('input', function (e) {
+      if (/^#[0-9A-Fa-f]{6}$/.test(e.target.value)) document.getElementById('linkIconColorPicker').value = e.target.value;
+    });
+
+    document.getElementById('linkImageUploadBtn').addEventListener('click', function () {
+      document.getElementById('linkImageFileInput').click();
+    });
+    var pendingLinkImage = '';
+    document.getElementById('linkImageFileInput').addEventListener('change', async function (e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      var statusEl = document.getElementById('linkFormStatus');
+      try {
+        statusEl.textContent = 'Yükleniyor…';
+        statusEl.className = 'status-msg';
+        var url = await uploadImage(file);
+        pendingLinkImage = url;
+        document.getElementById('linkIconPreview').src = url;
+        statusEl.textContent = 'Logo yüklendi.';
+        statusEl.className = 'status-msg ok';
+      } catch (err) {
+        statusEl.textContent = err.message || 'Yükleme başarısız.';
+        statusEl.className = 'status-msg error';
+      }
+    });
+
+    function startEditLink(id) {
+      var l = bio.links.find(function (x) { return x.id === id; });
+      if (!l) return;
+      editingLinkId = id;
+      document.getElementById('linkFormTitle').textContent = 'Linki düzenle';
+      document.getElementById('linkId').value = l.id;
+      document.getElementById('linkTitle').value = l.title || '';
+      document.getElementById('linkSubtitle').value = l.subtitle || '';
+      document.getElementById('linkUrl').value = l.url || '';
+      document.getElementById('linkIcon').value = l.icon || 'image';
+      pendingLinkImage = l.iconImage || '';
+      document.getElementById('linkIconPreview').src = pendingLinkImage;
+      document.getElementById('linkColorPicker').value = l.color || '#4F46E5';
+      document.getElementById('linkColorText').value = l.color || '#4F46E5';
+      document.getElementById('linkIconColorPicker').value = l.iconColor || '#FFFFFF';
+      document.getElementById('linkIconColorText').value = l.iconColor || '#FFFFFF';
+      document.getElementById('linkPerk').value = l.perk || '';
+      document.getElementById('cancelLinkEditBtn').style.display = 'inline-flex';
+      updateLinkIconRow();
+      window.scrollTo({ top: document.querySelector('#linkFormTitle').closest('.card').offsetTop - 20, behavior: 'smooth' });
+    }
+
+    function resetLinkForm() {
+      editingLinkId = null;
+      pendingLinkImage = '';
+      document.getElementById('linkFormTitle').textContent = 'Yeni link ekle';
+      document.getElementById('linkId').value = '';
+      document.getElementById('linkTitle').value = '';
+      document.getElementById('linkSubtitle').value = '';
+      document.getElementById('linkUrl').value = '';
+      document.getElementById('linkIcon').value = 'image';
+      document.getElementById('linkIconPreview').src = '';
+      document.getElementById('linkColorPicker').value = '#4F46E5';
+      document.getElementById('linkColorText').value = '#4F46E5';
+      document.getElementById('linkIconColorPicker').value = '#FFFFFF';
+      document.getElementById('linkIconColorText').value = '#FFFFFF';
+      document.getElementById('linkPerk').value = '';
+      document.getElementById('cancelLinkEditBtn').style.display = 'none';
+      updateLinkIconRow();
+    }
+    document.getElementById('cancelLinkEditBtn').addEventListener('click', resetLinkForm);
+
+    document.getElementById('saveLinkBtn').addEventListener('click', async function () {
+      var statusEl = document.getElementById('linkFormStatus');
+      var title = document.getElementById('linkTitle').value.trim();
+      var url = document.getElementById('linkUrl').value.trim();
+      if (!title || !url) {
+        statusEl.textContent = 'Başlık ve link zorunlu.';
+        statusEl.className = 'status-msg error';
+        return;
+      }
+      var icon = document.getElementById('linkIcon').value;
+      var linkData = {
+        title: title,
+        subtitle: document.getElementById('linkSubtitle').value.trim(),
+        url: url,
+        icon: icon,
+        iconImage: icon === 'image' ? pendingLinkImage : undefined,
+        color: document.getElementById('linkColorText').value.trim() || '#4F46E5',
+        iconColor: document.getElementById('linkIconColorText').value.trim() || '#FFFFFF',
+        perk: document.getElementById('linkPerk').value.trim() || undefined,
+      };
+
+      if (editingLinkId) {
+        var idx = bio.links.findIndex(function (l) { return l.id === editingLinkId; });
+        if (idx !== -1) bio.links[idx] = Object.assign({}, bio.links[idx], linkData);
+      } else {
+        linkData.id = newId();
+        bio.links.push(linkData);
+      }
+
+      var ok = await saveBio('linkFormStatus');
+      if (ok) {
+        resetLinkForm();
+        renderLinks();
+      }
+    });
+
+    updateLinkIconRow();
+  </script>
+</body>
+</html>

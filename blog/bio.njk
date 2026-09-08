@@ -7,7 +7,7 @@ eleventyExcludeFromCollections: true
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ bio.displayName }}</title>
+  <title>Kaan Tan</title>
   <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -27,7 +27,7 @@ eleventyExcludeFromCollections: true
     img { display: block; max-width: 100%; }
 
     .card { width: 100%; max-width: 460px; background: var(--white); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.4); height: fit-content; }
-    .banner { width: 100%; height: 130px; background: {{ bio.bannerColor }}; }
+    .banner { width: 100%; height: 130px; }
     .profile { text-align: center; padding: 0 28px 8px; margin-top: -58px; }
     .avatar { width: 112px; height: 112px; border-radius: 50%; object-fit: cover; border: 4px solid var(--white); background: var(--surface); margin: 0 auto 14px; }
     .name { font-family: var(--display); font-size: 1.4rem; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
@@ -55,7 +55,7 @@ eleventyExcludeFromCollections: true
 
     .links { padding: 26px 20px 28px; display: flex; flex-direction: column; gap: 12px; }
     .link-card { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
-    .link-card:hover { border-color: {{ bio.bannerColor }}; background: var(--white); transform: translateY(-1px); }
+    .link-card:hover { background: var(--white); transform: translateY(-1px); }
     .link-icon { flex-shrink: 0; width: 42px; height: 42px; border-radius: 11px; border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .link-icon svg { width: 20px; height: 20px; }
     .link-icon img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
@@ -64,103 +64,143 @@ eleventyExcludeFromCollections: true
     .link-sub { font-size: 0.78rem; color: var(--muted); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .link-perk { display: inline-block; margin-top: 5px; font-size: 0.7rem; font-weight: 700; color: #DED2FE; background: rgba(139,92,246,0.16); border: 1px solid rgba(139,92,246,0.3); padding: 2px 9px; border-radius: 100px; }
     .link-arrow { flex-shrink: 0; width: 16px; height: 16px; color: var(--muted); }
+
+    .skeleton { opacity: 0.5; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="banner"></div>
+  <div class="card skeleton" id="card">
+    <div class="banner" id="banner"></div>
     <div class="profile">
-      <img src="{{ bio.avatar }}" alt="{{ bio.displayName }}" class="avatar">
-      <div class="name">{{ bio.displayName }}</div>
-      {% if bio.location %}
-      <div class="location"><i data-lucide="map-pin"></i>{{ bio.location }}</div>
-      {% endif %}
-      {% if bio.bio %}
-      <div class="bio">{{ bio.bio }}</div>
-      {% endif %}
+      <img id="avatar" class="avatar" alt="">
+      <div class="name" id="name"></div>
+      <div class="location" id="locationRow" hidden><i data-lucide="map-pin"></i><span id="locationText"></span></div>
+      <div class="bio" id="bioText" hidden></div>
 
-      {% if bio.showEmail or bio.showPhone %}
-      <div class="contact-row">
-        {% if bio.showEmail %}
-        <a href="mailto:{{ bio.email }}" class="contact-btn"><i data-lucide="mail"></i>E-posta</a>
-        {% endif %}
-        {% if bio.showPhone %}
-        <a href="tel:{{ bio.phone }}" class="contact-btn"><i data-lucide="phone"></i>Ara</a>
-        {% endif %}
-      </div>
-      {% endif %}
-
-      {% if bio.socialLinks.length %}
-      <div class="follow-row">
-        {% for s in bio.socialLinks %}
-        <a href="{{ s.url }}" target="_blank" rel="noopener" class="follow-pill {{ s.platform }}">
-          <div class="fp-icon">
-            {% if s.platform == "youtube" %}
-              <svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            {% elif s.platform == "tiktok" %}
-              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="18" r="3" fill="white" stroke="none"/><path d="M10 18V4l7-1.5V9"/><circle cx="17" cy="10.5" r="3"/></svg>
-            {% elif s.platform == "instagram" %}
-              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="5"/><circle cx="18" cy="6" r="1.1" fill="white" stroke="none"/></svg>
-            {% elif s.platform == "linkedin" %}<i data-lucide="briefcase"></i>
-            {% elif s.platform == "github" %}<i data-lucide="terminal"></i>
-            {% elif s.platform == "behance" %}<i data-lucide="palette"></i>
-            {% else %}<i data-lucide="link"></i>{% endif %}
-          </div>
-          {% if s.platform == "youtube" %}Abone Ol{% else %}Takip Et{% endif %}
-          {% if s.live %}
-          <span class="fp-count" data-live="{{ s.platform }}"></span>
-          {% elif s.followerCount %}
-          <span class="fp-count">{{ s.followerCount }}</span>
-          {% endif %}
-        </a>
-        {% endfor %}
-      </div>
-      {% endif %}
+      <div class="contact-row" id="contactRow" hidden></div>
+      <div class="follow-row" id="followRow"></div>
     </div>
 
-    <div class="links">
-      {% for link in bio.links %}
-      <a href="{{ link.url }}" target="_blank" rel="noopener" class="link-card">
-        <div class="link-icon" style="background:{{ link.color | default(bio.bannerColor) }}; color:{{ link.iconColor | default('#0A0A0A') }};">
-          {% if link.icon == "mic" %}<i data-lucide="mic"></i>
-          {% elif link.icon == "search" %}<i data-lucide="search"></i>
-          {% elif link.icon == "star" %}<i data-lucide="star"></i>
-          {% elif link.icon == "shopping-bag" %}<i data-lucide="shopping-bag"></i>
-          {% elif link.icon == "globe" %}<i data-lucide="globe"></i>
-          {% elif link.icon == "message-circle" %}<i data-lucide="message-circle"></i>
-          {% elif link.icon == "activity" %}<i data-lucide="activity"></i>
-          {% elif link.icon == "terminal" %}<i data-lucide="terminal"></i>
-          {% elif link.icon == "file-text" %}<i data-lucide="file-text"></i>
-          {% elif link.icon == "kt-logo" %}
-            <svg viewBox="0 0 32 32" fill="none"><path d="M11 7v18M11 16l9-9M11 16l9 9" stroke="{{ link.iconColor | default('#0A0A0A') }}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          {% elif link.icon == "image" and link.iconImage %}
-            <img src="{{ link.iconImage }}" alt="{{ link.title }}">
-          {% else %}<i data-lucide="link"></i>{% endif %}
-        </div>
-        <div class="link-text">
-          <div class="link-title">{{ link.title }}</div>
-          {% if link.subtitle %}<div class="link-sub">{{ link.subtitle }}</div>{% endif %}
-          {% if link.perk %}<div class="link-perk">{{ link.perk }}</div>{% endif %}
-        </div>
-        <i data-lucide="arrow-right" class="link-arrow"></i>
-      </a>
-      {% endfor %}
-    </div>
+    <div class="links" id="linksList"></div>
   </div>
 
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <script>
-    lucide.createIcons();
+    function clickUrl(type, id) {
+      return '/.netlify/functions/bio-click?type=' + encodeURIComponent(type) + '&id=' + encodeURIComponent(id);
+    }
 
-    fetch('/.netlify/functions/social-stats')
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (typeof data.youtube === 'number') {
-          var el = document.querySelector('[data-live="youtube"]');
-          if (el) el.textContent = data.youtube.toLocaleString('tr-TR') + ' abone';
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    var SOCIAL_ICONS = {
+      youtube: '<svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>',
+      tiktok: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="18" r="3" fill="white" stroke="none"/><path d="M10 18V4l7-1.5V9"/><circle cx="17" cy="10.5" r="3"/></svg>',
+      instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="5"/><circle cx="18" cy="6" r="1.1" fill="white" stroke="none"/></svg>',
+      linkedin: '<i data-lucide="briefcase"></i>',
+      github: '<i data-lucide="terminal"></i>',
+      behance: '<i data-lucide="palette"></i>',
+    };
+
+    var LINK_ICONS = {
+      mic: '<i data-lucide="mic"></i>',
+      search: '<i data-lucide="search"></i>',
+      star: '<i data-lucide="star"></i>',
+      'shopping-bag': '<i data-lucide="shopping-bag"></i>',
+      globe: '<i data-lucide="globe"></i>',
+      'message-circle': '<i data-lucide="message-circle"></i>',
+      activity: '<i data-lucide="activity"></i>',
+      terminal: '<i data-lucide="terminal"></i>',
+      'file-text': '<i data-lucide="file-text"></i>',
+    };
+
+    function render(bio) {
+      document.title = bio.displayName || 'Kaan Tan';
+      document.getElementById('card').classList.remove('skeleton');
+      document.getElementById('banner').style.background = bio.bannerColor || '#4F46E5';
+      document.getElementById('avatar').src = bio.avatar || '';
+      document.getElementById('avatar').alt = bio.displayName || '';
+      document.getElementById('name').textContent = bio.displayName || '';
+
+      if (bio.location) {
+        document.getElementById('locationText').textContent = bio.location;
+        document.getElementById('locationRow').hidden = false;
+      }
+      if (bio.bio) {
+        document.getElementById('bioText').textContent = bio.bio;
+        document.getElementById('bioText').hidden = false;
+      }
+
+      var contactHtml = '';
+      if (bio.showEmail && bio.email) {
+        contactHtml += '<a href="mailto:' + escapeHtml(bio.email) + '" class="contact-btn"><i data-lucide="mail"></i>E-posta</a>';
+      }
+      if (bio.showPhone && bio.phone) {
+        contactHtml += '<a href="tel:' + escapeHtml(bio.phone) + '" class="contact-btn"><i data-lucide="phone"></i>Ara</a>';
+      }
+      if (contactHtml) {
+        document.getElementById('contactRow').innerHTML = contactHtml;
+        document.getElementById('contactRow').hidden = false;
+      }
+
+      var social = bio.socialLinks || [];
+      document.getElementById('followRow').innerHTML = social.map(function (s) {
+        var icon = SOCIAL_ICONS[s.platform] || '<i data-lucide="link"></i>';
+        var label = s.platform === 'youtube' ? 'Abone Ol' : 'Takip Et';
+        var countHtml = '';
+        if (s.live) {
+          countHtml = '<span class="fp-count" data-live="' + s.platform + '"></span>';
+        } else if (s.followerCount) {
+          countHtml = '<span class="fp-count">' + escapeHtml(s.followerCount) + '</span>';
         }
-      })
-      .catch(function () { /* sessizce yut, sayı gösterilmez */ });
+        return '<a href="' + clickUrl('social', s.platform) + '" class="follow-pill ' + s.platform + '">' +
+          '<div class="fp-icon">' + icon + '</div>' + label + countHtml + '</a>';
+      }).join('');
+
+      var links = bio.links || [];
+      document.getElementById('linksList').innerHTML = links.map(function (link) {
+        var color = link.color || bio.bannerColor || '#4F46E5';
+        var iconColor = link.iconColor || '#0A0A0A';
+        var iconHtml;
+        if (link.icon === 'kt-logo') {
+          iconHtml = '<svg viewBox="0 0 32 32" fill="none"><path d="M11 7v18M11 16l9-9M11 16l9 9" stroke="' + iconColor + '" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        } else if (link.icon === 'image' && link.iconImage) {
+          iconHtml = '<img src="' + escapeHtml(link.iconImage) + '" alt="' + escapeHtml(link.title) + '">';
+        } else {
+          iconHtml = LINK_ICONS[link.icon] || '<i data-lucide="link"></i>';
+        }
+        return '<a href="' + clickUrl('link', link.id) + '" class="link-card">' +
+          '<div class="link-icon" style="background:' + color + ';color:' + iconColor + ';">' + iconHtml + '</div>' +
+          '<div class="link-text">' +
+            '<div class="link-title">' + escapeHtml(link.title) + '</div>' +
+            (link.subtitle ? '<div class="link-sub">' + escapeHtml(link.subtitle) + '</div>' : '') +
+            (link.perk ? '<div class="link-perk">' + escapeHtml(link.perk) + '</div>' : '') +
+          '</div>' +
+          '<i data-lucide="arrow-right" class="link-arrow"></i>' +
+        '</a>';
+      }).join('');
+
+      lucide.createIcons();
+
+      fetch('/.netlify/functions/social-stats')
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (typeof data.youtube === 'number') {
+            var el = document.querySelector('[data-live="youtube"]');
+            if (el) el.textContent = data.youtube.toLocaleString('tr-TR') + ' abone';
+          }
+        })
+        .catch(function () { /* sessizce yut, sayı gösterilmez */ });
+    }
+
+    fetch('/.netlify/functions/bio-config')
+      .then(function (r) { return r.json(); })
+      .then(render)
+      .catch(function () {
+        document.getElementById('name').textContent = 'Yüklenemedi';
+        document.getElementById('card').classList.remove('skeleton');
+      });
   </script>
 </body>
 </html>

@@ -72,23 +72,32 @@ function replyToComment(commentId, text) {
   return graphPost(`/${commentId}/replies`, { message: text });
 }
 
+// Instagram's Graph API returns Reels permalinks as /reel/{code}/ even when
+// the same post is reachable (and commonly shared/pasted) as /p/{code}/ — so
+// matching on the full URL misses every Reel. The shortcode is what actually
+// identifies the post regardless of which prefix either side used.
+function extractShortcode(url) {
+  const m = (url || "").match(/\/(?:p|reel|tv)\/([A-Za-z0-9_-]+)/);
+  return m ? m[1] : null;
+}
+
 // Resolves a pasted Instagram post URL to the account's real numeric media
-// id by scanning the account's own media and matching on permalink. Needed
-// because the panel only collects a human-readable link/id, and per-post
-// trigger-word matching requires the actual media id to avoid cross-post
-// bleed (see findConfigForComment in instagram-webhook.js).
+// id by scanning the account's own media and matching on permalink shortcode.
+// Needed because the panel only collects a human-readable link/id, and
+// per-post trigger-word matching requires the actual media id to avoid
+// cross-post bleed (see findConfigForComment in instagram-webhook.js).
 async function findMediaIdByPermalink(postLinkOrId) {
   const raw = (postLinkOrId || "").trim();
   if (!raw) return null;
   if (/^\d+$/.test(raw)) return raw; // already a raw numeric media id
 
-  const normalize = (u) => (u || "").trim().replace(/\/+$/, "").toLowerCase();
-  const target = normalize(raw);
+  const targetCode = extractShortcode(raw);
+  if (!targetCode) return null;
 
   let url = `${GRAPH_BASE}/me/media?fields=id,permalink&limit=50&access_token=${pageToken()}`;
   for (let page = 0; page < 20 && url; page++) {
     const data = await fetch(url).then((r) => r.json()).catch(() => ({}));
-    const match = (data.data || []).find((m) => normalize(m.permalink) === target);
+    const match = (data.data || []).find((m) => extractShortcode(m.permalink) === targetCode);
     if (match) return match.id;
     url = data.paging && data.paging.next;
   }

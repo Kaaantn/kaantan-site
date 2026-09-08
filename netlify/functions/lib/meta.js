@@ -104,6 +104,52 @@ async function findMediaIdByPermalink(postLinkOrId) {
   return null;
 }
 
+// Same idea as findMediaIdByPermalink but resolves many links in a single
+// shared pagination pass instead of re-scanning from page 1 for each one —
+// used when backfilling every post that's still missing a media id, so the
+// cost stays O(pages) instead of O(posts × pages) as the post list grows.
+async function findMediaIdsByPermalinks(postLinksOrIds) {
+  const results = {};
+  const pending = new Map(); // shortcode -> original input strings sharing it
+
+  for (const raw of postLinksOrIds) {
+    const trimmed = (raw || "").trim();
+    if (!trimmed) {
+      results[raw] = null;
+    } else if (/^\d+$/.test(trimmed)) {
+      results[raw] = trimmed;
+    } else {
+      const code = extractShortcode(trimmed);
+      if (!code) {
+        results[raw] = null;
+      } else {
+        if (!pending.has(code)) pending.set(code, []);
+        pending.get(code).push(raw);
+      }
+    }
+  }
+
+  if (pending.size > 0) {
+    let url = `${GRAPH_BASE}/me/media?fields=id,permalink&limit=50&access_token=${pageToken()}`;
+    for (let page = 0; page < 20 && url && pending.size > 0; page++) {
+      const data = await fetch(url).then((r) => r.json()).catch(() => ({}));
+      for (const m of data.data || []) {
+        const code = extractShortcode(m.permalink);
+        if (code && pending.has(code)) {
+          for (const raw of pending.get(code)) results[raw] = m.id;
+          pending.delete(code);
+        }
+      }
+      url = data.paging && data.paging.next;
+    }
+    for (const raws of pending.values()) {
+      for (const raw of raws) results[raw] = null;
+    }
+  }
+
+  return results;
+}
+
 async function isFollowingBusiness(igsid) {
   const { ok, data } = await graphGet(`/${igsid}?fields=is_user_follow_business`);
   return ok ? Boolean(data.is_user_follow_business) : null; // null = couldn't determine
@@ -122,6 +168,7 @@ module.exports = {
   sendMessage,
   replyToComment,
   findMediaIdByPermalink,
+  findMediaIdsByPermalinks,
   isFollowingBusiness,
   postbackButton,
   webUrlButton,

@@ -18,20 +18,26 @@ function newId() {
 // Posts saved before mediaId resolution existed (or where resolution failed
 // at save time) sit with mediaId "" — which breaks per-post trigger-word
 // scoping (see findConfigForComment). Heal them opportunistically whenever
-// configs are loaded or saved.
+// configs are loaded or saved. Resolves everything missing in one shared
+// pagination pass rather than re-scanning per post.
 async function backfillMediaIds(configs) {
+  const missing = (configs.posts || []).filter((p) => !p.mediaId && p.postLink);
+  if (!missing.length) return false;
+
+  let resolved;
+  try {
+    resolved = await meta.findMediaIdsByPermalinks(missing.map((p) => p.postLink));
+  } catch (e) {
+    console.error("mediaId backfill failed", e);
+    return false;
+  }
+
   let changed = false;
-  for (const p of configs.posts || []) {
-    if (!p.mediaId && p.postLink) {
-      try {
-        const resolved = await meta.findMediaIdByPermalink(p.postLink);
-        if (resolved) {
-          p.mediaId = resolved;
-          changed = true;
-        }
-      } catch (e) {
-        console.error("mediaId backfill failed for", p.postLink, e);
-      }
+  for (const p of missing) {
+    const id = resolved[p.postLink];
+    if (id) {
+      p.mediaId = id;
+      changed = true;
     }
   }
   return changed;

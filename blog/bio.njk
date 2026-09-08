@@ -130,6 +130,7 @@ eleventyExcludeFromCollections: true
           {% elif link.icon == "message-circle" %}<i data-lucide="message-circle"></i>
           {% elif link.icon == "activity" %}<i data-lucide="activity"></i>
           {% elif link.icon == "terminal" %}<i data-lucide="terminal"></i>
+          {% elif link.icon == "file-text" %}<i data-lucide="file-text"></i>
           {% elif link.icon == "kt-logo" %}
             <svg viewBox="0 0 32 32" fill="none"><path d="M11 7v18M11 16l9-9M11 16l9 9" stroke="{{ link.iconColor | default('#0A0A0A') }}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           {% elif link.icon == "image" and link.iconImage %}

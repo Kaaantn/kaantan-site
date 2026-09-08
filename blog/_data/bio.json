@@ -25,6 +25,14 @@
   "avatar": "/assets/bio/profil.jpg",
   "links": [
     {
+      "title": "LightPDF - PDF Düzenle, Birleştir, Ayır",
+      "subtitle": "lightpdf.com",
+      "url": "https://lightpdfcom.pxf.io/aN9bbW",
+      "icon": "file-text",
+      "color": "#DC2626",
+      "iconColor": "#FFFFFF"
+    },
+    {
       "title": "ChatLLM - Tüm Yapay Zeka Modelleri Tek Yerde",
       "subtitle": "chatllm.abacus.ai",
       "url": "https://chatllm.abacus.ai/qka",

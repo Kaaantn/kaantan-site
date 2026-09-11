@@ -1,0 +1,344 @@
+---
+permalink: "/blog-admin/index.html"
+eleventyExcludeFromCollections: true
+---
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog Panel — Kaan Tan</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --lime-400: #A78BFA; --lime-500: #8B5CF6; --lime-600: #7C3AED;
+      --ink: #F5F3F8; --ink-2: #DAD6E3; --body: #B7B2C4; --muted: #8A8494;
+      --line: rgba(255,255,255,0.10); --surface: #16131E; --white: #0B0A10;
+      --danger: #F87171;
+      --display: 'Space Grotesk', sans-serif; --body-f: 'Inter', sans-serif;
+    }
+    body { font-family: var(--body-f); background: var(--white); color: var(--body); min-height: 100vh; line-height: 1.5; }
+    a { color: inherit; }
+    input, textarea { font-family: inherit; }
+
+    .wrap { max-width: 820px; margin: 0 auto; padding: 40px 20px 100px; }
+    h1 { font-family: var(--display); font-size: 1.6rem; color: var(--ink); margin-bottom: 6px; }
+    .sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 32px; }
+    .sub a { color: var(--lime-400); font-weight: 600; }
+
+    .gate { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; text-align: center; gap: 16px; }
+    .gate p { color: var(--muted); max-width: 360px; }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; background: var(--lime-500); color: #0A0A10; border: none; padding: 11px 22px; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+    .btn:hover { background: var(--lime-400); }
+    .btn.secondary { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+    .btn.danger { background: rgba(248,113,113,0.12); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn.small { padding: 6px 12px; font-size: 0.78rem; }
+
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; margin-bottom: 20px; }
+    .card h2 { font-family: var(--display); font-size: 1.05rem; color: var(--ink); margin-bottom: 14px; }
+
+    label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin: 14px 0 6px; }
+    label:first-child { margin-top: 0; }
+    input[type="text"], input[type="date"], textarea {
+      width: 100%; background: var(--white); border: 1px solid var(--line); color: var(--ink);
+      padding: 10px 12px; border-radius: 8px; font-size: 0.92rem;
+    }
+    input:focus, textarea:focus { outline: 1.5px solid var(--lime-500); }
+    textarea { resize: vertical; }
+    #contentInput { min-height: 320px; font-family: 'SF Mono', Consolas, monospace; font-size: 0.86rem; line-height: 1.6; }
+    #descriptionInput { min-height: 60px; }
+    .row { display: flex; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+
+    .tabs { display: flex; gap: 4px; margin-top: 14px; border-bottom: 1px solid var(--line); }
+    .tab-btn { background: none; border: none; color: var(--muted); padding: 8px 14px; font-size: 0.82rem; font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent; }
+    .tab-btn.active { color: var(--ink); border-bottom-color: var(--lime-500); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    #previewPane { background: var(--white); border: 1px solid var(--line); border-radius: 8px; padding: 16px; min-height: 320px; color: var(--body); }
+    #previewPane h2 { font-family: var(--display); font-size: 1.2rem; color: var(--ink); margin: 20px 0 10px; }
+    #previewPane p { margin-bottom: 14px; }
+    #previewPane a { color: var(--lime-400); }
+    #previewPane ul, #previewPane ol { margin: 0 0 14px 20px; }
+
+    .status-msg { font-size: 0.82rem; margin-top: 10px; }
+    .status-msg.error { color: var(--danger); }
+    .status-msg.ok { color: var(--lime-400); }
+    .empty { color: var(--muted); font-size: 0.88rem; padding: 20px 0; text-align: center; }
+    #userBar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 0.82rem; color: var(--muted); }
+
+    .post-item { border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; }
+    .post-item-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .post-title { font-weight: 600; color: var(--ink); font-size: 0.94rem; }
+    .post-meta { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+    .post-desc { font-size: 0.82rem; color: var(--body); margin-top: 8px; }
+    .post-actions { display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
+    .post-actions button, .post-actions a { background: none; border: 1px solid var(--line); color: var(--muted); padding: 6px 10px; border-radius: 7px; font-size: 0.78rem; cursor: pointer; text-decoration: none; }
+    .post-actions button:hover, .post-actions a:hover { color: var(--ink); border-color: var(--ink-2); }
+  </style>
+</head>
+<body>
+  <div id="gate" class="gate">
+    <h1>Blog Panel</h1>
+    <p>kaantan.com.tr/blog yazılarını buradan yönet. Devam etmek için giriş yapmalısın.</p>
+    <button class="btn" id="loginBtn">Giriş Yap</button>
+  </div>
+
+  <div id="app" class="wrap" style="display:none">
+    <div id="userBar">
+      <span id="userEmail"></span>
+      <button class="btn secondary" id="logoutBtn" style="padding:7px 14px;font-size:0.8rem">Çıkış</button>
+    </div>
+
+    <h1>Blog Yazıları</h1>
+    <p class="sub">Kaydettiğinde GitHub'a commit atılır, Netlify ~30-60 saniye içinde otomatik yayına alır — canlı olarak takip edebilirsin. <a href="/blog/" target="_blank" rel="noopener">Bloğu gör →</a> · <a href="/panel/">Yorum Otomasyonu →</a> · <a href="/bio-admin/">Bio Paneli →</a></p>
+
+    <div class="card">
+      <h2 id="formTitle">Yeni yazı ekle</h2>
+      <input type="hidden" id="postSlug">
+      <input type="hidden" id="postSha">
+      <label>Başlık</label>
+      <input type="text" id="titleInput" placeholder="Yazının başlığı">
+      <div class="two-col">
+        <div>
+          <label>Yayın tarihi</label>
+          <input type="date" id="dateInput">
+        </div>
+      </div>
+      <label>Açıklama (SEO / önizleme için)</label>
+      <textarea id="descriptionInput" placeholder="Google'da ve blog listesinde görünecek kısa açıklama"></textarea>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="write" type="button">Yaz</button>
+        <button class="tab-btn" data-tab="preview" type="button">Önizle</button>
+      </div>
+      <div class="tab-panel active" id="writeTab">
+        <label style="margin-top:10px">İçerik (Markdown — ## başlık, **kalın**, [link](url) gibi)</label>
+        <textarea id="contentInput" placeholder="Yazının içeriği..."></textarea>
+      </div>
+      <div class="tab-panel" id="previewTab">
+        <div id="previewPane"></div>
+      </div>
+
+      <div class="row">
+        <button class="btn" id="saveBtn">Kaydet</button>
+        <button class="btn secondary" id="cancelEditBtn" style="display:none">Vazgeç</button>
+      </div>
+      <div class="status-msg" id="formStatus"></div>
+    </div>
+
+    <div class="card">
+      <h2>Yayındaki yazılar</h2>
+      <div id="postsList"><div class="empty">Yükleniyor…</div></div>
+    </div>
+  </div>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    var gate = document.getElementById('gate');
+    var app = document.getElementById('app');
+
+    function showApp(user) {
+      gate.style.display = 'none';
+      app.style.display = 'block';
+      document.getElementById('userEmail').textContent = user.email || '';
+      loadPosts();
+    }
+    function showGate() {
+      gate.style.display = 'flex';
+      app.style.display = 'none';
+    }
+    if (window.netlifyIdentity) {
+      netlifyIdentity.on('init', function (user) { if (user) showApp(user); else showGate(); });
+      netlifyIdentity.on('login', function (user) { showApp(user); netlifyIdentity.close(); });
+      netlifyIdentity.on('logout', showGate);
+      netlifyIdentity.init();
+    }
+    document.getElementById('loginBtn').addEventListener('click', function () { netlifyIdentity.open('login'); });
+    document.getElementById('logoutBtn').addEventListener('click', function () { netlifyIdentity.logout(); });
+
+    async function authedFetch(url, options) {
+      var user = netlifyIdentity.currentUser();
+      var token = user ? await user.jwt() : null;
+      var opts = options || {};
+      opts.headers = Object.assign({}, opts.headers, token ? { Authorization: 'Bearer ' + token } : {});
+      return fetch(url, opts);
+    }
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    var postsCache = [];
+    var editingSlug = null;
+
+    async function loadPosts() {
+      var res = await authedFetch('/.netlify/functions/blog-admin');
+      if (!res.ok) {
+        document.getElementById('postsList').innerHTML = '<div class="empty">Yüklenemedi, tekrar giriş yapmayı dene.</div>';
+        return;
+      }
+      var data = await res.json();
+      postsCache = data.posts || [];
+      renderPosts();
+    }
+
+    function renderPosts() {
+      var list = document.getElementById('postsList');
+      if (!postsCache.length) {
+        list.innerHTML = '<div class="empty">Henüz yazı yok.</div>';
+        return;
+      }
+      list.innerHTML = postsCache.map(function (p) {
+        return '<div class="post-item">' +
+          '<div class="post-item-top">' +
+            '<div>' +
+              '<div class="post-title">' + escapeHtml(p.title) + '</div>' +
+              '<div class="post-meta">' + escapeHtml(p.date) + '</div>' +
+              '<div class="post-desc">' + escapeHtml(p.description) + '</div>' +
+            '</div>' +
+            '<div class="post-actions">' +
+              '<a href="/blog/' + encodeURIComponent(p.slug) + '/" target="_blank" rel="noopener">Gör</a>' +
+              '<button data-edit="' + escapeHtml(p.slug) + '">Düzenle</button>' +
+              '<button data-delete="' + escapeHtml(p.slug) + '" data-sha="' + escapeHtml(p.sha) + '">Sil</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      list.querySelectorAll('[data-edit]').forEach(function (btn) {
+        btn.addEventListener('click', function () { startEdit(btn.getAttribute('data-edit')); });
+      });
+      list.querySelectorAll('[data-delete]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          deletePost(btn.getAttribute('data-delete'), btn.getAttribute('data-sha'));
+        });
+      });
+    }
+
+    async function startEdit(slug) {
+      var statusEl = document.getElementById('formStatus');
+      statusEl.textContent = 'Yükleniyor…';
+      statusEl.className = 'status-msg';
+      var res = await authedFetch('/.netlify/functions/blog-admin?slug=' + encodeURIComponent(slug));
+      if (!res.ok) {
+        statusEl.textContent = 'Yüklenemedi.';
+        statusEl.className = 'status-msg error';
+        return;
+      }
+      var post = await res.json();
+      editingSlug = post.slug;
+      document.getElementById('formTitle').textContent = 'Yazıyı düzenle';
+      document.getElementById('postSlug').value = post.slug;
+      document.getElementById('postSha').value = post.sha;
+      document.getElementById('titleInput').value = post.title || '';
+      document.getElementById('dateInput').value = post.date || '';
+      document.getElementById('descriptionInput').value = post.description || '';
+      document.getElementById('contentInput').value = post.body || '';
+      document.getElementById('cancelEditBtn').style.display = 'inline-flex';
+      statusEl.textContent = '';
+      updatePreview();
+      window.scrollTo({ top: document.querySelector('.card').offsetTop - 20, behavior: 'smooth' });
+    }
+
+    function resetForm() {
+      editingSlug = null;
+      document.getElementById('formTitle').textContent = 'Yeni yazı ekle';
+      document.getElementById('postSlug').value = '';
+      document.getElementById('postSha').value = '';
+      document.getElementById('titleInput').value = '';
+      document.getElementById('dateInput').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('descriptionInput').value = '';
+      document.getElementById('contentInput').value = '';
+      document.getElementById('cancelEditBtn').style.display = 'none';
+      updatePreview();
+    }
+    document.getElementById('cancelEditBtn').addEventListener('click', resetForm);
+
+    async function deletePost(slug, sha) {
+      if (!confirm('"' + slug + '" yazısı silinsin mi? Bu işlem geri alınamaz.')) return;
+      var res = await authedFetch('/.netlify/functions/blog-admin?slug=' + encodeURIComponent(slug) + '&sha=' + encodeURIComponent(sha), { method: 'DELETE' });
+      if (res.ok) {
+        postsCache = postsCache.filter(function (p) { return p.slug !== slug; });
+        renderPosts();
+        if (editingSlug === slug) resetForm();
+      } else {
+        alert('Silinemedi.');
+      }
+    }
+
+    document.getElementById('saveBtn').addEventListener('click', async function () {
+      var statusEl = document.getElementById('formStatus');
+      var title = document.getElementById('titleInput').value.trim();
+      var date = document.getElementById('dateInput').value.trim();
+      var description = document.getElementById('descriptionInput').value.trim();
+      var contentBody = document.getElementById('contentInput').value.trim();
+
+      if (!title || !date || !contentBody) {
+        statusEl.textContent = 'Başlık, tarih ve içerik zorunlu.';
+        statusEl.className = 'status-msg error';
+        return;
+      }
+
+      var payload = {
+        slug: document.getElementById('postSlug').value,
+        sha: document.getElementById('postSha').value || undefined,
+        title: title,
+        date: date,
+        description: description,
+        body: contentBody,
+      };
+
+      statusEl.textContent = 'Kaydediliyor…';
+      statusEl.className = 'status-msg';
+
+      var res = await authedFetch('/.netlify/functions/blog-admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        var err = await res.json().catch(function () { return {}; });
+        statusEl.textContent = err.error || 'Kaydedilemedi.';
+        statusEl.className = 'status-msg error';
+        return;
+      }
+
+      var saved = await res.json();
+      statusEl.textContent = 'Kaydedildi — ~30-60 saniye içinde canlıya çıkacak.';
+      statusEl.className = 'status-msg ok';
+      resetForm();
+      loadPosts();
+    });
+
+    // ---- Yaz / Önizle sekmeleri ----
+    function updatePreview() {
+      var md = document.getElementById('contentInput').value;
+      document.getElementById('previewPane').innerHTML = window.marked ? marked.parse(md) : escapeHtml(md);
+    }
+    document.querySelectorAll('.tab-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+        document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+        btn.classList.add('active');
+        document.getElementById(btn.getAttribute('data-tab') + 'Tab').classList.add('active');
+        if (btn.getAttribute('data-tab') === 'preview') updatePreview();
+      });
+    });
+
+    resetForm();
+  </script>
+</body>
+</html>

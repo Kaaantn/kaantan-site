@@ -1,0 +1,16 @@
+{
+  "intro": "İşinize ve isteğinize uygun yapay zeka araçları, hazır rehberler ve dijital ürünler. Satın alma işlemi Shopier üzerinden güvenle tamamlanır.",
+  "storeUrl": "https://www.shopier.com/aitan",
+  "products": [
+    {
+      "title": "100 Yapay Zeka Aracı",
+      "subtitle": "Bilmen Gereken Rehber Serisi #1",
+      "image": "https://cdn.shopier.app/pictures_mid/aitan_fa2326f7dc58d3da5b6e7af7fe356224.png",
+      "price": "149 TL",
+      "oldPrice": "399 TL",
+      "badge": "%63 İndirim",
+      "type": "Dijital Ürün",
+      "url": "https://www.shopier.com/aitan/49575935"
+    }
+  ]
+}

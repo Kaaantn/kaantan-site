@@ -1,3 +1,7 @@
 .claude/
 node_modules/
 _site/
+.next/
+next-env.d.ts
+.env*.local
+.vercel

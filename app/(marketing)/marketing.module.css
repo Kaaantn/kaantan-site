@@ -1,0 +1,361 @@
+/* Ported from _includes/base.njk's inline <style> block (shared chrome for
+   /blog, /blog/[slug], /shop). Scoped via CSS Modules so none of this can
+   collide with the homepage's own class names (e.g. both define a
+   `.nav-logo`, but for different visual designs). */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 48px;
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 640px) {
+  .nav {
+    padding: 18px 20px;
+  }
+}
+.navLogo {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+.navLogo span {
+  color: var(--lime-600);
+}
+.navLinks {
+  display: flex;
+  gap: 26px;
+  list-style: none;
+}
+.navLinks a {
+  text-decoration: none;
+  color: var(--body);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.navLinks a:hover {
+  color: var(--ink);
+}
+
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 60px 24px 100px;
+}
+
+.postEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lime-600);
+  margin-bottom: 14px;
+}
+.postTitle {
+  font-family: var(--display);
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.postMeta {
+  font-size: 0.86rem;
+  color: var(--muted);
+  margin-bottom: 40px;
+}
+.postCover {
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  margin-bottom: 40px;
+  object-fit: cover;
+}
+
+.postBody {
+  font-size: 1.05rem;
+  color: var(--body);
+}
+.postBody :global(p) {
+  margin-bottom: 22px;
+}
+.postBody :global(h2) {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 42px 0 16px;
+  letter-spacing: -0.01em;
+}
+.postBody :global(h3) {
+  font-family: var(--display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 32px 0 14px;
+}
+.postBody :global(ul),
+.postBody :global(ol) {
+  margin: 0 0 22px 22px;
+}
+.postBody :global(li) {
+  margin-bottom: 8px;
+}
+.postBody :global(a) {
+  color: var(--lime-700);
+  text-decoration: underline;
+}
+.postBody :global(strong) {
+  color: var(--ink);
+  font-weight: 600;
+}
+.postBody :global(blockquote) {
+  border-left: 3px solid var(--lime-400);
+  padding-left: 18px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 22px;
+}
+.postBody :global(img) {
+  border-radius: 12px;
+  margin: 12px 0 22px;
+  border: 1px solid var(--line);
+}
+.postBody :global(code) {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+.postBody :global(pre) {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  padding: 18px;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin-bottom: 22px;
+}
+.postBody :global(pre code) {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.backLink {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--body);
+  text-decoration: none;
+  margin-bottom: 36px;
+}
+.backLink:hover {
+  color: var(--ink);
+}
+
+.ctaBox {
+  margin-top: 60px;
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  text-align: center;
+}
+.ctaBox p {
+  margin-bottom: 16px;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.ctaBox a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--lime-400);
+  color: var(--ink);
+  padding: 13px 26px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 30px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+@media (max-width: 640px) {
+  .footer {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    padding: 24px 20px;
+  }
+}
+.footer a {
+  text-decoration: none;
+  color: var(--muted);
+}
+.footer a:hover {
+  color: var(--ink);
+}
+
+/* ── Blog listing ── */
+.postListItem {
+  display: block;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+}
+.postListDate {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.postListTitle {
+  font-family: var(--display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.postListDesc {
+  color: var(--body);
+  font-size: 0.95rem;
+}
+
+/* ── Shop (ported verbatim from blog/shop.njk's inline <style>) ── */
+.shopWrap {
+  max-width: 1040px;
+}
+.shopGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 8px;
+}
+@media (max-width: 900px) {
+  .shopGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .shopGrid {
+    grid-template-columns: 1fr;
+  }
+}
+.shopCard {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+}
+.shopCard:hover {
+  border-color: var(--lime-400);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+}
+.shopCardImg {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--white);
+  overflow: hidden;
+}
+.shopCardImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.shopBadge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 100px;
+}
+.shopCardBody {
+  padding: 18px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.shopType {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lime-600);
+}
+.shopName {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-top: 2px;
+}
+.shopSub {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.shopPriceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 8px;
+}
+.shopPrice {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.shopOldPrice {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: line-through;
+}
+.shopCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.shopCta svg {
+  width: 14px;
+  height: 14px;
+}
+.shopCard:hover .shopCta {
+  color: var(--lime-700);
+}

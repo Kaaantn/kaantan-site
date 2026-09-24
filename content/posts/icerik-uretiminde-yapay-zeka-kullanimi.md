@@ -44,4 +44,4 @@ Benim gözlemim: yapay zekâ **sıradan işi** hızlandırıyor, ama içeriği d
 
 ## Sonuç
 
-Yapay zekâ, doğru kullanıldığında içerik üretiminde ciddi zaman kazandıran bir asistan. Ama direksiyon sizde kalmalı. İçerik üretimi, otomasyon ya da yapay zekâ entegrasyonu gibi konularda projeniz varsa, Kaan Tan olarak destek verebilirim.
+Yapay zekâ, doğru kullanıldığında içerik üretiminde ciddi zaman kazandıran bir asistan. Ama direksiyon sizde kalmalı. İçerik üretimi, otomasyon ya da yapay zekâ entegrasyonu gibi konularda projeniz varsa, Kaan Tan olarak destek verebiliriz.

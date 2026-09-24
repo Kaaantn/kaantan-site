@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./panel.css";
+import "./modules.css";
 
 // Kontrol paneli hiçbir zaman indekslenmez.
 export const metadata: Metadata = {

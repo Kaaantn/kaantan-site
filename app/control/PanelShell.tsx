@@ -7,7 +7,6 @@ import {
   ExternalLink,
   FileText,
   LayoutDashboard,
-  Lightbulb,
   Link2,
   MessageCircle,
   Wallet,
@@ -19,12 +18,8 @@ const NAV = [
   { href: "/control/instagram", label: "Instagram", short: "Instagram", icon: MessageCircle },
   { href: "/control/bio", label: "Bio Sayfası", short: "Bio", icon: Link2 },
   { href: "/control/blog", label: "Blog", short: "Blog", icon: FileText },
-];
-
-const SOON = [
-  { label: "Gelir – Gider", icon: Wallet },
-  { label: "İçerik Fikirleri", icon: Lightbulb },
-  { label: "Takvim", icon: CalendarDays },
+  { href: "/control/finance", label: "Gelir – Gider", short: "Gelir", icon: Wallet },
+  { href: "/control/content", label: "İçerik Planı", short: "İçerik", icon: CalendarDays },
 ];
 
 // Kabuk: masaüstünde sol menü, mobilde üst çubuk + alt sekme çubuğu.
@@ -50,14 +45,6 @@ export default function PanelShell({ email, children }: { email: string; childre
             </Link>
           ))}
 
-          <div className="cp-nav-label">Yakında</div>
-          {SOON.map(({ label, icon: Icon }) => (
-            <div key={label} className="cp-soon">
-              <Icon size={18} />
-              {label}
-              <em>yakında</em>
-            </div>
-          ))}
 
           <div className="cp-nav-label">Siteler</div>
           <a href="/" target="_blank" rel="noopener">

@@ -6,6 +6,7 @@ import styles from "../marketing.module.css";
 export const metadata: Metadata = {
   title: "Shop — Kaan Tan Blog",
   description: "Kaan Tan'ın Shopier mağazasındaki dijital ürünler ve yapay zeka rehberleri.",
+  alternates: { canonical: "/shop" },
 };
 
 interface Product {

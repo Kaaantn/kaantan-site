@@ -7,6 +7,7 @@ import styles from "../marketing.module.css";
 export const metadata: Metadata = {
   title: "Blog — Kaan Tan Blog",
   description: "Kaan Tan'ın e-ticaret, İkas, Shopify ve yazılım geliştirme üzerine yazıları.",
+  alternates: { canonical: "/blog" },
   openGraph: {
     title: "Blog",
     description: "Kaan Tan'ın e-ticaret, İkas, Shopify ve yazılım geliştirme üzerine yazıları.",

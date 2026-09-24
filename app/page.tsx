@@ -39,6 +39,7 @@ export const metadata: Metadata = {
   title: "Kaan Tan — Web, Otomasyon & İkas İş Ortağı",
   description:
     "Kaan Tan — solopreneur dijital çözüm ortağı. Profesyonel web sitesi, süreç otomasyonu, yapay zeka entegrasyonu ve İkas e-ticaret altyapısında iş ortaklığı. Ortalama 30 dakikada dönüş.",
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Kaan Tan — Dijital Çözüm Ortağınız",
     description: "Web sitesi, otomasyon, yapay zeka ve İkas e-ticaret çözümleri. Tek elden, hızlı ve profesyonel.",

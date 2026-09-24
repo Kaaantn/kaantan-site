@@ -76,6 +76,9 @@ export default function LoginPage() {
             {loading ? "Giriş yapılıyor…" : "Giriş Yap"}
           </button>
         </form>
+        <a href="/control/set-password" className="mt-4 block text-center text-xs text-[#8a8494] hover:text-[#dad6e3]">
+          Şifremi unuttum
+        </a>
       </div>
     </div>
   );

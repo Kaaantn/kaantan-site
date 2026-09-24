@@ -20,6 +20,25 @@ export default function SetPasswordPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const [sent, setSent] = useState(false);
+
+  async function handleSendCode() {
+    setError(null);
+    if (!email.trim()) {
+      setError("Önce e-posta adresini yaz.");
+      return;
+    }
+    setLoading(true);
+    const supabase = createClient();
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim());
+    setLoading(false);
+    if (error) {
+      setError("Kod gönderilemedi: " + error.message);
+      return;
+    }
+    setSent(true);
+  }
+
   async function handleVerifyCode(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
@@ -93,6 +112,14 @@ export default function SetPasswordPage() {
                 autoComplete="username"
               />
             </div>
+            <button
+              type="button"
+              onClick={handleSendCode}
+              disabled={loading}
+              className="w-full rounded-lg border border-white/10 px-4 py-2 text-sm text-[#dad6e3] transition hover:bg-white/5 disabled:opacity-60"
+            >
+              {sent ? "Kod gönderildi, tekrar gönder" : "Kod gönder"}
+            </button>
             <div>
               <label htmlFor="code" className="mb-1.5 block text-xs font-medium text-[#dad6e3]">
                 Doğrulama kodu

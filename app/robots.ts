@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/bio/", "/control/"],
+      disallow: ["/bio", "/control"],
     },
     sitemap: "https://kaantan.com.tr/sitemap.xml",
   };

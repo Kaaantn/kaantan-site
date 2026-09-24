@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   MapPin, Mail, Phone, Briefcase, Terminal, Palette, Link as LinkIcon,
   Mic, Search, Star, ShoppingBag, Globe, MessageCircle, Activity, FileText, ArrowRight,
@@ -93,7 +94,7 @@ export default async function BioPage() {
   return (
     <div className={styles.page}>
       <div className={styles.card}>
-        <div className={styles.banner} style={{ background: bio.bannerColor || "#4F46E5" }} />
+        <div className={styles.banner} style={{ backgroundColor: bio.bannerColor || "#E5471B" }} />
         <div className={styles.profile}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={bio.avatar || ""} alt={bio.displayName || ""} className={styles.avatar} />
@@ -149,7 +150,7 @@ export default async function BioPage() {
 
         <div className={styles.links}>
           {bio.links.map((link: BioLink) => {
-            const color = link.color || bio.bannerColor || "#4F46E5";
+            const color = link.color || bio.bannerColor || "#E5471B";
             const iconColor = link.iconColor || "#0A0A0A";
             return (
               <a key={link.id} href={clickUrl("link", link.id)} className={styles.linkCard}>
@@ -167,6 +168,9 @@ export default async function BioPage() {
           })}
         </div>
       </div>
+      <Link href="/" className={styles.home}>
+        kaantan.com.tr →
+      </Link>
     </div>
   );
 }

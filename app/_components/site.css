@@ -1,0 +1,311 @@
+/* ══ Ortak site çerçevesi: üst menü, alt bilgi, butonlar (sx- öneki) ══ */
+
+.sx-wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: clamp(20px, 4vw, 40px);
+}
+
+/* Butonlar */
+.sx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 26px;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition:
+    transform 0.25s var(--ease),
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  white-space: nowrap;
+}
+.sx-btn svg {
+  transition: transform 0.25s var(--ease);
+}
+.sx-btn:hover svg {
+  transform: translate(2px, -2px);
+}
+.sx-btn:active {
+  transform: scale(0.97);
+}
+.sx-btn-sm {
+  padding: 11px 18px;
+  font-size: 0.88rem;
+}
+.sx-btn-ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+.sx-btn-ink:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.sx-btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+.sx-btn-accent:hover {
+  background: var(--accent-ink);
+}
+.sx-btn-line {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+.sx-btn-line:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* Üst menü */
+.sx-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(245, 242, 235, 0.82);
+  backdrop-filter: saturate(1.4) blur(12px);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+.sx-header.is-scrolled {
+  border-bottom-color: var(--line);
+  background: rgba(245, 242, 235, 0.94);
+}
+.sx-header-in {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px clamp(20px, 4vw, 40px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.sx-logo {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.28rem;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: baseline;
+}
+.sx-logo i {
+  display: inline-block;
+  width: 0.34em;
+  height: 0.34em;
+  margin-left: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: translateY(-0.02em);
+  transition: transform 0.4s var(--ease);
+}
+.sx-logo:hover i {
+  transform: translateY(-0.02em) rotate(90deg) scale(1.15);
+}
+.sx-nav {
+  display: flex;
+  gap: 30px;
+}
+.sx-nav a {
+  position: relative;
+  color: var(--ink-2);
+  text-decoration: none;
+  font-size: 0.93rem;
+  font-weight: 500;
+  padding: 6px 0;
+}
+.sx-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease);
+}
+.sx-nav a:hover::after,
+.sx-nav a.is-active::after {
+  transform: scaleX(1);
+}
+.sx-nav a.is-active {
+  color: var(--ink);
+}
+.sx-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sx-burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1.5px solid var(--line-strong);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* Mobil menü */
+.sx-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--paper);
+  padding: 96px clamp(20px, 6vw, 40px) 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-12px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s var(--ease),
+    visibility 0s linear 0.4s;
+}
+.sx-drawer.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s var(--ease);
+}
+.sx-drawer nav {
+  display: flex;
+  flex-direction: column;
+}
+.sx-drawer nav a {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.5s var(--ease);
+}
+.sx-drawer.is-open nav a {
+  opacity: 1;
+  transform: none;
+}
+.sx-drawer nav a span {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0;
+}
+.sx-drawer .sx-btn {
+  width: 100%;
+  padding: 18px;
+}
+
+@media (max-width: 920px) {
+  .sx-nav {
+    display: none;
+  }
+  .sx-header-actions .sx-btn {
+    display: none;
+  }
+  .sx-burger {
+    display: inline-flex;
+  }
+}
+
+/* Alt bilgi */
+.sx-footer {
+  background: var(--ink);
+  color: #b9b3a5;
+  padding-top: 72px;
+}
+.sx-footer .sx-logo {
+  color: var(--paper);
+}
+.sx-footer-in {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+  gap: 40px;
+  padding-bottom: 56px;
+}
+.sx-footer-brand p {
+  margin-top: 14px;
+  max-width: 300px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.sx-footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sx-footer-col h4 {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7f796c;
+  margin-bottom: 6px;
+}
+.sx-footer-col a {
+  color: #d9d4c7;
+  text-decoration: none;
+  font-size: 0.95rem;
+  width: fit-content;
+  transition: color 0.2s ease;
+}
+.sx-footer-col a:hover {
+  color: var(--accent);
+}
+.sx-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 22px;
+  padding-bottom: 28px;
+  border-top: 1px solid #2c2820;
+  font-size: 0.82rem;
+  color: #7f796c;
+}
+@media (max-width: 820px) {
+  .sx-footer-in {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sx-footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 480px) {
+  .sx-footer-bottom {
+    flex-direction: column;
+  }
+}

@@ -1,268 +1,344 @@
-/* Ported from _includes/base.njk's inline <style> block (shared chrome for
-   /blog, /blog/[slug], /shop). Scoped via CSS Modules so none of this can
-   collide with the homepage's own class names (e.g. both define a
-   `.nav-logo`, but for different visual designs). */
-
-.nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 22px 48px;
-  border-bottom: 1px solid var(--line);
-}
-@media (max-width: 640px) {
-  .nav {
-    padding: 18px 20px;
-  }
-}
-.navLogo {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 1.15rem;
-  color: var(--ink);
-  text-decoration: none;
-}
-.navLogo span {
-  color: var(--lime-600);
-}
-.navLinks {
-  display: flex;
-  gap: 26px;
-  list-style: none;
-}
-.navLinks a {
-  text-decoration: none;
-  color: var(--body);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-.navLinks a:hover {
-  color: var(--ink);
-}
+/* Blog sayfaları (liste + yazı). CSS Modules ile ana sayfadan izole. */
 
 .wrap {
   max-width: 760px;
   margin: 0 auto;
-  padding: 130px 24px 100px; /* üstte sabit menü için boşluk */
+  padding: clamp(40px, 6vw, 72px) clamp(20px, 4vw, 24px) 100px;
 }
 .wrapWide {
-  max-width: 1080px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 130px 24px 100px;
+  padding: clamp(40px, 6vw, 72px) clamp(20px, 4vw, 40px) 110px;
 }
 
 .postEyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  display: block;
+  font-family: var(--mono);
   font-size: 0.76rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--lime-600);
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.pageTitle {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(2.8rem, 8vw, 5.6rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+}
+.pageLead {
+  margin-top: 18px;
+  max-width: 560px;
+  font-size: 1.12rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+/* ── Arama / liste ── */
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 40px 0 28px;
+}
+.search {
+  position: relative;
+  flex: 1 1 320px;
+  max-width: 460px;
+}
+.search input {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--card);
+  border: 1.5px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 14px 20px 14px 48px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.search input:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.search svg {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+.count {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.empty {
+  padding: 48px 0;
+  color: var(--muted);
+}
+
+.postGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.postListItem {
+  display: flex;
+  flex-direction: column;
+  padding: 26px;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 22px;
+  text-decoration: none;
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    border-color 0.25s ease;
+}
+.postListItem:hover {
+  transform: translate(-4px, -4px);
+  border-color: var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+}
+.postListDate {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
   margin-bottom: 14px;
+}
+.postListTitle {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.postListDesc {
+  color: var(--ink-2);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.postListMore {
+  margin-top: auto;
+  padding-top: 18px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--accent-ink);
+}
+
+@media (max-width: 960px) {
+  .postGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 620px) {
+  .postGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Yazı sayfası ── */
+.backLink {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 32px;
+  transition: color 0.2s ease;
+}
+.backLink:hover {
+  color: var(--accent);
 }
 .postTitle {
   font-family: var(--display);
-  font-size: clamp(1.9rem, 4vw, 2.6rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  font-weight: 800;
+  font-size: clamp(2rem, 5.4vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
   color: var(--ink);
-  margin-bottom: 16px;
 }
 .postMeta {
-  font-size: 0.86rem;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.76rem;
   color: var(--muted);
-  margin-bottom: 40px;
 }
 .postCover {
   width: 100%;
-  border-radius: 16px;
+  border-radius: 18px;
+  margin: 28px 0 0;
   border: 1px solid var(--line);
-  margin-bottom: 40px;
-  object-fit: cover;
 }
-
 .postBody {
-  font-size: 1.05rem;
-  color: var(--body);
+  margin-top: 36px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--ink-2);
 }
 .postBody :global(p) {
-  margin-bottom: 22px;
+  margin-bottom: 1.3em;
 }
 .postBody :global(h2) {
   font-family: var(--display);
-  font-size: 1.5rem;
   font-weight: 700;
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   color: var(--ink);
-  margin: 42px 0 16px;
-  letter-spacing: -0.01em;
+  margin: 2em 0 0.6em;
+  scroll-margin-top: 90px;
 }
 .postBody :global(h3) {
   font-family: var(--display);
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
   color: var(--ink);
-  margin: 32px 0 14px;
+  margin: 1.7em 0 0.5em;
 }
 .postBody :global(ul),
 .postBody :global(ol) {
-  margin: 0 0 22px 22px;
+  margin: 0 0 1.4em 1.3em;
 }
 .postBody :global(li) {
-  margin-bottom: 8px;
+  margin-bottom: 0.5em;
+  padding-left: 4px;
+}
+.postBody :global(li::marker) {
+  color: var(--accent);
 }
 .postBody :global(a) {
-  color: var(--lime-700);
+  color: var(--ink);
+  font-weight: 500;
   text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.postBody :global(a:hover) {
+  color: #fff;
+  background: var(--accent);
+  text-decoration-color: var(--accent);
 }
 .postBody :global(strong) {
   color: var(--ink);
   font-weight: 600;
 }
 .postBody :global(blockquote) {
-  border-left: 3px solid var(--lime-400);
-  padding-left: 18px;
-  color: var(--muted);
-  font-style: italic;
-  margin-bottom: 22px;
+  margin: 1.6em 0;
+  padding: 4px 0 4px 22px;
+  border-left: 4px solid var(--accent);
+  font-family: var(--display);
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--ink);
 }
 .postBody :global(img) {
-  border-radius: 12px;
-  margin: 12px 0 22px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 14px;
+  margin: 1.4em 0;
   border: 1px solid var(--line);
 }
 .postBody :global(code) {
-  background: var(--surface);
-  border: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--paper-2);
   padding: 2px 6px;
-  border-radius: 5px;
-  font-size: 0.9em;
+  border-radius: 6px;
+  color: var(--ink);
 }
 .postBody :global(pre) {
-  background: var(--surface);
-  color: var(--ink);
-  border: 1px solid var(--line);
-  padding: 18px;
-  border-radius: 10px;
+  background: var(--ink);
+  color: #e9e4d6;
+  border-radius: 14px;
+  padding: 18px 20px;
   overflow-x: auto;
-  margin-bottom: 22px;
+  margin: 1.5em 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 .postBody :global(pre code) {
-  background: none;
-  border: none;
+  background: transparent;
+  color: inherit;
   padding: 0;
 }
-
-.backLink {
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--body);
-  text-decoration: none;
-  margin-bottom: 36px;
-}
-.backLink:hover {
-  color: var(--ink);
+.postBody :global(hr) {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.4em 0;
 }
 
 .ctaBox {
-  margin-top: 60px;
-  padding: 32px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  text-align: center;
+  margin-top: 56px;
+  padding: clamp(26px, 4vw, 40px);
+  background: var(--ink);
+  border-radius: 24px;
+  color: #c9c3b5;
 }
 .ctaBox p {
-  margin-bottom: 16px;
-  color: var(--ink-2);
-  font-weight: 500;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  letter-spacing: -0.03em;
+  color: var(--paper);
+  margin-bottom: 20px;
+  line-height: 1.15;
 }
 .ctaBox a {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--lime-400);
-  color: var(--ink);
-  padding: 13px 26px;
-  border-radius: 10px;
+  padding: 14px 24px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
   font-weight: 600;
   text-decoration: none;
-  font-size: 0.92rem;
+  transition: background 0.25s ease, transform 0.25s var(--ease);
+}
+.ctaBox a:hover {
+  background: #f25a2d;
+  transform: translateY(-2px);
 }
 
-.footer {
-  border-top: 1px solid var(--line);
-  padding: 30px 48px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-@media (max-width: 640px) {
-  .footer {
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
-    padding: 24px 20px;
-  }
-}
-.footer a {
-  text-decoration: none;
-  color: var(--muted);
-}
-.footer a:hover {
-  color: var(--ink);
+.related {
+  margin-top: 64px;
 }
 
-/* ── Blog listing ── */
-.postGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-@media (max-width: 760px) {
-  .postGrid {
-    grid-template-columns: 1fr;
-  }
-}
-.postListItem {
-  display: flex;
-  flex-direction: column;
-  padding: 26px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.02);
-  text-decoration: none;
-  transition:
-    border-color 0.25s ease,
-    transform 0.25s ease,
-    background 0.25s ease;
-}
-.postListItem:hover {
-  border-color: var(--lime-600);
-  background: rgba(139, 92, 246, 0.06);
-  transform: translateY(-3px);
-}
-.postListDate {
-  font-size: 0.82rem;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-.postListTitle {
-  font-family: var(--display);
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-.postListDesc {
-  color: var(--body);
-  font-size: 0.95rem;
+/* Okuma ilerleme çubuğu */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: 200;
+  pointer-events: none;
 }

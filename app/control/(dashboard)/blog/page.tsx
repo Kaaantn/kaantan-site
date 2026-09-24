@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { marked } from "marked";
+import { ArrowUpRight, Pencil, Trash2 } from "lucide-react";
+import Toast from "../../Toast";
 
 interface PostSummary {
   slug: string;
@@ -14,15 +16,12 @@ interface PostSummary {
 
 const emptyForm = { slug: "", sha: "", title: "", date: new Date().toISOString().slice(0, 10), description: "", body: "" };
 
-const inputCls =
-  "w-full rounded-lg border border-white/10 bg-[#16131e] px-3 py-2 text-sm text-[#f5f3f8] outline-none focus:border-[#8b5cf6]";
-const labelCls = "mb-1.5 mt-3 block text-xs font-medium uppercase tracking-wide text-[#8a8494] first:mt-0";
-
 export default function BlogAdminPage() {
   const [posts, setPosts] = useState<PostSummary[] | null>(null);
   const [form, setForm] = useState(emptyForm);
   const [tab, setTab] = useState<"write" | "preview">("write");
   const [status, setStatus] = useState<{ text: string; ok: boolean } | null>(null);
+  const [q, setQ] = useState("");
 
   function loadPosts() {
     fetch("/api/control/blog/posts")
@@ -32,6 +31,12 @@ export default function BlogAdminPage() {
   }
 
   useEffect(loadPosts, []);
+
+  useEffect(() => {
+    if (!status || status.text.startsWith("Yükleniyor") || status.text.startsWith("Kaydediliyor")) return;
+    const t = setTimeout(() => setStatus(null), 3800);
+    return () => clearTimeout(t);
+  }, [status]);
 
   async function startEdit(slug: string) {
     setStatus({ text: "Yükleniyor…", ok: true });
@@ -48,7 +53,6 @@ export default function BlogAdminPage() {
 
   function resetForm() {
     setForm({ ...emptyForm, date: new Date().toISOString().slice(0, 10) });
-    setStatus(null);
     setTab("write");
   }
 
@@ -93,95 +97,129 @@ export default function BlogAdminPage() {
   }
 
   const previewHtml = tab === "preview" ? (marked.parse(form.body || "", { async: false }) as string) : "";
+  const words = useMemo(() => (form.body.trim() ? form.body.trim().split(/\s+/).length : 0), [form.body]);
+
+  const filtered = useMemo(() => {
+    const t = q.trim().toLocaleLowerCase("tr");
+    if (!posts) return null;
+    if (!t) return posts;
+    return posts.filter((p) => `${p.title} ${p.description}`.toLocaleLowerCase("tr").includes(t));
+  }, [posts, q]);
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-[#f5f3f8]">Blog Yazıları</h1>
-      <p className="mt-1 text-sm text-[#8a8494]">
-        Kaydettiğinde GitHub&apos;a commit atılır, ~30-60 saniye içinde otomatik yayına alır.{" "}
-        <Link href="/blog/" target="_blank" className="font-semibold text-[#a78bfa]">Bloğu gör →</Link>
-      </p>
+      <div className="cp-head">
+        <div>
+          <h1>Blog Yazıları</h1>
+          <p>Kaydettiğinde GitHub&apos;a commit atılır, ~30-60 saniye içinde otomatik yayına alınır.</p>
+        </div>
+        <div className="cp-head-actions">
+          <Link href="/blog" target="_blank" className="cp-btn cp-btn-ghost">
+            Bloğu gör <ArrowUpRight size={15} />
+          </Link>
+        </div>
+      </div>
 
-      <div className="mt-6 rounded-xl border border-white/10 bg-[#0b0a10] p-6">
-        <h2 className="mb-3 font-semibold text-[#f5f3f8]">{form.sha ? "Yazıyı Düzenle" : "Yeni Yazı Ekle"}</h2>
+      <section className="cp-card">
+        <div className="cp-card-head">
+          <h2>{form.sha ? "Yazıyı Düzenle" : "Yeni Yazı Ekle"}</h2>
+          {form.sha && <span className="cp-chip is-accent">düzenleniyor</span>}
+        </div>
 
-        <label className={labelCls}>Başlık</label>
-        <input className={inputCls} placeholder="Yazının başlığı" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+        <div className="cp-field">
+          <label className="cp-label">Başlık</label>
+          <input className="cp-input" placeholder="Yazının başlığı" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+        </div>
+        <div className="cp-grid-2">
+          <div className="cp-field">
+            <label className="cp-label">Yayın tarihi</label>
+            <input type="date" className="cp-input" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
+          </div>
+          <div className="cp-field">
+            <label className="cp-label">Açıklama (SEO / önizleme)</label>
+            <textarea className="cp-input" rows={2} placeholder="Google'da ve blog listesinde görünecek kısa açıklama" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+            <div className="cp-hint" style={{ margin: "6px 0 0" }}>{form.description.length} karakter · ideal 120-160</div>
+          </div>
+        </div>
 
-        <label className={labelCls}>Yayın tarihi</label>
-        <input type="date" className={inputCls} value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
-
-        <label className={labelCls}>Açıklama (SEO / önizleme için)</label>
-        <textarea className={inputCls} rows={2} placeholder="Google'da ve blog listesinde görünecek kısa açıklama" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
-
-        <div className="mt-4 flex gap-1 border-b border-white/10">
-          <button onClick={() => setTab("write")} className={`px-3.5 py-2 text-sm font-medium ${tab === "write" ? "border-b-2 border-[#8b5cf6] text-[#f5f3f8]" : "text-[#8a8494]"}`}>Yaz</button>
-          <button onClick={() => setTab("preview")} className={`px-3.5 py-2 text-sm font-medium ${tab === "preview" ? "border-b-2 border-[#8b5cf6] text-[#f5f3f8]" : "text-[#8a8494]"}`}>Önizle</button>
+        <div className="cp-tabs" role="tablist">
+          <button role="tab" aria-selected={tab === "write"} className={tab === "write" ? "is-on" : ""} onClick={() => setTab("write")}>
+            Yaz
+          </button>
+          <button role="tab" aria-selected={tab === "preview"} className={tab === "preview" ? "is-on" : ""} onClick={() => setTab("preview")}>
+            Önizle
+          </button>
         </div>
 
         {tab === "write" ? (
-          <>
-            <label className={labelCls}>İçerik (Markdown — ## başlık, **kalın**, [link](url) gibi)</label>
+          <div className="cp-field">
+            <label className="cp-label">İçerik — Markdown (## başlık, **kalın**, [link](url))</label>
             <textarea
-              className={`${inputCls} min-h-[320px] font-mono text-[0.86rem] leading-relaxed`}
+              className="cp-input cp-mono"
+              style={{ minHeight: 340 }}
               placeholder="Yazının içeriği..."
               value={form.body}
               onChange={(e) => setForm({ ...form, body: e.target.value })}
             />
-          </>
+            <div className="cp-hint" style={{ margin: "6px 0 0" }}>{words} kelime · yaklaşık {Math.max(1, Math.round(words / 200))} dk okuma</div>
+          </div>
         ) : (
-          <div
-            className="prose prose-invert mt-3 min-h-[320px] rounded-lg border border-white/10 bg-[#16131e] p-4 text-sm text-[#dad6e3] [&_a]:text-[#a78bfa] [&_h2]:mt-5 [&_h2]:text-[#f5f3f8] [&_p]:mb-3"
-            dangerouslySetInnerHTML={{ __html: previewHtml }}
-          />
+          <div className="cp-preview" dangerouslySetInnerHTML={{ __html: previewHtml }} />
         )}
 
-        <div className="mt-4 flex gap-2">
-          <button onClick={save} className="rounded-lg bg-[#a78bfa] px-4 py-2 text-sm font-semibold text-[#0b0a10] hover:bg-[#c4b5fd]">
+        <div className="cp-actions" style={{ marginTop: 16 }}>
+          <button onClick={save} className="cp-btn cp-btn-primary">
             Kaydet
           </button>
           {form.sha && (
-            <button onClick={resetForm} className="rounded-lg border border-white/10 px-4 py-2 text-sm text-[#dad6e3] hover:bg-white/5">
+            <button onClick={resetForm} className="cp-btn cp-btn-ghost">
               Vazgeç
             </button>
           )}
         </div>
-        {status && <p className={`mt-2.5 text-sm ${status.ok ? "text-[#a78bfa]" : "text-red-400"}`}>{status.text}</p>}
-      </div>
+      </section>
 
-      <div className="mt-5 rounded-xl border border-white/10 bg-[#0b0a10] p-6">
-        <h2 className="mb-3 font-semibold text-[#f5f3f8]">Yayındaki Yazılar</h2>
-        {posts === null ? (
-          <p className="text-sm text-[#8a8494]">Yükleniyor…</p>
-        ) : posts.length === 0 ? (
-          <p className="py-4 text-center text-sm text-[#8a8494]">Henüz yazı yok.</p>
+      <section className="cp-card">
+        <div className="cp-card-head">
+          <h2>Yayındaki Yazılar</h2>
+          {posts && <span className="cp-chip">{posts.length} yazı</span>}
+        </div>
+
+        <div className="cp-field">
+          <input className="cp-input" placeholder="Yazılarda ara…" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Yazılarda ara" />
+        </div>
+
+        {filtered === null ? (
+          <p className="cp-empty">Yükleniyor…</p>
+        ) : filtered.length === 0 ? (
+          <p className="cp-empty">{q ? "Eşleşen yazı yok." : "Henüz yazı yok."}</p>
         ) : (
-          <div className="space-y-3">
-            {posts.map((p) => (
-              <div key={p.slug} className="rounded-lg border border-white/10 p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="text-sm font-medium text-[#f5f3f8]">{p.title}</div>
-                    <div className="mt-0.5 text-xs text-[#8a8494]">{p.date}</div>
-                    <div className="mt-1.5 text-sm text-[#b7b2c4]">{p.description}</div>
-                  </div>
-                  <div className="flex shrink-0 flex-wrap gap-1.5">
-                    <Link href={`/blog/${p.slug}/`} target="_blank" className="rounded border border-white/10 px-2.5 py-1 text-xs text-[#8a8494] hover:text-[#f5f3f8]">
-                      Gör
-                    </Link>
-                    <button onClick={() => startEdit(p.slug)} className="rounded border border-white/10 px-2.5 py-1 text-xs text-[#8a8494] hover:text-[#f5f3f8]">
-                      Düzenle
-                    </button>
-                    <button onClick={() => deletePost(p.slug, p.sha)} className="rounded border border-white/10 px-2.5 py-1 text-xs text-[#8a8494] hover:text-[#f5f3f8]">
-                      Sil
-                    </button>
-                  </div>
+          <div className="cp-list">
+            {filtered.map((p) => (
+              <div key={p.slug} className="cp-row">
+                <div className="cp-row-main">
+                  <div className="cp-row-title">{p.title}</div>
+                  <div className="cp-row-sub">{p.date}</div>
+                  <div className="cp-row-sub" style={{ marginTop: 6, color: "var(--ink-2)" }}>{p.description}</div>
+                </div>
+                <div className="cp-row-tools">
+                  <Link href={`/blog/${p.slug}`} target="_blank" className="cp-icon-btn" aria-label="Yazıyı gör" title="Yazıyı gör">
+                    <ArrowUpRight size={16} />
+                  </Link>
+                  <button onClick={() => startEdit(p.slug)} className="cp-icon-btn" aria-label="Düzenle" title="Düzenle">
+                    <Pencil size={16} />
+                  </button>
+                  <button onClick={() => deletePost(p.slug, p.sha)} className="cp-icon-btn is-danger" aria-label="Sil" title="Sil">
+                    <Trash2 size={16} />
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         )}
-      </div>
+      </section>
+
+      <Toast msg={status?.text || ""} bad={status ? !status.ok : false} />
     </div>
   );
 }

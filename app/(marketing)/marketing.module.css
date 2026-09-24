@@ -43,7 +43,12 @@
 .wrap {
   max-width: 760px;
   margin: 0 auto;
-  padding: 60px 24px 100px;
+  padding: 130px 24px 100px; /* üstte sabit menü için boşluk */
+}
+.wrapWide {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 130px 24px 100px;
 }
 
 .postEyebrow {
@@ -217,11 +222,33 @@
 }
 
 /* ── Blog listing ── */
+.postGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+@media (max-width: 760px) {
+  .postGrid {
+    grid-template-columns: 1fr;
+  }
+}
 .postListItem {
-  display: block;
-  padding: 24px 0;
-  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.02);
   text-decoration: none;
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+.postListItem:hover {
+  border-color: var(--lime-600);
+  background: rgba(139, 92, 246, 0.06);
+  transform: translateY(-3px);
 }
 .postListDate {
   font-size: 0.82rem;
@@ -238,124 +265,4 @@
 .postListDesc {
   color: var(--body);
   font-size: 0.95rem;
-}
-
-/* ── Shop (ported verbatim from blog/shop.njk's inline <style>) ── */
-.shopWrap {
-  max-width: 1040px;
-}
-.shopGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-  margin-top: 8px;
-}
-@media (max-width: 900px) {
-  .shopGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 560px) {
-  .shopGrid {
-    grid-template-columns: 1fr;
-  }
-}
-.shopCard {
-  display: flex;
-  flex-direction: column;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  overflow: hidden;
-  text-decoration: none;
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease,
-    transform 0.2s ease;
-}
-.shopCard:hover {
-  border-color: var(--lime-400);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-  transform: translateY(-3px);
-}
-.shopCardImg {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background: var(--white);
-  overflow: hidden;
-}
-.shopCardImg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.shopBadge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: var(--ink);
-  color: var(--white);
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 5px 10px;
-  border-radius: 100px;
-}
-.shopCardBody {
-  padding: 18px 18px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.shopType {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--lime-600);
-}
-.shopName {
-  font-family: var(--display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-  margin-top: 2px;
-}
-.shopSub {
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-.shopPriceRow {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-top: 8px;
-}
-.shopPrice {
-  font-family: var(--display);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-.shopOldPrice {
-  font-size: 0.85rem;
-  color: var(--muted);
-  text-decoration: line-through;
-}
-.shopCta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 12px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--ink-2);
-}
-.shopCta svg {
-  width: 14px;
-  height: 14px;
-}
-.shopCard:hover .shopCta {
-  color: var(--lime-700);
 }

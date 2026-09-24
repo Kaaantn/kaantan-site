@@ -3,7 +3,7 @@ import Link from "next/link";
 import Script from "next/script";
 import { notFound } from "next/navigation";
 import { marked } from "marked";
-import { getPostBySlug, getPostSlugs } from "@/lib/posts";
+import { getAllPosts, getPostBySlug, getPostSlugs } from "@/lib/posts";
 import { tarih } from "@/lib/dates";
 import styles from "../../marketing.module.css";
 
@@ -33,6 +33,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound();
 
   const html = marked.parse(post.body, { async: false }) as string;
+  const others = getAllPosts()
+    .filter((p) => p.slug !== post.slug)
+    .slice(0, 3);
 
   return (
     <div className={styles.wrap}>
@@ -44,7 +47,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         />
       )}
 
-      <Link href="/blog/" className={styles.backLink}>
+      <Link href="/blog" className={styles.backLink}>
         ← Tüm yazılar
       </Link>
       <div className={styles.postEyebrow}>Blog</div>
@@ -61,6 +64,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           WhatsApp&apos;tan Yaz →
         </a>
       </div>
+
+      {others.length > 0 && (
+        <div style={{ marginTop: "56px" }}>
+          <div className={styles.postEyebrow}>Diğer yazılar</div>
+          <div className={styles.postGrid} style={{ gridTemplateColumns: "1fr" }}>
+            {others.map((p) => (
+              <Link key={p.slug} href={`/blog/${p.slug}`} className={styles.postListItem}>
+                <div className={styles.postListDate}>{tarih(p.date)}</div>
+                <div className={styles.postListTitle}>{p.title}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

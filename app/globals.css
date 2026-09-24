@@ -1990,3 +1990,23 @@ footer {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Ana sayfa "Son yazılar" bölümü (proje kartlarını yeniden kullanır) ── */
+.hb-card {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+.hb-date {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.hb-card .project-desc {
+  flex: 1;
+}
+.hb-more {
+  margin-top: 28px;
+  text-align: center;
+}

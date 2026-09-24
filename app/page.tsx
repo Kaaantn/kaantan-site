@@ -34,6 +34,8 @@ import {
   MapPin,
 } from "lucide-react";
 import HomeAnimations from "./HomeAnimations";
+import { getAllPosts } from "@/lib/posts";
+import { tarih } from "@/lib/dates";
 
 export const metadata: Metadata = {
   title: "Kaan Tan — Web, Otomasyon & İkas İş Ortağı",
@@ -85,6 +87,8 @@ const personJsonLd = {
 };
 
 export default function HomePage() {
+  const latestPosts = getAllPosts().slice(0, 3);
+
   return (
     <>
       <Script
@@ -116,8 +120,7 @@ export default function HomePage() {
           <li><a href="#services">Hizmetler</a></li>
           <li><a href="#process">Süreç</a></li>
           <li><a href="#projects">Projelerim</a></li>
-          <li><a href="/blog/">Blog</a></li>
-          <li><a href="/shop/">Shop</a></li>
+          <li><a href="/blog">Blog</a></li>
           <li><a href="#contact" className="nav-cta">İletişime Geç</a></li>
         </ul>
         <button className="nav-burger" id="burgerBtn" aria-label="Menüyü aç/kapat" aria-expanded="false">
@@ -134,8 +137,7 @@ export default function HomePage() {
           <li><a href="#services">Hizmetler</a></li>
           <li><a href="#projects">Projelerim</a></li>
           <li><a href="#process">Süreç</a></li>
-          <li><a href="/blog/">Blog</a></li>
-          <li><a href="/shop/">Shop</a></li>
+          <li><a href="/blog">Blog</a></li>
         </ul>
         <a href="https://wa.me/905422979212" target="_blank" rel="noopener" className="mm-cta">
           <MessageCircle size={20} /> WhatsApp&apos;tan Yaz
@@ -516,6 +518,31 @@ export default function HomePage() {
               </div>
               <a href="https://apps.ikas.com/tr/uygulama/f11c28a4-db00-4fb5-8835-1c9bd381529a" target="_blank" rel="noopener" className="project-link">Uygulamaya Git <ArrowUpRight /></a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ BLOG ══ */}
+      <section id="blog">
+        <div className="section-inner">
+          <div className="reveal">
+            <div className="section-eyebrow">Blog</div>
+            <h2 className="section-title">Son yazılar.</h2>
+          </div>
+
+          <div className="projects-grid">
+            {latestPosts.map((post) => (
+              <a key={post.slug} href={`/blog/${post.slug}`} className="project-card reveal hb-card">
+                <div className="hb-date">{tarih(post.date)}</div>
+                <h3 className="project-name">{post.title}</h3>
+                <p className="project-desc">{post.description}</p>
+                <span className="project-link">Yazıyı oku <ArrowUpRight /></span>
+              </a>
+            ))}
+          </div>
+
+          <div className="hb-more reveal">
+            <a href="/blog" className="project-link">Tüm yazılar <ArrowUpRight /></a>
           </div>
         </div>
       </section>

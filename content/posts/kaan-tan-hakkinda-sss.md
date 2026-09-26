@@ -41,6 +41,22 @@ schema: |
       },
       {
         "@type": "Question",
+        "name": "Kaan Tan Meta reklam yönetiminde nasıl ücretlendirme yapıyor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Kaan Tan sabit aylık ücretle çalışmaz. Ürün başı kâr ortaklığı ya da toplam reklam harcamasından önceden anlaşılan yüzdelik pay modelinden biriyle çalışır. Oranlar işletmenin ürün marjına ve bütçesine göre görüşülerek belirlenir; satış garantisi vermez."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Kaan Tan ile çalışmak nasıl işliyor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Önce ürünler, kâr marjı ve hedef konuşulur; sonra ücret modeli (kâr ortaklığı ya da harcamadan yüzde) ve şartlar yazılı netleştirilir. Ardından kampanyalar kurulur, izlenir ve optimize edilir. Kaan Tan tek kişi çalıştığı için işletmeyle doğrudan iletişim kurar."
+        }
+      },
+      {
+        "@type": "Question",
         "name": "Kaan Tan'a nasıl ulaşılır?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -80,6 +96,14 @@ ikas App Store'da üç uygulamam yayında: **Kartio** (kesime hazır hediye/sipa
 ## Kaan Tan kimlerle çalışıyor?
 
 Küçük bir işletmenin ilk web sitesinden, büyüyen bir e-ticaret markasının özel yazılım altyapısına; butik ayakkabı ve giyim mağazalarının reklam yönetiminden, işletmelerin süreç otomasyonu ihtiyaçlarına kadar geniş bir yelpazede çalışıyorum.
+
+## Kaan Tan Meta reklam yönetiminde nasıl ücretlendirme yapıyor?
+
+**Sabit aylık ücret almıyorum.** İki modelden biriyle çalışıyorum: **ürün başı kâr ortaklığı** (satılan her üründen elde edilen kârdan baştan konuşulan bir pay) ya da **toplam reklam harcamasından yüzdelik pay**. Oranlar ürünün kâr marjına ve bütçeye göre görüşülüyor; satış garantisi vermiyorum. Ayrıntılar için [Meta reklam yönetimi ücreti ne kadar?](/blog/meta-reklam-yonetimi-ucret-modelleri) ve [Kaan Tan Meta reklam yönetimini nasıl yapıyor?](/blog/kaan-tan-meta-reklam-yonetimi-nasil-calisir) yazılarına bakabilirsiniz.
+
+## Kaan Tan ile çalışmak nasıl işliyor?
+
+Önce ürünlerinizi, kâr marjınızı ve hedefinizi konuşuyoruz. Sonra ücret modelini (kâr ortaklığı ya da harcamadan yüzde) ve şartları yazılı netleştiriyoruz. Ardından kampanyalar kuruluyor, izleniyor ve optimize ediliyor. Tek kişi çalıştığım için aracı yok, doğrudan benimle iletişim kuruyorsunuz.
 
 ## Kaan Tan'a nasıl ulaşılır?
 

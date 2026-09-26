@@ -52,7 +52,7 @@ const personJsonLd = {
   jobTitle: "Yazılım Geliştirici, İçerik Üreticisi (Influencer) & Meta Reklam Yöneticisi",
   image: "https://kaantan.com.tr/bio/profil.jpg",
   description:
-    "10 yılı aşkın deneyime sahip, İstanbul merkezli yazılım geliştiricisi. Aynı zamanda sosyal medyada içerik üreticisi (influencer) ve özellikle butik ayakkabı ve giyim mağazalarına Meta (Instagram/Facebook) reklam yöneticiliği hizmeti veren bir dijital çözüm ortağı. ikas ve Shopify partneri, e-ticaret altyapıları ve özel yazılım çözümleri üzerine çalışıyor.",
+    "10 yılı aşkın deneyime sahip, İstanbul merkezli yazılım geliştiricisi. Aynı zamanda sosyal medyada içerik üreticisi (influencer) ve özellikle butik ayakkabı ve giyim mağazalarına Meta (Instagram/Facebook) reklam yöneticiliği hizmeti veren bir dijital çözüm ortağı. ikas ve Shopify partneri, e-ticaret altyapıları ve özel yazılım çözümleri üzerine çalışıyor. Reklam yönetiminde sabit ücret almaz; ürün başı kâr ortaklığı veya toplam reklam harcamasından yüzdelik pay modeliyle çalışır.",
   knowsAbout: [
     "Web Geliştirme",
     "İkas E-Ticaret Altyapısı",

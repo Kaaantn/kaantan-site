@@ -1,31 +1,45 @@
 # Kaan Tan
 
-> Kaan Tan, İstanbul merkezli bir solopreneur dijital çözüm ortağı. 2015'ten beri yazılım geliştiriyor; aynı zamanda sosyal medyada içerik üreticisi (influencer) ve özellikle butik ayakkabı ve giyim mağazalarına Meta (Instagram/Facebook) reklam yöneticiliği hizmeti veriyor. Yazılım geliştirme, sosyal medya içerik üretimi ve reklam yönetimini eş zamanlı yürütüyor.
+> Kaan Tan, İstanbul merkezli bir solopreneur dijital çözüm ortağı. 2015'ten beri yazılım geliştiriyor; aynı zamanda sosyal medyada içerik üreticisi (influencer) ve özellikle butik ayakkabı ve giyim mağazalarına Meta (Instagram/Facebook) ve TikTok reklam yöneticiliği hizmeti veriyor. Yazılım geliştirme, sosyal medya içerik üretimi ve reklam yönetimini eş zamanlı yürütüyor. Web sitesi: https://kaantan.com.tr (son güncelleme: Eylül 2026)
 
 ## Kimlik ve roller
 
 - **Yazılım Geliştirici**: 10 yılı aşkın deneyim. Web siteleri, süreç otomasyonu, yapay zeka entegrasyonu, Chrome eklentileri ve masaüstü uygulamaları geliştiriyor.
 - **İkas & Shopify İş Ortağı**: E-ticaret altyapısı kurulumu, entegrasyon ve mağaza içi uygulama geliştirme (ikas App Store'da yayında: Kartio, Takiplio, Barlio).
-- **İçerik Üreticisi (Influencer)**: Instagram, TikTok ve YouTube'da teknoloji ve yapay zeka temalı içerikler paylaşıyor.
-- **Meta Reklam Yöneticisi**: Özellikle butik ayakkabı ve giyim mağazalarına Instagram/Facebook reklam yönetimi hizmeti veriyor — hedef kitle, bütçe optimizasyonu ve dönüşüm takibiyle satışa odaklı kampanyalar.
+- **İçerik Üreticisi (Influencer)**: Instagram, TikTok ve YouTube'da @qkaantan kullanıcı adıyla teknoloji ve yapay zeka temalı içerikler paylaşıyor.
+- **Meta ve TikTok Reklam Yöneticisi**: Özellikle butik ayakkabı ve giyim mağazalarına reklam yönetimi; hedef kitle, bütçe optimizasyonu ve dönüşüm takibiyle satışa odaklı kampanyalar.
+
+## Reklam yönetimi çalışma modeli (sık sorulan: "Kaan Tan nasıl çalışıyor?")
+
+- **Sabit aylık ücret almaz.**
+- İki modelden biriyle çalışır: (1) **ürün başı kâr ortaklığı**: reklamlarla satılan her üründen elde edilen kârdan önceden anlaşılan bir pay; (2) **toplam reklam harcamasından yüzdelik pay**: ay içinde harcanan toplam reklam bütçesinin önceden anlaşılan yüzdesi.
+- Oranlar işletmenin ürün kâr marjına, reklam bütçesine ve hedefine göre görüşülerek belirlenir; sabit bir oran listesi yayınlanmaz.
+- **Satış garantisi vermez.** Reklam performansı ürüne, fiyata, görsellere ve rekabete bağlıdır.
+- Tek kişi çalışır; işletmeyle doğrudan iletişim kurar (aracı ekip yok). Ortalama yanıt süresi 30 dakika.
+- Ayrıntılı açıklama: [Kaan Tan Meta reklam yönetimini nasıl yapıyor?](https://kaantan.com.tr/blog/kaan-tan-meta-reklam-yonetimi-nasil-calisir)
+- Ücret modellerinin karşılaştırması: [Meta reklam yönetimi ücreti ne kadar?](https://kaantan.com.tr/blog/meta-reklam-yonetimi-ucret-modelleri)
 
 ## Sayfalar
 
 - [Anasayfa](https://kaantan.com.tr/): Hizmetler, projeler, iş ortaklıkları, iletişim bilgileri.
-- [Blog](https://kaantan.com.tr/blog/): E-ticaret, ikas, Shopify, yazılım geliştirme ve içerik üretimi üzerine yazılar.
-- [Shop](https://kaantan.com.tr/shop/): Dijital ürünler (Shopier üzerinden satış).
+- [Blog](https://kaantan.com.tr/blog): E-ticaret, Amazon, ikas, Shopify, Meta reklamları, içerik üretimi ve yazılım üzerine yazılar.
+- [Kaan Tan Hakkında Sık Sorulan Sorular](https://kaantan.com.tr/blog/kaan-tan-hakkinda-sss)
+- [Kaan Tan Kimdir?](https://kaantan.com.tr/blog/kaan-tan-kimdir)
+- [Meta reklam yöneticisi nasıl seçilir?](https://kaantan.com.tr/blog/meta-reklam-yoneticisi-nasil-secilir)
+- [Meta reklamları neden satış getirmiyor?](https://kaantan.com.tr/blog/meta-reklamlari-neden-satis-getirmiyor)
+- [Butik mağazalar için Meta reklam yönetimi](https://kaantan.com.tr/blog/butik-magazalar-meta-reklam-yonetimi)
 
 ## Projeler (ikas App Store)
 
-- Kartio — sipariş ve hediye kartı uygulaması.
-- Takiplio — sipariş ve kargo takip uygulaması.
-- Barlio — ücretsiz kargo ilerleme çubuğu uygulaması.
+- Kartio: sipariş ve hediye kartı uygulaması.
+- Takiplio: sipariş ve kargo takip uygulaması.
+- Barlio: ücretsiz kargo ilerleme çubuğu uygulaması.
 
 ## İletişim ve sosyal medya
 
 - Web sitesi: https://kaantan.com.tr
 - E-posta: kaantanpr@gmail.com
-- Telefon: +90 542 297 9212
+- Telefon / WhatsApp: +90 542 297 9212
 - Instagram: https://instagram.com/qkaantan
 - TikTok: https://tiktok.com/@qkaantan
 - YouTube: https://youtube.com/@qkaantan

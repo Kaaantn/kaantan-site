@@ -28,14 +28,24 @@ async function loadFinance() {
   try {
     const supabase = createAdminClient();
     const month = monthKey(todayKey());
-    const { data } = await supabase
+    // Ayın son gününü "31" diye sabitlemek Şubat/Nisan/Haziran/Eylül/Kasım'da
+    // geçersiz bir tarihe (örn. 2026-09-31) yol açıyordu — Postgres bunu
+    // reddediyor, supabase-js da hata fırlatmadığı için sonuç sessizce boş
+    // dönüyordu (genel bakışta her şey "—" görünüyordu, Gelir-Gider sayfası
+    // ayrı bir yöntem kullandığından etkilenmiyordu). Ayın gerçek son gününü
+    // hesaplayıp bunu önlüyoruz.
+    const [y, m] = month.split("-").map(Number);
+    const lastDay = new Date(y, m, 0).getDate();
+    const { data, error } = await supabase
       .from("finance_entries")
       .select("type,amount,currency,category,status,entry_date,title,note,id")
       .gte("entry_date", `${month}-01`)
-      .lte("entry_date", `${month}-31`);
+      .lte("entry_date", `${month}-${String(lastDay).padStart(2, "0")}`);
+    if (error) throw error;
     const entries = (data || []).map((e) => ({ ...e, amount: Number(e.amount) })) as FinanceEntry[];
     return { month, summary: summarize(entries, "TRY"), count: entries.length };
-  } catch {
+  } catch (e) {
+    console.error("loadFinance failed", e);
     return null;
   }
 }

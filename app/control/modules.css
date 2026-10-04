@@ -573,12 +573,62 @@
 /* Alt sekme çubuğu: 6 modül */
 @media (max-width: 1023px) {
   .cp-tabbar {
-    grid-template-columns: repeat(6, 1fr);
-    gap: 2px;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
     padding-inline: 6px;
   }
   .cp-tabbar a {
-    font-size: 0.62rem;
-    padding: 8px 2px;
+    font-size: 0.58rem;
+    padding: 8px 1px;
+  }
+}
+
+/* ── Medya kiti paneli ── */
+.cp-warn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  background: #f7ecc7;
+  border: 1.5px solid #e2cf8c;
+  border-radius: 16px;
+  font-size: 0.92rem;
+  color: #6b5206;
+}
+.cp-warn svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.cp-linkbox {
+  margin-bottom: 12px;
+}
+.cp-platform.is-off {
+  opacity: 0.6;
+}
+.cp-savebar {
+  position: sticky;
+  bottom: 14px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 12px 14px 12px 20px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(22, 19, 15, 0.3);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.cp-savebar .cp-btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+@media (max-width: 1023px) {
+  .cp-savebar {
+    bottom: 84px;
   }
 }

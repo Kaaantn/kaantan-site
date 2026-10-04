@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   CalendarDays,
   ExternalLink,
+  IdCard,
   FileText,
   LayoutDashboard,
   Link2,
@@ -20,6 +21,7 @@ const NAV = [
   { href: "/control/blog", label: "Blog", short: "Blog", icon: FileText },
   { href: "/control/finance", label: "Gelir – Gider", short: "Gelir", icon: Wallet },
   { href: "/control/content", label: "İçerik Planı", short: "İçerik", icon: CalendarDays },
+  { href: "/control/media-kit", label: "Medya Kiti", short: "Kit", icon: IdCard },
 ];
 
 // Kabuk: masaüstünde sol menü, mobilde üst çubuk + alt sekme çubuğu.

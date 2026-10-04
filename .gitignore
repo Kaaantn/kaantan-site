@@ -5,3 +5,4 @@ _site/
 next-env.d.ts
 .env*.local
 .vercel
+*.tsbuildinfo

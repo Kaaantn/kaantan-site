@@ -2,25 +2,78 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, Mail, MapPin, MessageCircle } from "lucide-react";
-import { PLATFORMS, getKit, tokenMatches, type MediaKit } from "@/lib/mediaKit";
+import { PLATFORMS, getKit, tokenMatches, type Lang, type MediaKit } from "@/lib/mediaKit";
 import styles from "../kit.module.css";
 import PrintButton from "./PrintButton";
 
 export const dynamic = "force-dynamic";
 
+// Sayfanın sabit etiketleri iki dilde.
+const T = {
+  tr: {
+    kit: "Medya Kiti",
+    updated: "Güncelleme",
+    platforms: "Platformlar",
+    followers: "takipçi",
+    views: "Son 28 gün izlenme",
+    audience: "Kitle",
+    countries: "Ülkeler",
+    age: "Yaş aralığı",
+    gender: "Cinsiyet",
+    topics: "İçerik konuları",
+    formats: "İş birliği formatları",
+    brands: "Çalıştığım markalar",
+    rates: "Paketler",
+    contactTitle: "İş birliği için",
+    contactText: "Bu kit güncel rakamlarla hazırlandı. Detayları konuşalım.",
+    print: "PDF olarak kaydet",
+    wa: "Merhaba Kaan, medya kitini inceledim, iş birliği hakkında konuşmak istiyorum.",
+    title: "Kaan Tan — Medya Kiti",
+    desc: "Kaan Tan'ın iş birliği medya kiti.",
+    locale: "tr-TR",
+  },
+  en: {
+    kit: "Media Kit",
+    updated: "Updated",
+    platforms: "Platforms",
+    followers: "followers",
+    views: "Views, last 28 days",
+    audience: "Audience",
+    countries: "Countries",
+    age: "Age range",
+    gender: "Gender",
+    topics: "Content topics",
+    formats: "Collaboration formats",
+    brands: "Brands I've worked with",
+    rates: "Packages",
+    contactTitle: "Let's work together",
+    contactText: "This kit is built with current numbers. Let's talk details.",
+    print: "Save as PDF",
+    wa: "Hi Kaan, I've seen your media kit and would like to talk about a collaboration.",
+    title: "Kaan Tan — Media Kit",
+    desc: "Kaan Tan's collaboration media kit.",
+    locale: "en-GB",
+  },
+} as const;
+
+const pickLang = (v: string | string[] | undefined): Lang => (v === "en" ? "en" : "tr");
+
 // Özel sayfa: arama motorlarına kapalı, bağlantı gizli kodla açılır, dışarı Referer sızdırmaz
 // (aksi halde sosyal hesap linklerine tıklayınca gizli adres o sitelere gönderilirdi).
-export const metadata: Metadata = {
-  title: "Kaan Tan — Medya Kiti",
-  description: "Kaan Tan'ın iş birliği medya kiti.",
-  robots: { index: false, follow: false, noarchive: true, nosnippet: true },
-  referrer: "no-referrer",
-  openGraph: {
-    title: "Kaan Tan — Medya Kiti",
-    description: "İş birliği için güncel medya kiti.",
-    type: "website",
-  },
-};
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ lang?: string | string[] }>;
+}): Promise<Metadata> {
+  const t = T[pickLang((await searchParams).lang)];
+  return {
+    title: t.title,
+    description: t.desc,
+    robots: { index: false, follow: false, noarchive: true, nosnippet: true },
+    referrer: "no-referrer",
+    openGraph: { title: t.title, description: t.desc, type: "website" },
+  };
+}
 
 async function load(token: string): Promise<MediaKit | null> {
   try {
@@ -32,32 +85,53 @@ async function load(token: string): Promise<MediaKit | null> {
   }
 }
 
-const dateLabel = (iso: string) =>
-  iso ? new Intl.DateTimeFormat("tr-TR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(iso + "T00:00:00")) : "";
-
-export default async function MediaKitPage({ params }: { params: Promise<{ token: string }> }) {
+export default async function MediaKitPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ token: string }>;
+  searchParams: Promise<{ lang?: string | string[] }>;
+}) {
   const { token } = await params;
+  const lang = pickLang((await searchParams).lang);
+  const t = T[lang];
   const kit = await load(token);
   if (!kit) notFound();
 
-  const platforms = kit.stats.filter((s) => s.enabled && (s.followers || s.avgViews || s.engagement || s.handle));
+  const c = kit[lang];
+  const dateLabel = kit.updatedAt
+    ? new Intl.DateTimeFormat(t.locale, { day: "numeric", month: "long", year: "numeric" }).format(new Date(kit.updatedAt + "T00:00:00"))
+    : "";
+  const platforms = kit.stats.filter((s) => s.enabled && (s.followers || s.views30 || s.handle));
   const audience = [
-    ["Ülkeler", kit.audience.countries],
-    ["Yaş aralığı", kit.audience.age],
-    ["Cinsiyet", kit.audience.gender],
+    [t.countries, c.audience.countries],
+    [t.age, c.audience.age],
+    [t.gender, c.audience.gender],
   ].filter(([, v]) => v);
-  const wa = kit.whatsapp ? `https://wa.me/${kit.whatsapp}?text=${encodeURIComponent("Merhaba Kaan, medya kitini inceledim, iş birliği hakkında konuşmak istiyorum.")}` : "";
+  const wa = kit.whatsapp ? `https://wa.me/${kit.whatsapp}?text=${encodeURIComponent(t.wa)}` : "";
 
   return (
-    <main className={styles.page}>
+    <main className={styles.page} lang={lang}>
       <div className={styles.sheet}>
         <header className={styles.top}>
           <div className={styles.brand}>
             Kaan Tan<i />
           </div>
           <div className={styles.topRight}>
-            <span>Medya Kiti</span>
-            {kit.updatedAt && <span>Güncelleme: {dateLabel(kit.updatedAt)}</span>}
+            <nav className={styles.langs} aria-label="Language">
+              <a href="?lang=tr" className={lang === "tr" ? styles.langOn : ""} hrefLang="tr">
+                TR
+              </a>
+              <a href="?lang=en" className={lang === "en" ? styles.langOn : ""} hrefLang="en">
+                EN
+              </a>
+            </nav>
+            <span>{t.kit}</span>
+            {dateLabel && (
+              <span>
+                {t.updated}: {dateLabel}
+              </span>
+            )}
           </div>
         </header>
 
@@ -67,19 +141,19 @@ export default async function MediaKitPage({ params }: { params: Promise<{ token
           </div>
           <div>
             <h1>{kit.name}</h1>
-            {kit.title && <p className={styles.sub}>{kit.title}</p>}
-            {kit.location && (
+            {c.title && <p className={styles.sub}>{c.title}</p>}
+            {c.location && (
               <p className={styles.loc}>
-                <MapPin size={14} /> {kit.location}
+                <MapPin size={14} /> {c.location}
               </p>
             )}
-            {kit.about && <p className={styles.about}>{kit.about}</p>}
+            {c.about && <p className={styles.about}>{c.about}</p>}
           </div>
         </section>
 
         {platforms.length > 0 && (
           <section className={styles.block}>
-            <h2>Platformlar</h2>
+            <h2>{t.platforms}</h2>
             <div className={styles.stats}>
               {platforms.map((s) => {
                 const label = PLATFORMS.find((p) => p.id === s.id)?.label || s.id;
@@ -97,27 +171,20 @@ export default async function MediaKitPage({ params }: { params: Promise<{ token
                           <span>{s.handle}</span>
                         ))}
                     </div>
-                    {s.followers && (
-                      <div className={styles.big}>
-                        {s.followers}
-                        <small>takipçi</small>
-                      </div>
-                    )}
-                    <dl>
-                      {s.avgViews && (
-                        <>
-                          <dt>Ort. izlenme</dt>
-                          <dd>{s.avgViews}</dd>
-                        </>
+                    <div className={styles.nums}>
+                      {s.followers && (
+                        <div>
+                          <div className={styles.big}>{s.followers}</div>
+                          <small>{t.followers}</small>
+                        </div>
                       )}
-                      {s.engagement && (
-                        <>
-                          <dt>Etkileşim oranı</dt>
-                          <dd>{s.engagement}</dd>
-                        </>
+                      {s.views30 && (
+                        <div>
+                          <div className={styles.big}>{s.views30}</div>
+                          <small>{t.views}</small>
+                        </div>
                       )}
-                    </dl>
-                    {s.note && <p className={styles.note}>{s.note}</p>}
+                    </div>
                   </article>
                 );
               })}
@@ -127,7 +194,7 @@ export default async function MediaKitPage({ params }: { params: Promise<{ token
 
         {audience.length > 0 && (
           <section className={styles.block}>
-            <h2>Kitle</h2>
+            <h2>{t.audience}</h2>
             <dl className={styles.rows}>
               {audience.map(([k, v]) => (
                 <div key={k}>
@@ -140,22 +207,22 @@ export default async function MediaKitPage({ params }: { params: Promise<{ token
         )}
 
         <div className={styles.two}>
-          {kit.topics.length > 0 && (
+          {c.topics.length > 0 && (
             <section className={styles.block}>
-              <h2>İçerik konuları</h2>
+              <h2>{t.topics}</h2>
               <ul className={styles.chips}>
-                {kit.topics.map((t) => (
-                  <li key={t}>{t}</li>
+                {c.topics.map((x) => (
+                  <li key={x}>{x}</li>
                 ))}
               </ul>
             </section>
           )}
-          {kit.formats.length > 0 && (
+          {c.formats.length > 0 && (
             <section className={styles.block}>
-              <h2>İş birliği formatları</h2>
+              <h2>{t.formats}</h2>
               <ul className={styles.list}>
-                {kit.formats.map((t) => (
-                  <li key={t}>{t}</li>
+                {c.formats.map((x) => (
+                  <li key={x}>{x}</li>
                 ))}
               </ul>
             </section>
@@ -164,26 +231,26 @@ export default async function MediaKitPage({ params }: { params: Promise<{ token
 
         {kit.brands.length > 0 && (
           <section className={styles.block}>
-            <h2>Çalıştığım markalar</h2>
+            <h2>{t.brands}</h2>
             <ul className={styles.chips}>
-              {kit.brands.map((t) => (
-                <li key={t}>{t}</li>
+              {kit.brands.map((x) => (
+                <li key={x}>{x}</li>
               ))}
             </ul>
           </section>
         )}
 
-        {kit.rates && (
+        {c.rates && (
           <section className={styles.block}>
-            <h2>Paketler</h2>
-            <p className={styles.pre}>{kit.rates}</p>
+            <h2>{t.rates}</h2>
+            <p className={styles.pre}>{c.rates}</p>
           </section>
         )}
 
         <section className={styles.contact}>
           <div>
-            <h2>İş birliği için</h2>
-            <p>Bu kit güncel rakamlarla hazırlandı. Detayları konuşalım.</p>
+            <h2>{t.contactTitle}</h2>
+            <p>{t.contactText}</p>
           </div>
           <div className={styles.contactBtns}>
             {wa && (
@@ -201,7 +268,7 @@ export default async function MediaKitPage({ params }: { params: Promise<{ token
 
         <footer className={styles.foot}>
           <span>kaantan.com.tr</span>
-          <PrintButton />
+          <PrintButton label={t.print} />
         </footer>
       </div>
     </main>

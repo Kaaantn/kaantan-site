@@ -167,42 +167,47 @@
 .statHead a:hover {
   color: var(--accent);
 }
+.nums {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 16px;
+}
 .big {
-  margin-top: 14px;
   font-family: var(--display);
   font-weight: 800;
-  font-size: 2.5rem;
+  font-size: clamp(1.9rem, 5vw, 2.5rem);
   letter-spacing: -0.04em;
   line-height: 1;
   color: var(--ink);
 }
-.big small {
-  margin-left: 8px;
-  font-family: var(--sans);
-  font-weight: 500;
-  font-size: 0.85rem;
-  letter-spacing: 0;
-  color: var(--muted);
-}
-.stat dl {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 6px 14px;
-  margin-top: 14px;
-  font-size: 0.9rem;
-}
-.stat dt {
-  color: var(--muted);
-}
-.stat dd {
-  text-align: right;
-  font-weight: 600;
-  color: var(--ink);
-}
-.note {
-  margin-top: 10px;
+.nums small {
+  display: block;
+  margin-top: 6px;
   font-size: 0.8rem;
+  line-height: 1.3;
   color: var(--muted);
+}
+.langs {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  margin-bottom: 6px;
+  background: var(--paper-2);
+  border-radius: 999px;
+}
+.langs a {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-decoration: none;
+}
+.langOn {
+  background: var(--ink);
+  color: var(--paper) !important;
 }
 .rows {
   display: grid;
@@ -378,6 +383,9 @@
 
 /* PDF / yazdırma */
 @media print {
+  .langs {
+    display: none;
+  }
   .page {
     background: #fff;
     padding: 0;
